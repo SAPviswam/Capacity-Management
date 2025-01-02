@@ -91,7 +91,7 @@
                         id="_IDGenTeeext4"
                         width="40%"
                         text="&quot;Let's create something amazing together.&quot;"
-                        class="quoteText"
+                        class="quoteText sapUiLargeMarginTop"
                     />
                     <!-- <Text text="Together.&quot;" class="quoteText"/> -->
                 </content>
