@@ -1,4 +1,4 @@
-using {capacitymanagement.db as db} from '../db/schema';
+using {capacitymanagement.db as db} from '../db/datamodel';
 
 @path: 'CapSRV'
 
