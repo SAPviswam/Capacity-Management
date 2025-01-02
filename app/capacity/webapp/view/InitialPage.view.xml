@@ -1,0 +1,96 @@
+<mvc:View
+    controllerName="com.sap.smartcontrols.controller.InitialPage"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:tnt="sap.tnt"
+    height="100%"
+>
+    <tnt:ToolPage id="toolPage">
+        <tnt:header>
+            <tnt:ToolHeader id="idTool">
+                <Title
+                    id="idTitle"
+                    class="sapUiTinyLargeBegin"
+                    text="WELCOME"
+                    textAlign="Center"
+                />
+            </tnt:ToolHeader>
+        </tnt:header>
+        <!-- side content -->
+        <tnt:sideContent>
+            <tnt:SideNavigation
+                class="sa"
+                id="idSidenavigation"
+                itemSelect="onItemSelect"
+            >
+                <tnt:NavigationList
+                    id="idnavigation"
+                    class="sa"
+                >
+                    <tnt:NavigationListItem
+                        id="idnavhome"
+                        key="Home"
+                        text="Home"
+                        icon="sap-icon://home"
+                    />
+ 
+                    <tnt:NavigationListItem
+                        id="idnavlistitem"
+                        key="MasterRecords"
+                        text="Master Records"
+                    />
+                    <tnt:NavigationListItem
+                        id="idparkingscreation"
+                        key="ContainerDetais"
+                        text="ContainerDetais"
+                    />
+                    <tnt:NavigationListItem
+                        id="idnavlistitem1"
+                        key="ProductDetails"
+                        text="Product Details"
+                    />
+                </tnt:NavigationList>
+            </tnt:SideNavigation>
+        </tnt:sideContent>
+        <!-- Main Contents -->
+        <tnt:mainContents>
+            <NavContainer
+                id="idNavContainer"
+                initialPage="root2"
+                class="sssp"
+            >
+                <pages>
+                    <ScrollContainer
+                        id="idScroll1"
+                        horizontal="false"
+                        vertical="true"
+                        height="100%"
+                        width="100%"
+                        class="sapUiContentPadding"
+                    >
+                        <Text
+                            id="idSample"
+                            text="Welcome To Home Page"
+                        />
+                    </ScrollContainer>
+                    <!-- Master Details -->
+                      <ScrollContainer
+                        id="idScroll2"
+                        horizontal="false"
+                        vertical="true"
+                        height="100%"
+                        width="100%"
+                        class="sapUiContentPadding"
+                    >
+                        <Text
+                            id="id2ndpage"
+                            text="Welcome To Master Details Page"
+                        />
+                    </ScrollContainer>
+                </pages>
+            </NavContainer>
+        </tnt:mainContents>
+    </tnt:ToolPage>
+</mvc:View>
+ 
+ 

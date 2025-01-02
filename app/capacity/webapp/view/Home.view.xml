@@ -1,0 +1,101 @@
+<mvc:View
+    controllerName="com.app.artihcus.controller.Home"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+>
+    <App id="_IDGenApp1">
+        <pages>
+            <Page
+                id="_IDGenPage"
+                showHeader="false"
+                class="sapUiContentPadding backgroundColour"
+            >
+                <content>
+                    <HBox
+                        id="_IDGenHB2ox"
+                        width="100%"
+                        justifyContent="SpaceBetween"
+                        alignItems="Center"
+                    >
+                        <Image
+                            id="id_GenImage1PageHome"
+                            height="2.5rem"
+                            class="sapUiTinyMarginBegin"
+                            src="https://artihcus.com/assets/img/AG-logo.png"
+                        />
+
+                        <HBox
+                            id="_IDGenH22Box1"
+                            class="sapUiTinyMarginEnd"
+                        >
+                            <Button
+                                id="_IDGenButton"
+                                text="{i18n>LoginButton}"
+                                type="Transparent"
+                                press="onLogin"
+                            />
+                            <Button
+                                id="_IDG34enButton1"
+                                text="{i18n>SignupButton}"
+                                type="Transparent"
+                                press="onSignup"
+                            />
+                        </HBox>
+                    </HBox>
+
+                    <HBox
+                        id="_IDGen33HBox2"
+                        class="EntireHbox"
+                        justifyContent="SpaceBetween"
+                    >
+                        <HBox
+                            id="_IDG33enHBox3"
+                            class="textHbox"
+                        >
+                            <Text
+                                id="_IDGe33nText"
+                                text="{i18n>HI}"
+                                class="Hi"
+                            />
+                            <VBox id="_IDGenV33Box">
+                                <Label
+                                    id="_IDG33enLabel"
+                                    width="20%"
+                                />
+                                <Text
+                                    id="_IDG44enText1"
+                                    text="{i18n>Welcome}"
+                                    class="welcome"
+                                />
+                                <Text
+                                    id="_IDGenTeeext2"
+                                    text="{i18n>Capacity}"
+                                    class="capacityTitle"
+                                />
+                                <Text
+                                    id="_IDGenTeeext3"
+                                    text="{i18n>Management}"
+                                    class="capacityTitle"
+                                />
+                            </VBox>
+                        </HBox>
+                        <HBox id="_IDGenHBeeox4">
+                            <Image
+                                id="idImage"
+                                src="Image/truckWithGoods.gif"
+                            />
+                        </HBox>
+                    </HBox>
+                    <Text
+                        id="_IDGenTeeext4"
+                        width="40%"
+                        text="&quot;Let's create something amazing together.&quot;"
+                        class="quoteText"
+                    />
+                    <!-- <Text text="Together.&quot;" class="quoteText"/> -->
+                </content>
+            </Page>
+        </pages>
+    </App>
+</mvc:View>
