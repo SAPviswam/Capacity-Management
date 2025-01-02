@@ -1,0 +1,120 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+>
+    <Dialog
+        id="idSignupDialog"
+        resizable="false"
+        draggable="false"
+        title="SignUp for A new Account"
+        class="sapMPopover sapMIBar sapMHeader-CTX"
+        beginButton="True"
+    >
+        <beginButton>
+            <Button
+                id="idSignupCancelBtn"
+                text="cancel"
+                press="onPressCancelSignUp"
+            />
+        </beginButton>
+        <content>
+            <form:SimpleForm
+                id="idSignupForm"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="4"
+                labelSpanL="4"
+                labelSpanM="4"
+                labelSpanS="12"
+                emptySpanXL="1"
+                emptySpanL="1"
+                emptySpanM="1"
+                emptySpanS="0"
+                columnsXL="2"
+                columnsL="2"
+                columnsM="1"
+            >
+                <VBox
+                    id="idSignupVBox1"
+                    class="SignUpFragmentVbox"
+                    width="100%"
+                >
+                    <HBox id="idSignupHBox1">
+                        <Label
+                            id="idSignupUserNameLabel"
+                            class="sapUiTinyMarginTop"
+                            text="User Name"
+                            width="100px"
+                        />
+
+                        <Input
+                            id="idSignupUserNameInput"
+                            placeholder="Username"
+                        />
+                    </HBox>
+
+                    <HBox id="idSignupHBox2">
+                        <Label
+                            id="idSignupEmailLabel"
+                            text="Email"
+                            class="sapUiTinyMarginTop"
+                            width="100px"
+                        />
+
+                        <Input
+                            id="idSignupEmailNameInput"
+                            placeholder="Email"
+                        />
+                    </HBox>
+                    <HBox id="idSignupHBox3">
+                        <Label
+                            id="idSignupPhoneLabel"
+                            text="Phone"
+                            class="sapUiTinyMarginTop"
+                            width="100px"
+                        />
+                        <Input
+                            id="idSignupPhoneInput"
+                            placeholder="Phone"
+                        />
+                    </HBox>
+                    <HBox id="idSignupHBox4">
+                        <Label
+                            id="idSignupPasswordLabel"
+                            text="Password"
+                            class="sapUiTinyMarginTop"
+                            width="100px"
+                        />
+                        <Input
+                            id="idSignupPasswordInput"
+                            placeholder="Password"
+                        />
+                    </HBox>
+                    <HBox id="idSignupHBox5">
+                        <Label
+                            id="idSignupConfirmPasswordLabel"
+                            text="Confirm Password"
+                            class="sapUiTinyMarginTop"
+                            width="100px"
+                        />
+
+                        <Input
+                            id="idSignupConfirmPasswordInput"
+                            placeholder="Confirm Pwd"
+                        />
+                    </HBox>
+                    <Button
+                        id="_IDGenButtson4"
+                        class="sapUiSmallMarginTop"
+                        type="Emphasized"
+                        width="90%"
+                        text="Sign Up"
+                        press="onPressSignUpCreate"
+                    />
+                </VBox>
+            </form:SimpleForm>
+        </content>
+    </Dialog>
+</core:FragmentDefinition>

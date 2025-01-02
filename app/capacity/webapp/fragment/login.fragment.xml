@@ -1,0 +1,90 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+>
+    <Dialog
+        id="idLoginDialog"
+        resizable="false"
+        draggable="false"
+        title="User Login"
+        class="sapMPopover sapMIBar sapMHeader-CTX"
+        beginButton="True"
+    >
+        <beginButton>
+            <Button
+                id="idLoginCancleBtn"
+                text="Cancel"
+                press="onPressCancelLoginBtn"
+            />
+        </beginButton>
+        <content>
+            <form:SimpleForm
+                id="idLoginform"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                
+            >
+                <VBox
+                    id="idLoginVBox1"
+                    class="loginFragmentVbox"
+                    width="100%"
+                >
+                    <HBox id="idLoginHBox1">
+                        <Label
+                            id="idLoginUserNameLabel"
+                            class="sapUiTinyMarginTop"
+                            text="User Name : "
+                            width="100px"
+                        />
+                        <Input
+                            id="idLoginUserNameInput"
+                            placeholder="Username"
+                        />
+                    </HBox>
+                    <HBox id="idLoginHBox2">
+                        <Label
+                            id="idLoginUserPasswordLabel"
+                            text="Password :"
+                            class="sapUiTinyMarginTop"
+                            width="100px"
+                        />
+
+                        <Input
+                            id="idLoginUserPasswordInput"
+                            placeholder="password"
+                        />
+                    </HBox>
+
+                    <Button
+                        id="idLoginBtn"
+                        class="sapUiSmallMarginTop"
+                        type="Emphasized"
+                        width="90%"
+                        text="Login"
+                        press="onPressLogin"
+                    />
+
+                    <HBox
+                        id="idLoginHBox3"
+                        justifyContent="SpaceBetween"
+                        width="90%"
+                    >
+                        <CheckBox
+                            id="idLoginAutoSave"
+                            text="Auto Save"
+                            select="onSelectCheckBox"
+                        />
+
+                        <Link
+                            id="idLoginChangePassword"
+                            text="Change Password"
+                            press="onChangePasswordBtn"
+                        />
+                    </HBox>
+                </VBox>
+            </form:SimpleForm>
+        </content>
+    </Dialog>
+</core:FragmentDefinition>

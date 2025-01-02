@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="com.app.artihcus.controller.Home"
+    controllerName="com.app.capacity.controller.Home"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
     xmlns="sap.m"
@@ -33,13 +33,13 @@
                                 id="_IDGenButton"
                                 text="{i18n>LoginButton}"
                                 type="Transparent"
-                                press="onLogin"
+                                press="onPressLogin"
                             />
                             <Button
                                 id="_IDG34enButton1"
                                 text="{i18n>SignupButton}"
                                 type="Transparent"
-                                press="onSignup"
+                                press="onPressSignup"
                             />
                         </HBox>
                     </HBox>
