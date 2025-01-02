@@ -1,6 +1,6 @@
 <mvc:View
     controllerName="com.app.capacity.controller.Home"
-    xmlns:mvc="sap.ui.core.mvc"
+   xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
     xmlns="sap.m"
 >
@@ -33,14 +33,15 @@
                                 id="_IDGenButton"
                                 text="{i18n>LoginButton}"
                                 type="Transparent"
-                                press="onPressLogin"
+                                press="onLogin"
                             />
                             <Button
                                 id="_IDG34enButton1"
                                 text="{i18n>SignupButton}"
                                 type="Transparent"
-                                press="onPressSignup"
+                                press="onSignup"
                             />
+                            <Button id="next" press="onNExt" text="Next"></Button>
                         </HBox>
                     </HBox>
 
@@ -55,7 +56,7 @@
                         >
                             <Text
                                 id="_IDGe33nText"
-                                text="{i18n>HI}"
+                                text="{i18n>Hi}"
                                 class="Hi"
                             />
                             <VBox id="_IDGenV33Box">
@@ -91,7 +92,7 @@
                         id="_IDGenTeeext4"
                         width="40%"
                         text="&quot;Let's create something amazing together.&quot;"
-                        class="quoteText sapUiLargeMarginTop"
+                        class="quoteText"
                     />
                     <!-- <Text text="Together.&quot;" class="quoteText"/> -->
                 </content>

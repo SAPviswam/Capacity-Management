@@ -1,0 +1,13 @@
+<mvc:View
+    controllerName="com.app.capacity.controller.MainPage"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    height="100%"
+>
+<Page id="jk">
+    <Text id="ooo" text="HIIII"></Text>
+    </Page>
+</mvc:View>
+ 
+ 
