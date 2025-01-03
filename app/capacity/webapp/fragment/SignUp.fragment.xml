@@ -10,7 +10,6 @@
         draggable="false"
         title="SignUp for A new Account"
         class="sapMPopover sapMIBar sapMHeader-CTX"
-        beginButton="True"
     >
         <beginButton>
             <Button
