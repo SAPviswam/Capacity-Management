@@ -1,0 +1,52 @@
+###read call
+GET http://localhost:4004/odata/v2/CapSRV/Materials 
+
+
+###Create call
+
+POST http://localhost:4004/odata/v2/CapSRV/Materials
+Content-Type: application/json
+
+{
+            "model": "Model C",
+            "EAN": "1234567890123",
+            "length": "100.00",
+            "width": "50.00",
+            "height": "30.00",
+            "volume": "150000.00",
+            "vuom": "cm",
+            "muom": "kg",
+            "uom": "pcs",
+            "mCategory": "Category 1",
+            "description": "Description of Model A",
+            "netWeight": "10.00",
+            "grossWeight": "12.00",
+            "wuom": "kg",
+            "quantity": "100",
+            "stack": "5",
+            "mass": "50.00",
+            "layersHeight": "2",
+            "color": "#FF0000"  
+}
+
+
+###read call
+GET http://localhost:4004/odata/v2/CapSRV/TruckTypes
+
+###Create
+
+POST http://localhost:4004/odata/v2/CapSRV/TruckTypes
+Content-Type: application/json
+
+{
+    "truckType": "14FT",
+    "length": "20.00",
+    "width": "8.00",
+    "height": "4.00",
+    "uom": "m",
+    "volume": "640.00",
+    "tvuom": "m³",        
+    "truckWeight": "5000",  
+    "capacity": "10000",   
+    "tuom": "kg"         
+}

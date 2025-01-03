@@ -10,12 +10,13 @@
     color: #5e2d91;
 }
 
-.quoteText {
+/* .quoteText {
     font-size: 2rem;
     color: #ff8c00;
     font-weight: Bold;
     margin: -2 0% 0% 2% !important;
-}
+     
+} */
 
 .loginSignup {
     margin-top: 20px;
@@ -170,13 +171,13 @@
 }
 
 .backgroundColour {
-    background-image: linear-gradient(135deg, #d1f0f4, #f1e6fa, #fff5ea, #fff2e4) !important;
+    /* background-image: linear-gradient(135deg, #fdfffd, #8fdbf2b1, #65d3f5) !important; */
 
 }
 
 .sapMITH {
 
-    background-image: linear-gradient(135deg, #d1f0f4, #f1e6fa, #fff5ea, #fff5ea, #fff2e4);
+    /* background-image: linear-gradient(135deg, #fdfffd, #8fdbf2b1, #65d3f5); */
 
 }
 
@@ -287,7 +288,8 @@
 /* start of required truck CSS */
 .sapMIBar.sapMHeader-CTX {
 
-    background-image: linear-gradient(135deg, #d1f0f4, #f1e6fa, #fff5ea, #fff2e4) !important;
+    /* background-image: linear-gradient(135deg,  #fdfffd, #8fdbf2b1, #65d3f5) !important; */
+
     filter: none;
 
 }
@@ -339,3 +341,63 @@
 }
 
 /* change password class End*/
+
+
+
+
+/* Enter your custom styles here */
+.backgroundColour {
+ 
+ 
+    /* background: linear-gradient(to right, #fdfffd, #8fdbf2b1, #65d3f5)!important; */
+}
+
+.sapMITBFilter .sapMITBText {
+    overflow: visible; /* Allow overflow */
+    white-space: nowrap; /* Prevent text wrapping */
+    text-overflow: clip; /* Remove ellipsis */
+    width: auto; /* Set width to auto */
+}
+
+#IdpageScanning3 {
+    width: 200px; /* Adjust this value as needed */
+}
+/* Optional: Style for IconTabHeader */
+.sapMITBHeader {
+    /* background-color: transparent !important; Ensure header is transparent */
+}
+
+.sapMITH {
+    vertical-align: top;
+    font-size: var(--sapFontSmallSize);
+    display: flex;
+    align-items: flex-start;
+    /* background-color: transparent !important; */
+    border-bottom: none;
+    box-shadow: var(--sapContent_HeaderShadow);
+    position: relative;
+    padding: 0 2rem;
+}
+
+/* Home View Start*/
+
+
+
+/* Home View end*/
+
+.centered-up {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10%;
+  /* Ensure no margins are applied that could push things out of place */
+}
+
+
+.quoteText {
+    font-size: 2rem;
+    color: #ff8c00;
+    font-weight: bold;
+    margin: -2px 0 0 2% !important;
+}
