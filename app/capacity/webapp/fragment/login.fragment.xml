@@ -14,7 +14,7 @@
     >
         <beginButton>
             <Button
-                id="_IDGenButton11"
+                id="_IDGenButton111"
                 text="Cancel"
                 press="oncancelbtn"
             />

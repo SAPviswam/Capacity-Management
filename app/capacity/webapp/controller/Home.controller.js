@@ -1,5 +1,3 @@
-
-
 sap.ui.define([
     "./BaseController",
     "sap/m/MessageToast",
@@ -11,7 +9,12 @@ sap.ui.define([
         "use strict";
 
         return Controller.extend("com.app.capacity.controller.Home", {
-            async onInit () {
+             onInit:async function () {
+
+                // Loading Twilio Details
+                const oConfigModel = this.getOwnerComponent().getModel("config");
+                this.oTwilioConfig = oConfigModel.getProperty("/Twilio");
+
                 const oUserModel = new JSONModel({
                     userID: "",
                     fName: "",
@@ -26,6 +29,7 @@ sap.ui.define([
                 this.getView().setModel(oUserModel, "UserModel")
                 // Check credentials are saved
                 await this.checkAutoLogin()
+
 
 
             },
@@ -277,9 +281,9 @@ sap.ui.define([
 
                 // Prepare the Twilio API details
                 var formattedPhoneNumber = "+91" + sPhnNumber; // Assuming country code for India
-                const accountSid = "ACc0509634f284a38ff1a8dbd4ecb7bea5";  // Constant.oAccountSID;
-                const authToken = "f8dd66b6e9fb3b3912ca48ae3b5f7ea3";   // Constant.oAuthToken;
-                const serviceSid = "VA957dd7a44d971c0f083f27a3a3d24432";   // Constant.oServiceID;
+                const accountSid = this.oTwilioConfig.AccountSID;  
+                const authToken = this.oTwilioConfig.AuthToken; 
+                const serviceSid = this.oTwilioConfig.ServiceID;   
                 const url = `https://verify.twilio.com/v2/Services/${serviceSid}/Verifications`;
 
                 // Prepare the data for the request
@@ -353,9 +357,9 @@ sap.ui.define([
                 }
 
                 // Prepare the Twilio Verify Check API details
-                const accountSid = "ACc0509634f284a38ff1a8dbd4ecb7bea5";  // Constant.oAccountSID;
-                const authToken = "f8dd66b6e9fb3b3912ca48ae3b5f7ea3";   // Constant.oAuthToken;
-                const serviceSid = "VA957dd7a44d971c0f083f27a3a3d24432",   // Constant.oServiceID;
+                const accountSid = this.oTwilioConfig.AccountSID;  
+                const authToken = this.oTwilioConfig.AUTHToken;   
+                const serviceSid = this.oTwilioConfig.serviceID; 
                     url = `https://verify.twilio.com/v2/Services/${serviceSid}/VerificationCheck`,
                     payload = {
                         To: this._storedPhoneNumber,
