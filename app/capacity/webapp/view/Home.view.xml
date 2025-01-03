@@ -1,8 +1,8 @@
 <mvc:View
-    controllerName="com.app.capacity.controller.Home"
     xmlns:mvc="sap.ui.core.mvc"
-    displayBlock="true"
     xmlns="sap.m"
+    controllerName="com.app.capacity.controller.Home"
+    displayBlock="true"
 >
     <App id="_IDGenApp1">
         <pages>
@@ -24,7 +24,6 @@
                             class="sapUiTinyMarginBegin"
                             src="https://artihcus.com/assets/img/AG-logo.png"
                         />
-
                         <HBox
                             id="_IDGenH22Box1"
                             class="sapUiTinyMarginEnd"
@@ -33,17 +32,16 @@
                                 id="_IDGenButton"
                                 text="{i18n>LoginButton}"
                                 type="Transparent"
-                                press="onPressLogin"
+                                press="onLogin"
                             />
                             <Button
                                 id="_IDG34enButton1"
                                 text="{i18n>SignupButton}"
                                 type="Transparent"
-                                press="onPressSignup"
+                                press="onSignup"
                             />
                         </HBox>
                     </HBox>
-
                     <HBox
                         id="_IDGen33HBox2"
                         class="EntireHbox"
@@ -90,10 +88,10 @@
                     <Text
                         id="_IDGenTeeext4"
                         width="40%"
-                        text="&quot;Let's create something amazing together.&quot;"
-                        class="quoteText sapUiLargeMarginTop"
+                        text="Let's create something amazing together."
+                        class="quoteText"
                     />
-                    <!-- <Text text="Together.&quot;" class="quoteText"/> -->
+                    <!--  <Text text="Together.&quot;" class="quoteText"/>  -->
                 </content>
             </Page>
         </pages>

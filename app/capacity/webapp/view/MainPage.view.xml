@@ -1,0 +1,212 @@
+<mvc:View
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:tnt="sap.tnt"
+    controllerName="com.app.capacity.controller.MainPage"
+    xmlns:vk="sap.ui.vk"
+    height="100%"
+    xmlns:filterBar="sap.fe.macros.filterBar"
+    xmlns:smartfilterbar="sap.ui.comp.smartfilterbar"
+    xmlns:smarttable="sap.ui.comp.smarttable"
+>
+    <tnt:ToolPage
+        id="toolPage"
+        class="backgroundColour"
+    >
+        <!-- Tool Page heder -->
+        <tnt:header>
+            <tnt:ToolHeader
+                id="idTool"
+                class="backgroundColour"
+            >
+                <tnt:content>
+                    <HBox
+                        id="_IDGenHBox1"
+                        width="100%"
+                        alignItems="Center"
+                        class="backgroundColour"
+                    >
+                        <!-- Button positioned on the left -->
+                        <Button
+                            id="skksws"
+                            icon="sap-icon://menu2"
+                            press=".onCollapseExpandPress"
+                            class="sapUiLargeMarginEnd"
+                        />
+                        <Image
+                            id="idArtihcusIn_Mainpage"
+                            height="1.5rem"
+                            class="sapUiTinyMarginBegin"
+                            src="https://www.daikin.com/-/media/Project/Daikin/daikin_com/dg_common/images/logo_daikin-png.png"
+                        />
+                        <!-- Title centered in the remaining space -->
+                        <HBox
+                            id="_IDGenHBox2"
+                            justifyContent="Center"
+                            width="100%"
+                        >
+                            <Title
+                                id="idPageTitle"
+                                text="Capacity Management"
+                            />
+                        </HBox>
+                    </HBox>
+                </tnt:content>
+            </tnt:ToolHeader>
+        </tnt:header>
+        <!-- side content -->
+        <tnt:sideContent>
+            <tnt:SideNavigation
+                class="backgroundColour"
+                id="idSidenavigation"
+                itemSelect="onItemSelect"
+            >
+                <tnt:NavigationList id="idnavigationList">
+                    <!-- <tnt:NavigationListItem
+                        id="idnavhome"
+                        key="Home"
+                        text="Home"
+                        icon="sap-icon://home"
+                    /> -->
+
+                    <tnt:NavigationListItem
+                        id="idnavMasterRecords"
+                        key="MasterRecords"
+                        text="Master Records"
+                    >
+                        <!-- <tnt:NavigationListItem
+                            id="idnavContainerDetails"
+                            key="ContainerDetails"
+                            text="Container Details"
+                        />
+                        <tnt:NavigationListItem
+                            id="idnavProductDetails"
+                            key="ProductDetails"
+                            text="Product Details"
+                        /> -->
+                    </tnt:NavigationListItem>
+                    <tnt:NavigationListItem
+                        id="idnavSimulation"
+                        key="SimulationCreation"
+                        text="Simulation Page"
+                    />
+                </tnt:NavigationList>
+            </tnt:SideNavigation>
+        </tnt:sideContent>
+        <!-- Main Contents -->
+        <tnt:mainContents>
+            <NavContainer
+                class="backgroundColour"
+                id="idNavContainer"
+                initialPage="idScroll1"
+            >
+                <pages>
+                    <!-- Master Details -->
+                    <ScrollContainer
+                        id="idScroll2"
+                        horizontal="false"
+                        vertical="true"
+                        height="100%"
+                        width="100%"
+                        class="sapUiContentPadding backgroundColour"
+                    >
+                        <!-- <Button id="idDisplay" text="Display Products" class="sapUiTinyMargin" ></Button>
+                      <Button id="idDisplayCOnt" text="Containers" class="sapUiTinyMargin"></Button>
+                      <Button id="idModelCreation" text="Create Model" class="sapUiTinyMargin"></Button> -->
+                        <IconTabBar
+                            expanded="true"
+                            expandable="false"
+                            id="IconTabBar"
+                            backgroundDesign="Transparent"
+                            class="backgroundColour iconTabBar"
+                        >
+                            <items>
+                                <IconTabFilter
+                                    id="IdpageScanning1"
+                                    visible="true"
+                                    key="info"
+                                    interactionMode="Auto"
+                                    icon="Image/listIcon.png"
+                                    iconColor="Positive"
+                                    text="Product List"
+                                    class="backgroundColour"
+                                >
+                                    <Text
+                                        id="idList"
+                                        text="ProductList"
+                                    />
+                                </IconTabFilter>
+                                <IconTabFilter
+                                    id="IdpageScanning2"
+                                    visible="true"
+                                    key="info"
+                                    icon="Image/ProductInIconTabBar.png"
+                                    interactionMode="Auto"
+                                    iconColor="Critical"
+                                    text="Add Product"
+                                    class="backgroundColour"
+                                >
+                                    <Text
+                                        id="idList1"
+                                        text="Product Creation"
+                                    />
+                                </IconTabFilter>
+                            </items>
+                        </IconTabBar>
+                    </ScrollContainer>
+                    <!-- Simulation new -->
+                    <ScrollContainer
+                        id="idScroll5"
+                        horizontal="false"
+                        vertical="true"
+                        height="100%"
+                        width="100%"
+                        class="sapUiContentPadding"
+                    >
+                        <IconTabBar
+                            expanded="true"
+                            expandable="false"
+                            id="IconTabBar1"
+                            backgroundDesign="Transparent"
+                            class="sapUiTinyMargin"
+                        >
+                            <items>
+                                <IconTabFilter
+                                    id="IdpageScanning3"
+                                    visible="true"
+                                    key="info"
+                                    interactionMode="Auto"
+                                    icon="Image/listIcon.png"
+                                    iconColor="Positive"
+                                    text="Previous Simulations"
+                                    class="sapUiTinyMargin"
+                                >
+                                    <Text
+                                        id="idList2"
+                                        text="Previous Simulations"
+                                    />
+                                </IconTabFilter>
+                                <IconTabFilter
+                                    id="IdpageScanning4"
+                                    visible="true"
+                                    key="info"
+                                    icon="Image/SimulateIconTabBar.gif"
+                                    interactionMode="Auto"
+                                    iconColor="Critical"
+                                    text="Create Simulation"
+                                    textDirection="Inherit"
+                                    class="sapUiTinyMargin"
+                                >
+                                    <Text
+                                        id="idList4"
+                                        text="Create Simulations"
+                                    />
+                                </IconTabFilter>
+                            </items>
+                        </IconTabBar>
+                    </ScrollContainer>
+                </pages>
+            </NavContainer>
+        </tnt:mainContents>
+    </tnt:ToolPage>
+</mvc:View>
