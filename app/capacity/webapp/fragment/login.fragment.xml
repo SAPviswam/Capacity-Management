@@ -9,7 +9,7 @@
         resizable="false"
         draggable="false"
         title="Login to your account"
-        class="sapMPopover sapMIBar sapMHeader-CTX"
+        
         beginButton="True"
     >
         <beginButton>
@@ -89,11 +89,17 @@
                             select="onSelectCheckBox"
                         />
  
-                        <Link
-                            id="IDchan22gePassword_"
+                        <!-- <Link
+                            id="IDchan22gePassword"
                             text="Change Password"
                             press="onChangePasswordBtn"
-                        />
+                        /> -->
+
+                        <Button id="idForgotPasswordBtn_cs"
+                          text="Forgot password"
+                          type="Emphasized"
+                          press="onForgotPasswordPress">
+                        </Button>
                     </HBox>
                 </VBox>
             </form:SimpleForm>
