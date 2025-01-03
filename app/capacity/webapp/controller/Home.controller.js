@@ -98,6 +98,22 @@ sap.ui.define([
 
                 }
             },
+
+            // for forgot password dialog box opens
+            onForgotPasswordPress:async function(){
+                if (!this.oForgotPasswordDialog) {
+                    this.oForgotPasswordDialog = await this.loadFragment("ForgotPassword");
+                }
+
+                this.oForgotPasswordDialog.open();
+            },
+
+            onCancelBtnPressForgotPassword: function(){
+                if (this.oForgotPasswordDialog.isOpen()) {
+                    this.oForgotPasswordDialog.close();
+                }
+            },
+
             onLoginBtnPressInLoginDialog: async function () {
                 debugger
                 const oModel = this.getOwnerComponent().getModel("ModelV2"),
