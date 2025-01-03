@@ -1,8 +1,8 @@
 <mvc:View
+    controllerName="com.app.capacity.controller.MainPage"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:tnt="sap.tnt"
-    controllerName="com.app.capacity.controller.MainPage"
     xmlns:vk="sap.ui.vk"
     height="100%"
     xmlns:filterBar="sap.fe.macros.filterBar"
