@@ -51,9 +51,9 @@ sap.ui.define([
                 })
             })
         },
-        readData: function (oModel, oPath, oFilter) {
+        readData: function (oModel, sPath, oFilter) {
             return new Promise((resolve, reject) => {
-                oModel.read(oPath, {
+                oModel.read(sPath, {
                     filters: [oFilter],
                     success: function (oSuccessData) {
                         resolve(oSuccessData)
@@ -75,17 +75,25 @@ sap.ui.define([
         },
 
         validateField: function (oView, fieldId, value, regex, errorMessage) {
-            // Validation
             const validationErrors = [];
-            const oField = oView.byId(fieldId);
-            if (!value || (regex && !regex.test(value))) {
-                oField.setValueState("Error");
-                oField.setValueStateText(errorMessage);
-                validationErrors.push(errorMessage);
+            if (!fieldId) {
+                if (!value || (regex && !regex.test(value))) {
+                    validationErrors.push(errorMessage);
+                }
+                return validationErrors
             } else {
-                oField.setValueState("None");
+                // Validation
+                const oField = oView.byId(fieldId);
+                if (!value || (regex && !regex.test(value))) {
+                    oField.setValueState("Error");
+                    oField.setValueStateText(errorMessage);
+                    validationErrors.push(errorMessage);
+                } else {
+                    oField.setValueState("None");
+                }
+                return validationErrors
             }
-            return validationErrors
+
         },
 
         //Base function for opening the Profile PopOver..
@@ -120,7 +128,7 @@ sap.ui.define([
                         var oProfileModel = new sap.ui.model.json.JSONModel(oProfileData);
 
                         if (!This._oPopover) {
-                            This._oPopover = sap.ui.xmlfragment("com.app.artihcus.fragment.ProfileDialog", This);
+                            This._oPopover = sap.ui.xmlfragment("com.app.capacity.controller.ProfileDialog", This);
                             oView.addDependent(This._oPopover);
                         }
                         // Set both the profile and visibility models to the popover

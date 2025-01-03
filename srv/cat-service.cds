@@ -8,5 +8,6 @@ define service MyService {
     define entity TruckTypes      as projection on db.TruckTypes;
     define entity SelectedProduct as projection on db.SelectedProduct;
     define entity History         as projection on db.History;
+    define entity Users         as projection on db.Users;
 
 }
