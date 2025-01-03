@@ -1,8 +1,8 @@
 <mvc:View
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m"
     controllerName="com.app.capacity.controller.Home"
+     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
+    xmlns="sap.m"
 >
     <App id="_IDGenApp1">
         <pages>
@@ -88,7 +88,7 @@
                     <Text
                         id="_IDGenTeeext4"
                         width="40%"
-                        text="Let's create something amazing together."
+                        text="&quot;Let's create something amazing together.&quot;"
                         class="quoteText"
                     />
                     <!--  <Text text="Together.&quot;" class="quoteText"/>  -->
