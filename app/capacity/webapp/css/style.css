@@ -170,13 +170,13 @@
 }
 
 .backgroundColour {
-    background-image: linear-gradient(135deg, #fdfffd, #8fdbf2b1, #65d3f5) !important;
+    /* background-image: linear-gradient(135deg, #fdfffd, #8fdbf2b1, #65d3f5) !important; */
 
 }
 
 .sapMITH {
 
-    background-image: linear-gradient(135deg, #fdfffd, #8fdbf2b1, #65d3f5);
+    /* background-image: linear-gradient(135deg, #fdfffd, #8fdbf2b1, #65d3f5); */
 
 }
 
@@ -287,7 +287,7 @@
 /* start of required truck CSS */
 .sapMIBar.sapMHeader-CTX {
 
-    background-image: linear-gradient(135deg,  #fdfffd, #8fdbf2b1, #65d3f5) !important;
+    /* background-image: linear-gradient(135deg,  #fdfffd, #8fdbf2b1, #65d3f5) !important; */
     filter: none;
 
 }
@@ -347,7 +347,7 @@
 .backgroundColour {
  
  
-    background: linear-gradient(to right, #fdfffd, #8fdbf2b1, #65d3f5)!important;
+    /* background: linear-gradient(to right, #fdfffd, #8fdbf2b1, #65d3f5)!important; */
 }
 
 .sapMITBFilter .sapMITBText {
@@ -362,7 +362,7 @@
 }
 /* Optional: Style for IconTabHeader */
 .sapMITBHeader {
-    background-color: transparent !important; /* Ensure header is transparent */
+    /* background-color: transparent !important; Ensure header is transparent */
 }
 
 .sapMITH {
@@ -370,7 +370,7 @@
     font-size: var(--sapFontSmallSize);
     display: flex;
     align-items: flex-start;
-    background-color: transparent !important;
+    /* background-color: transparent !important; */
     border-bottom: none;
     box-shadow: var(--sapContent_HeaderShadow);
     position: relative;

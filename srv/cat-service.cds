@@ -58,12 +58,11 @@ annotate MyService.Users with  @(UI: {
             TypeName: 'Truck Type',
             TypeNamePlural: 'Truck Types'
         },
-        SelectionFields: [truckType, length, width, height],
         LineItem: [
-            { $Type: 'UI.DataField', Value: truckType },
-            { $Type: 'UI.DataField', Value: length },
-            { $Type: 'UI.DataField', Value: width },
-            { $Type: 'UI.DataField', Value: height }
+            { $Type: 'UI.DataField', Value: truckType,Label:'Container Type' },
+            { $Type: 'UI.DataField', Value: length,Label:'Length'},
+            { $Type: 'UI.DataField', Value: width ,Label:'Width'},
+            { $Type: 'UI.DataField', Value: height,Label:'Height' }
         ]
     }) ;
 
