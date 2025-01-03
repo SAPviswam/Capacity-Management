@@ -339,3 +339,40 @@
 }
 
 /* change password class End*/
+
+
+
+
+/* Enter your custom styles here */
+.backgroundColour {
+ 
+ 
+    background: linear-gradient(to right, #fdfffd, #8fdbf2b1, #65d3f5)!important;
+}
+
+.sapMITBFilter .sapMITBText {
+    overflow: visible; /* Allow overflow */
+    white-space: nowrap; /* Prevent text wrapping */
+    text-overflow: clip; /* Remove ellipsis */
+    width: auto; /* Set width to auto */
+}
+
+#IdpageScanning3 {
+    width: 200px; /* Adjust this value as needed */
+}
+/* Optional: Style for IconTabHeader */
+.sapMITBHeader {
+    background-color: transparent !important; /* Ensure header is transparent */
+}
+
+.sapMITH {
+    vertical-align: top;
+    font-size: var(--sapFontSmallSize);
+    display: flex;
+    align-items: flex-start;
+    background-color: transparent !important;
+    border-bottom: none;
+    box-shadow: var(--sapContent_HeaderShadow);
+    position: relative;
+    padding: 0 2rem;
+}
