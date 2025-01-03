@@ -10,12 +10,13 @@
     color: #5e2d91;
 }
 
-.quoteText {
+/* .quoteText {
     font-size: 2rem;
     color: #ff8c00;
     font-weight: Bold;
     margin: -2 0% 0% 2% !important;
-}
+     
+} */
 
 .loginSignup {
     margin-top: 20px;
@@ -339,3 +340,26 @@
 }
 
 /* change password class End*/
+
+/* Home View Start*/
+
+
+
+/* Home View end*/
+
+.centered-up {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10%;
+  /* Ensure no margins are applied that could push things out of place */
+}
+
+
+.quoteText {
+    font-size: 2rem;
+    color: #ff8c00;
+    font-weight: bold;
+    margin: -2px 0 0 2% !important;
+}
