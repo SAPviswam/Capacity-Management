@@ -98,6 +98,22 @@ sap.ui.define([
 
                 }
             },
+
+            // for forgot password dialog box opens
+            onForgotPasswordPress:async function(){
+                if (!this.oForgotPasswordDialog) {
+                    this.oForgotPasswordDialog = await this.loadFragment("ForgotPassword");
+                }
+
+                this.oForgotPasswordDialog.open();
+            },
+
+            onCancelBtnPressForgotPassword: function(){
+                if (this.oForgotPasswordDialog.isOpen()) {
+                    this.oForgotPasswordDialog.close();
+                }
+            },
+
             onLoginBtnPressInLoginDialog: async function () {
                 debugger
                 const oModel = this.getOwnerComponent().getModel("ModelV2"),
@@ -108,6 +124,27 @@ sap.ui.define([
 
 
                 // validations
+                // test
+                const aUserInputs = [
+                    { Id: "_IDGenInput11", value: sUserEnteredUserID, regex: null, message: "Please enter registered user ID" },
+                    { Id: "_IDGenInput221", value: sUserEnteredPassword, regex: null, message: "Enter your password" }
+                ],
+                raisedErrors = [];
+
+                aUserInputs.forEach(async input => {
+                    let aValidations = this.validateField(oUserView, input.Id, input.value, input.regex, input.message)
+                    if (aValidations.length > 0) {
+                        raisedErrors.push(aValidations[0]) // pushning error into empty array
+                    }
+                })
+
+                if (raisedErrors.length > 0) {
+                    for (let error of raisedErrors) {
+                        MessageBox.information(error) // showing error msg 
+                        return;
+                    }
+                }
+                // test
                 var flag = true;
                 if (!sUserEnteredUserID) {
                     oUserView.byId("_IDGenInput11").setValueState("Warning");
