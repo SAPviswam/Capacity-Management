@@ -27,7 +27,7 @@ define entity Users : cuid {
 @assert.unique: {model: [model]
 
 }
-
+ 
 define entity Materials {
 
     key ID              : UUID;
@@ -56,8 +56,9 @@ define entity Materials {
 }
 
 /**Defining Vehicle Entity */
+ 
 define entity TruckTypes {
-    key truckType   : String;
+    key truckType   : String  ;
         length      : String;
         width       : String;
         height      : String;
@@ -69,16 +70,17 @@ define entity TruckTypes {
         tuom        : String;
 }
 
+ 
 define entity SelectedProduct {
     key ID               : UUID;
         Productno        : Association to Materials;
         SelectedQuantity : String;
 }
 
-
+ 
 define entity History : managed {
     key ID        : UUID;
-        productNo : Association to many SelectedProduct;
+        productNo : Association to SelectedProduct;
         truckType : Association to TruckTypes;
 
 }

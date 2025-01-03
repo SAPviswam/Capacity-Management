@@ -17,11 +17,12 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "/odata/v4/CapSRV/",
+        "uri": "/odata/v2/CapSRV/",
         "type": "OData",
         "settings": {
           "annotations": [],
-          "odataVersion": "4.0"
+          "localUri": "/odata/v2/MyService.xml",
+          "odataVersion": "2.0"
         }
       },
       "mainService2": {
@@ -29,6 +30,7 @@
         "type": "OData",
         "settings": {
           "annotations": [],
+          "localUri": "/odata/v2/MyService.xml",
           "odataVersion": "2.0"
         }
       }

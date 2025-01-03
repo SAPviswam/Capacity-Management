@@ -98,7 +98,7 @@
             <NavContainer
                 class="backgroundColour"
                 id="idNavContainer"
-                initialPage="idScroll1"
+                initialPage="idScroll2"
             >
                 <pages>
                     <!-- Master Details -->
@@ -131,10 +131,50 @@
                                     text="Product List"
                                     class="backgroundColour"
                                 >
-                                    <Text
-                                        id="idList"
-                                        text="ProductList"
-                                    />
+                                <VBox id="idHbox" width="82%">
+                                    <smartfilterbar:SmartFilterBar
+                                        id="idSmartFilters"
+                                         
+                                        entitySet="Materials"
+                                    >
+                                        <smartfilterbar:controlConfiguration>
+                                            <smartfilterbar:ControlConfiguration
+                                                visibleInAdvancedArea="true"
+                                                id="idControl1"
+                                                label="Model"
+                                                key="model"
+                                            />
+                                             <smartfilterbar:ControlConfiguration
+                                                visibleInAdvancedArea="true"
+                                                id="idControl2"
+                                                label="Description"
+                                                key="description"
+                                            />
+                                             <smartfilterbar:ControlConfiguration
+                                                visibleInAdvancedArea="true"
+                                                id="idControl"
+                                                label="Material Category"
+                                                key="mCategory"
+                                            />
+                                        </smartfilterbar:controlConfiguration>
+                                    </smartfilterbar:SmartFilterBar>
+                                    <smarttable:SmartTable
+                                        id="idSmartTable"
+                                        header="Models Table"
+                                        headerLevel="H6"
+                                        showRowCount="true"
+                                        showFullScreenButton="true"
+                                        enableAutoBinding="true"
+                                        enableAutoColumnWidth="true"
+                                        enableExport="true"
+                                        tableType="ResponsiveTable"
+                                        smartFilterId="idSmartFilters"
+                                        entitySet="Materials"
+                                        
+                                    >
+                                    <Table id="idMyTable" mode="MultiSelect"></Table>
+                                    </smarttable:SmartTable>
+                                    </VBox>
                                 </IconTabFilter>
                                 <IconTabFilter
                                     id="IdpageScanning2"
@@ -150,6 +190,7 @@
                                         id="idList1"
                                         text="Product Creation"
                                     />
+                                    
                                 </IconTabFilter>
                             </items>
                         </IconTabBar>
