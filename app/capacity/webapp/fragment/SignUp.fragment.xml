@@ -5,7 +5,7 @@
     xmlns="sap.m"
 >
     <Dialog
-        id="idSignssUp"
+        id="idSignupDialog"
         resizable="false"
         draggable="false"
         title="SignUp for A new Account"
@@ -14,14 +14,14 @@
     >
         <beginButton>
             <Button
-                id="s"
+                id="idSignupCancelBtn"
                 text="cancel"
-                press="onCancelPressInSignUp"
+                press="onPressCancelSignUp"
             />
         </beginButton>
         <content>
             <form:SimpleForm
-                id="idSidgnUpForm_CS"
+                id="idSignupForm"
                 editable="true"
                 layout="ResponsiveGridLayout"
                 labelSpanXL="4"
@@ -37,162 +37,72 @@
                 columnsM="1"
             >
                 <VBox
-                    id="_IDGendVBox1"
+                    id="idSignupVBox1"
                     class="SignUpFragmentVbox"
                     width="100%"
                 >
-                    <HBox id="_IDGenHddBox3">
+                    <HBox id="idSignupHBox1">
                         <Label
-                            id="_IDGenLaddbel4"
+                            id="idSignupUserNameLabel"
                             class="sapUiTinyMarginTop"
-                            text="First Name"
+                            text="User Name"
                             width="100px"
                         />
-                        <Label
-                            id="_IDGenLabeld5"
-                            class="sapUiTinyMarginTop"
-                            text=":"
-                            width="20px"
-                        />
+
                         <Input
-                            id="_IDGenInputd2"
-                            placeholder="First Name"
-                            value="{UserModel>/fName}"
+                            id="idSignupUserNameInput"
+                            placeholder="Username"
                         />
                     </HBox>
 
-                    <HBox id="_IDGenHBoxdd4">
+                    <HBox id="idSignupHBox2">
                         <Label
-                            id="_IDGenddLabel6"
-                            text="Last Name"
+                            id="idSignupEmailLabel"
+                            text="Email"
                             class="sapUiTinyMarginTop"
                             width="100px"
                         />
-                        <Label
-                            id="_IDGenLddabel7"
-                            text=":"
-                            class="sapUiTinyMarginTop"
-                            width="20px"
-                        />
+
                         <Input
-                            id="_IDGenInputd3"
-                            placeholder="Last Name"
-                            value="{UserModel>/lName}"
+                            id="idSignupEmailNameInput"
+                            placeholder="Email"
                         />
                     </HBox>
-                    <HBox id="_IDGenHBosx5">
+                    <HBox id="idSignupHBox3">
                         <Label
-                            id="_IDGensLabel8"
-                            text="Mail ID"
+                            id="idSignupPhoneLabel"
+                            text="Phone"
                             class="sapUiTinyMarginTop"
                             width="100px"
                         />
-                        <Label
-                            id="_IDGensLabel9"
-                            text=":"
-                            class="sapUiTinyMarginTop"
-                            width="20px"
-                        />
                         <Input
-                            id="_IDGenInpust4"
-                            placeholder="Enter E-mail"
-                            value="{UserModel>/mailID}"
+                            id="idSignupPhoneInput"
+                            placeholder="Phone"
                         />
                     </HBox>
-                    <HBox id="_IDGeneHBosx5">
+                    <HBox id="idSignupHBox4">
                         <Label
-                            id="_IDGenseLabel8"
-                            text="Phone Number"
-                            class="sapUiTinyMarginTop"
-                            width="100px"
-                        />
-                        <Label
-                            id="_IDGensLefabel9"
-                            text=":"
-                            class="sapUiTinyMarginTop"
-                            width="20px"
-                        />
-                        <Input
-                            id="_IDGenInpuseft4"
-                            placeholder="Enter phone number"
-                            value="{UserModel>/phoneNo}"
-                            liveChange="onAfterNumberEnter"
-                        />
-                        <Button
-                            id="idOTPBtn"
-                            class="sapUiSmallMarginBegin"
-                            type="Emphasized"
-                            text="Get OTP"
-                            press="onGetOTPPress"
-                            enabled="false"
-                        />
-                    </HBox>
-                    <HBox
-                        id="_IDGenregeHBosx5"
-                        visible="false"
-                    >
-                        <Label
-                            id="_IDGensfgeLabel8"
-                            text=""
-                            class="sapUiTinyMarginTop"
-                            width="100px"
-                        />
-                        <Label
-                            id="_IDGensrgLefabel9"
-                            text=" "
-                            class="sapUiTinyMarginTop"
-                            width="20px"
-                        />
-                        <Input
-                            id="_IDGenInrfgpuseft4"
-                            placeholder="Enter OTP"
-                            value=""
-                        />
-                        <Button
-                            id="idOTPBfdtn"
-                            class="sapUiSmallMarginBegin"
-                            type="Emphasized"
-                            text="Validate"
-                            press="onValidateOTP"
-                        />
-                    </HBox>
-                    <HBox id="_IDGenHBoxs6">
-                        <Label
-                            id="_IDGenLsabel10"
+                            id="idSignupPasswordLabel"
                             text="Password"
                             class="sapUiTinyMarginTop"
                             width="100px"
                         />
-                        <Label
-                            id="_IDGenLsabel11"
-                            text=":"
-                            class="sapUiTinyMarginTop"
-                            width="20px"
-                        />
                         <Input
-                            id="_IDGenInputs5"
-                            placeholder="Enter password"
-                            value="{UserModel>/password}"
-                            type="Password"
+                            id="idSignupPasswordInput"
+                            placeholder="Password"
                         />
                     </HBox>
-                    <HBox id="_IDGenHBosx7">
+                    <HBox id="idSignupHBox5">
                         <Label
-                            id="_IDGensLabel12"
+                            id="idSignupConfirmPasswordLabel"
                             text="Confirm Password"
                             class="sapUiTinyMarginTop"
                             width="100px"
                         />
-                        <Label
-                            id="_IDGensLabel13"
-                            text=":"
-                            class="sapUiTinyMarginTop"
-                            width="20px"
-                        />
+
                         <Input
-                            id="_IDGenInpust6"
-                            placeholder="Confirm Password"
-                            type="Password"
+                            id="idSignupConfirmPasswordInput"
+                            placeholder="Confirm Pwd"
                         />
                     </HBox>
                     <Button
@@ -201,26 +111,8 @@
                         type="Emphasized"
                         width="90%"
                         text="Sign Up"
-                        enabled="true"
-                        press="onSignUpPress"
+                        press="onPressSignUpCreate"
                     />
-                    <!-- <HBox justifyContent="SpaceBetween">
-           
-                                    <CheckBox
-                                        id="_IDGenCheckBox"
-                                        text="Auto Save"
-                                        select="onSelectCheckBox"
-                                    />
-                                  
-                    
-                        <Link
-                            id="IDchangePassword"
-                            text="Change Password"
-                      
-                            press="onChangePasswordBtn"
-                        />
-                       
-                    </HBox> -->
                 </VBox>
             </form:SimpleForm>
         </content>

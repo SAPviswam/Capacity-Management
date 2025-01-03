@@ -5,92 +5,80 @@
     xmlns="sap.m"
 >
     <Dialog
-        id="idconnectsapdialogbox_CS1"
+        id="idLoginDialog"
         resizable="false"
         draggable="false"
-        title="Login to your account"
+        title="User Login"
         class="sapMPopover sapMIBar sapMHeader-CTX"
         beginButton="True"
     >
         <beginButton>
             <Button
-                id="_IDGenButton111"
+                id="idLoginCancleBtn"
                 text="Cancel"
-                press="oncancelbtn"
+                press="onPressCancelLoginBtn"
             />
         </beginButton>
         <content>
             <form:SimpleForm
-                id="idc1onnecttosapDetailsForm_CS"
+                id="idLoginform"
                 editable="true"
                 layout="ResponsiveGridLayout"
                 
             >
                 <VBox
-                    id="_IDGenVBox22"
+                    id="idLoginVBox1"
                     class="loginFragmentVbox"
                     width="100%"
                 >
-                    <HBox id="_IDGenHBox21">
+                    <HBox id="idLoginHBox1">
                         <Label
-                            id="_IDGenLabel221"
+                            id="idLoginUserNameLabel"
                             class="sapUiTinyMarginTop"
-                            text="User Name"
+                            text="User Name : "
                             width="100px"
                         />
-                        <Label
-                            id="_IDGenLabel122"
-                            class="sapUiTinyMarginTop"
-                            text=":"
-                            width="20px"
-                        />
                         <Input
-                            id="_IDGenInput11"
-                            placeholder="User ID"
+                            id="idLoginUserNameInput"
+                            placeholder="Username"
                         />
                     </HBox>
-                    <HBox id="_IDGenHBox122">
+                    <HBox id="idLoginHBox2">
                         <Label
-                            id="_IDGenLabe22l2"
-                            text="Password"
+                            id="idLoginUserPasswordLabel"
+                            text="Password :"
                             class="sapUiTinyMarginTop"
                             width="100px"
                         />
-                        <Label
-                            id="_IDGenLabe22l3"
-                            text=":"
-                            class="sapUiTinyMarginTop"
-                            width="20px"
-                        />
+
                         <Input
-                            id="_IDGenInput221"
-                            type="Password"
-                            placeholder="Password"
+                            id="idLoginUserPasswordInput"
+                            placeholder="password"
                         />
                     </HBox>
 
                     <Button
-                        id="_IDGenButt22n2"
+                        id="idLoginBtn"
                         class="sapUiSmallMarginTop"
                         type="Emphasized"
                         width="90%"
                         text="Login"
-                        press="onLoginBtnPressInLoginDialog"
+                        press="onPressLogin"
                     />
 
                     <HBox
-                        id="_IDGenHBo33x2"
+                        id="idLoginHBox3"
                         justifyContent="SpaceBetween"
                         width="90%"
                     >
                         <CheckBox
-                            id="_IDGenChe22ckBox"
+                            id="idLoginAutoSave"
                             text="Auto Save"
                             select="onSelectCheckBox"
                         />
 
                         <Link
-                            id="IDchan22gePassword"
+                            id="idLoginChangePassword"
                             text="Change Password"
                             press="onChangePasswordBtn"
                         />

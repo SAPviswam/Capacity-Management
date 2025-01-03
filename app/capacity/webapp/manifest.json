@@ -23,14 +23,6 @@
           "annotations": [],
           "odataVersion": "4.0"
         }
-      },
-      "mainServiceV2": {
-        "uri": "/odata/v2/CapSRV/",
-        "type": "OData",
-        "settings": {
-          "annotations": [],
-          "odataVersion": "2.0"
-        }
       }
     },
     "crossNavigation": {
@@ -91,16 +83,6 @@
           "autoExpandSelect": true,
           "earlyRequests": true
         }
-      },
-      "ModelV2": {
-        "dataSource": "mainServiceV2",
-        "preload": true,
-        "settings": {
-          "operationMode": "Server",
-          "autoExpandSelect": true,
-          "earlyRequests": true,
-          "defaultBindingMode": "OneWay"
-        }
       }
     },
     "resources": {
@@ -129,10 +111,10 @@
           ]
         },
         {
-          "name": "RouteMainPage",
-          "pattern": "RouteMainPage",
+          "name": "InitialPage",
+          "pattern": "InitialPage",
           "target": [
-            "TargetMainPage"
+            "TargetInitialPage"
           ]
         }
       ],
@@ -140,12 +122,12 @@
         "TargetHome": {
           "id": "Home",
           "name": "Home"
-        },
-        "TargetMainPage": {
-          "id": "MainPage",
-          "name": "MainPage"
         }
-      }
+      },
+      "TargetInitialPage": {
+          "id": "InitialPage",
+          "name": "InitialPage"
+        }
     },
     "rootView": {
       "viewName": "com.app.capacity.view.App",

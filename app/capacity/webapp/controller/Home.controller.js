@@ -1,11 +1,9 @@
 sap.ui.define([
     "./BaseController",
     "sap/m/MessageToast",
-    "sap/m/MessageBox",
-    "sap/ui/core/UIComponent",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/core/UIComponent"
 ],
-    function (Controller, MessageToast, MessageBox, UIComponent, JSONModel) {
+    function (Controller, MessageToast, UIComponent) {
         "use strict";
 
         return Controller.extend("com.app.capacity.controller.Home", {
@@ -102,26 +100,27 @@ sap.ui.define([
                     this.oLoginDialog = await this.loadFragment("login");
                 }
                 this.oLoginDialog.open();
-
             },
-            oncancelbtn: function () {
+            //*********************************Login Button in Home Page End *********************************/
+            //*********************************Login Form Cancel Button in login Fragment Start *********************************/
+            onPressCancelLoginBtn: function () {
                 if (this.oLoginDialog.isOpen()) {
                     this.oLoginDialog.close();
                 }
             },
-            onSignup: async function () {
+            //*********************************Login Form Cancel Button in login Fragment End *********************************/
+            //*********************************SignUp Button in Home Page Start *********************************/
+            onPressSignup: async function () {
                 if (!this.oSignUpDialog) {
                     this.oSignUpDialog = await this.loadFragment("SignUp");
                 }
-
                 this.oSignUpDialog.open();
-
             },
-            onCancelPressInSignUp: function () {
+            //*********************************SignUp Button in Home Page End *********************************/
+            //*********************************SignUp Form Cancel Button in SignUp Fragment Start *********************************/
+            onPressCancelSignUp: function () {
                 if (this.oSignUpDialog.isOpen()) {
-                    this.getView().getModel("UserModel").setProperty("/", {})
                     this.oSignUpDialog.close();
-
                 }
             },
             onLoginBtnPressInLoginDialog: async function () {
