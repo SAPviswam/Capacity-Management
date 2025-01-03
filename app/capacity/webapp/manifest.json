@@ -23,6 +23,14 @@
           "annotations": [],
           "odataVersion": "4.0"
         }
+      },
+      "mainService2": {
+        "uri": "/odata/v2/CapSRV/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "2.0"
+        }
       }
     },
     "crossNavigation": {
@@ -83,6 +91,15 @@
           "autoExpandSelect": true,
           "earlyRequests": true
         }
+      },
+      "ModelV2": {
+        "dataSource": "mainService2",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
       }
     },
     "resources": {
@@ -111,10 +128,10 @@
           ]
         },
         {
-          "name": "InitialPage",
-          "pattern": "InitialPage",
+          "name": "MainPage",
+          "pattern": "MainPage",
           "target": [
-            "TargetInitialPage"
+            "TargetMainPage"
           ]
         }
       ],
@@ -124,9 +141,9 @@
           "name": "Home"
         }
       },
-      "TargetInitialPage": {
-          "id": "InitialPage",
-          "name": "InitialPage"
+      "TargetMainPage": {
+          "id": "MainPage",
+          "name": "MainPage"
         }
     },
     "rootView": {

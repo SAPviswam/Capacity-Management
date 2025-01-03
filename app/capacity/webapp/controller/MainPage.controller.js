@@ -1,9 +1,10 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller"
-  ], (BaseController) => {
+  ], 
+  function (Controller) {
     "use strict";
   
-    return BaseController.extend("com.app.capacity.controller.InitialPage", {
+    return Controller.extend("com.app.capacity.controller.MainPage", {
         onInit() {
         }
     });

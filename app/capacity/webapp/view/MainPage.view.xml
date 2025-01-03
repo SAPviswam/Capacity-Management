@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="com.sap.capacity.controller.InitialPage"
+    controllerName="com.app.capacity.controller.MainPage"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:tnt="sap.tnt"

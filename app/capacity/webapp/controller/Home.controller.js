@@ -1,18 +1,16 @@
 sap.ui.define([
     "./BaseController",
     "sap/m/MessageToast",
-    "sap/ui/core/UIComponent"
+    "sap/m/MessageBox",
+    "sap/ui/core/UIComponent",
+    "sap/ui/model/json/JSONModel"
 ],
-    function (Controller, MessageToast, UIComponent) {
+    function (BaseController, MessageToast, MessageBox, UIComponent, JSONModel) {
         "use strict";
 
-        return Controller.extend("com.app.capacity.controller.Home", {
-             onInit:async function () {
 
-                // Loading Twilio Details
-                const oConfigModel = this.getOwnerComponent().getModel("config");
-                this.oTwilioConfig = oConfigModel.getProperty("/Twilio");
-
+        return BaseController.extend("com.app.capacity.controller.Home", {
+            async onInit() {
                 const oUserModel = new JSONModel({
                     userID: "",
                     fName: "",
@@ -28,33 +26,11 @@ sap.ui.define([
                 // Check credentials are saved
                 await this.checkAutoLogin()
 
-
+                const oConfigModel = this.getOwnerComponent().getModel("config");
+                this.oTwilioConfig = oConfigModel.getProperty("/Twilio");
+                this.oSMSConfig = oConfigModel.getProperty("/SMS");
 
             },
-            onAfterRendering: function () {
-                // This ensures the elements are rendered before we start the animation
-                var aTextElements = [
-                  this.byId("_IDGe33nText").getDomRef(),
-                  this.byId("_IDG44enText1").getDomRef(),
-                  this.byId("_IDGenTeeext2").getDomRef(),
-                  this.byId("_IDGenTeeext3").getDomRef(),
-                  this.byId("_IDGenTeeext4").getDomRef()
-                ];
-         
-                // Ensure that each element exists before applying GSAP animation
-                if (aTextElements.every(function (el) { return el !== null; })) {
-                  gsap.from(aTextElements, {
-                    duration: 1.5,
-                    opacity: 0,
-                    y: 30,
-                    stagger: 0.5,
-                   
-                   
-                    ease: "elastic"
-                  });
-                }
-              },
-     
             checkAutoLogin: async function () {
 
                 const savedData = localStorage.getItem('loginData');
@@ -84,7 +60,7 @@ sap.ui.define([
 
                             // Navigate to the Initial Screen
                             const oRouter = this.getOwnerComponent().getRouter();
-                            oRouter.navTo("RouteMainPage");
+                            oRouter.navTo("MainPage");
                         }
                     } catch (error) {
                         sap.m.MessageToast.show("Oops something went wrong please refresh the page");
@@ -100,27 +76,26 @@ sap.ui.define([
                     this.oLoginDialog = await this.loadFragment("login");
                 }
                 this.oLoginDialog.open();
+
             },
-            //*********************************Login Button in Home Page End *********************************/
-            //*********************************Login Form Cancel Button in login Fragment Start *********************************/
-            onPressCancelLoginBtn: function () {
+            oncancelbtn: function () {
                 if (this.oLoginDialog.isOpen()) {
                     this.oLoginDialog.close();
                 }
             },
-            //*********************************Login Form Cancel Button in login Fragment End *********************************/
-            //*********************************SignUp Button in Home Page Start *********************************/
-            onPressSignup: async function () {
+            onSignup: async function () {
                 if (!this.oSignUpDialog) {
                     this.oSignUpDialog = await this.loadFragment("SignUp");
                 }
+
                 this.oSignUpDialog.open();
+
             },
-            //*********************************SignUp Button in Home Page End *********************************/
-            //*********************************SignUp Form Cancel Button in SignUp Fragment Start *********************************/
-            onPressCancelSignUp: function () {
+            onCancelPressInSignUp: function () {
                 if (this.oSignUpDialog.isOpen()) {
+                    this.getView().getModel("UserModel").setProperty("/", {})
                     this.oSignUpDialog.close();
+
                 }
             },
             onLoginBtnPressInLoginDialog: async function () {
@@ -218,7 +193,7 @@ sap.ui.define([
 
                 // Navigate to the Initial Screen
                 const oRouter = this.getOwnerComponent().getRouter();
-                oRouter.navTo("RouteMainPage");
+                oRouter.navTo("MainPage");
                 // window.location.reload(true);
 
             },
@@ -280,9 +255,9 @@ sap.ui.define([
 
                 // Prepare the Twilio API details
                 var formattedPhoneNumber = "+91" + sPhnNumber; // Assuming country code for India
-                const accountSid = this.oTwilioConfig.AccountSID;  
-                const authToken = this.oTwilioConfig.AuthToken; 
-                const serviceSid = this.oTwilioConfig.ServiceID;   
+                const accountSid = this.oTwilioConfig.AccountSID;  // Constant.oAccountSID;
+                const authToken = this.oTwilioConfig.AuthToken;   // Constant.oAuthToken;
+                const serviceSid = this.oTwilioConfig.ServiceID;   // Constant.oServiceID;
                 const url = `https://verify.twilio.com/v2/Services/${serviceSid}/Verifications`;
 
                 // Prepare the data for the request
@@ -356,9 +331,9 @@ sap.ui.define([
                 }
 
                 // Prepare the Twilio Verify Check API details
-                const accountSid = this.oTwilioConfig.AccountSID;  
-                const authToken = this.oTwilioConfig.AUTHToken;   
-                const serviceSid = this.oTwilioConfig.serviceID; 
+                const accountSid = this.oTwilioConfig.AccountSID,  // Constant.oAccountSID;
+                    authToken = this.oTwilioConfig.AuthToken,   // Constant.oAuthToken;
+                    serviceSid = this.oTwilioConfig.ServiceID,   // Constant.oServiceID;
                     url = `https://verify.twilio.com/v2/Services/${serviceSid}/VerificationCheck`,
                     payload = {
                         To: this._storedPhoneNumber,
@@ -407,7 +382,6 @@ sap.ui.define([
             },
 
             onSignUpPress: async function () {
-                debugger
 
                 const oPayload = this.getView().getModel("UserModel").getProperty("/"),
                     sPath = "/Users",
@@ -492,10 +466,11 @@ sap.ui.define([
                     oUserView.byId("_IDGenInpust6").setValue("")
                     oUserView.byId("_IDGenInpuseft4").setEditable(true);
                     oUserView.byId("_IDGenButtson4").setEnabled(false)
+
                     // Send the generated UserID to User
                     // NOTE : Give credentilas here to send User ID to Registerd Mobile number 
-                    const accountSid = "AC5a7f5b49547b4f26bc2e12ed6ed1c1bb",
-                        authToken = "bbb31519d9c849799c359f90b4e964d9",
+                    const accountSid = this.oSMSConfig.AccountSID,
+                        authToken = this.oSMSConfig.AuthToken,
                         url = `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
                         fromNumber = '+12315089152';
                     $.ajax({
@@ -508,10 +483,10 @@ sap.ui.define([
                         data: {
                             To: `+91${oPayload.phoneNo}`,
                             From: fromNumber,
-                            Body: `Hi ${oPayload.fName} your login ID for Capacity Management Application is ${oPayload.userID} don't share with anyone. \nThank You,\nArtihcus Global.`
+                            Body: `Hi ${oPayload.Firstname} your login ID for Capacity Management Application is ${oPayload.userID} don't share with anyone. \nThank You,\nArtihcus Global.`
                         },
                         success: function (data) {
-                            sap.m.MessageBox.show('Login ID will be sent via SMS to your mobile number');
+                            sap.m.MessageBox.information('Login ID will be sent via SMS to your mobile number');
                         },
                         error: function (error) {
                             sap.m.MessageBox.information(`Failed to send SMS.\nyour user ID is ${oPayload.userID} please note this for future use`);
@@ -526,9 +501,5 @@ sap.ui.define([
                     console.error("Failed to create record." + error);
                 }
             },
-            onNExt:function(){
-                const oRouter = this.getOwnerComponent().getRouter();
-                oRouter.navTo("RouteMainPage");
-            }
         });
     });
