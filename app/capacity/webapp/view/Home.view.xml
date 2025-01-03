@@ -24,7 +24,6 @@
                             class="sapUiTinyMarginBegin"
                             src="https://artihcus.com/assets/img/AG-logo.png"
                         />
-
                         <HBox
                             id="_IDGenH22Box1"
                             class="sapUiTinyMarginEnd"
@@ -43,7 +42,6 @@
                             />
                         </HBox>
                     </HBox>
-
                     <HBox
                         id="_IDGen33HBox2"
                         class="EntireHbox"
@@ -93,7 +91,7 @@
                         text="&quot;Let's create something amazing together.&quot;"
                         class="quoteText"
                     />
-                    <!-- <Text text="Together.&quot;" class="quoteText"/> -->
+                    <!--  <Text text="Together.&quot;" class="quoteText"/>  -->
                 </content>
             </Page>
         </pages>

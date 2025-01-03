@@ -14,7 +14,7 @@
     font-size: 2rem;
     color: #ff8c00;
     font-weight: Bold;
-    margin: -2 0% 0% 2%!important;
+    margin: -2 0% 0% 2% !important;
 }
 
 .loginSignup {
@@ -40,7 +40,7 @@
 
 /* .backgroundColour {
     background-color: rgb(236, 242, 242);
-
+ 
 } */
 
 
@@ -50,7 +50,7 @@
 }
 
 .TitleMain {
-    color:cadetblue;
+    color: cadetblue;
     font-weight: bold;
 
 }
@@ -103,12 +103,13 @@
     -webkit-mask-size: 100% 100%;
     mask-size: 100% 100%;
 }
+
 /* upload */
 .line-md--upload-outline {
     display: inline-block;
     width: 1em;
     height: 1em;
-    
+
     --svg: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cg%20fill='none'%20stroke='%23000'%20stroke-linecap='round'%20stroke-linejoin='round'%20stroke-width='2'%3E%3Cpath%20d='M12%204v6h2l-4%204-4-4h2V4'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
     background-color: currentColor;
     -webkit-mask-image: var(--svg);
@@ -128,127 +129,157 @@
 
 .iconTabBar {
     background-image: url("..Image/truckInSimulate.png");
-    background-size:auto; /* Adjust as needed */
-background-repeat: no-repeat;
-background-position: center center; /* Adjust as needed */
-width: 125%;
-height: 125%;
-} 
+    background-size: auto;
+    /* Adjust as needed */
+    background-repeat: no-repeat;
+    background-position: center center;
+    /* Adjust as needed */
+    width: 125%;
+    height: 125%;
+}
 
 /* icon */
-.product{
-padding-right: 70%;
-background-image: url("../Image/product.gif"); /* Assign or Content */
-background-size:auto; /* Adjust as needed */
-background-repeat: no-repeat;
-background-position: center center; /* Adjust as needed */
-width: 125%;
-height: 125%;
+.product {
+    padding-right: 70%;
+    background-image: url("../Image/product.gif");
+    /* Assign or Content */
+    background-size: auto;
+    /* Adjust as needed */
+    background-repeat: no-repeat;
+    background-position: center center;
+    /* Adjust as needed */
+    width: 125%;
+    height: 125%;
 }
+
 /* begin of to make the icon tab bar with no border and gif applicable  */
 .sapMITBFilterIcon {
     width: 3rem;
     height: 3rem;
-     border: 2px solid white;
+    border: 2px solid white;
 }
 
 .sapMITBSelected .sapMITBFilterDefault {
-    background:white;
+    background: white;
     color: #fff;
 }
 
 .sapMITBFilterNegative:not(.sapMITBTextOnly) {
-   
-    border-color: #fff; 
+
+    border-color: #fff;
 }
 
-.backgroundColour{
-    background-image: linear-gradient(135deg, #d1f0f4, #f1e6fa,#fff5ea, #fff2e4) !important;
+.backgroundColour {
+    background-image: linear-gradient(135deg, #d1f0f4, #f1e6fa, #fff5ea, #fff2e4) !important;
 
 }
-.sapMITH{
 
-    background-image: linear-gradient(135deg, #d1f0f4, #f1e6fa,#fff5ea,#fff5ea, #fff2e4);
-    
-    }
-.sapMITBFilter .sapMITBFilterIcon, .sapMITBFilter .sapMITBInlineIcon {
-        cursor:pointer;
-    }
-    .sapMITBItem .sapMITBFilterIcon {
+.sapMITH {
 
-        overflow:hidden;
-       
-       }
+    background-image: linear-gradient(135deg, #d1f0f4, #f1e6fa, #fff5ea, #fff5ea, #fff2e4);
 
-       .sapMITBFilterIcon {
- 
-        border:none;
-    }
+}
+
+.sapMITBFilter .sapMITBFilterIcon,
+.sapMITBFilter .sapMITBInlineIcon {
+    cursor: pointer;
+}
+
+.sapMITBItem .sapMITBFilterIcon {
+
+    overflow: hidden;
+
+}
+
+.sapMITBFilterIcon {
+
+    border: none;
+}
+
 /*end of classes to make the icon tab bar with no border and gif applicable  */
 /* ------------------------------------------------------------------------------------------------ */
 .overlayContainer {
-    position: relative;   /* Relative positioning for stacking content */
-    display: inline-block; /* Ensures the image and overlay stack together */
-    width: 100%;          /* Ensure it takes up full width */
-    height: 100%;         /* Ensure it takes up full height */
+    position: relative;
+    /* Relative positioning for stacking content */
+    display: inline-block;
+    /* Ensures the image and overlay stack together */
+    width: 100%;
+    /* Ensure it takes up full width */
+    height: 100%;
+    /* Ensure it takes up full height */
 }
 
 .overlayContent {
     position: absolute;
-    top: 20px;            /* Adjust the top position for the overlay elements */
-    left: 20px;           /* Adjust left position if needed */
-    z-index: 10;          /* Ensures overlay content is on top of the image */
+    top: 20px;
+    /* Adjust the top position for the overlay elements */
+    left: 20px;
+    /* Adjust left position if needed */
+    z-index: 10;
+    /* Ensures overlay content is on top of the image */
     padding: 10px;
     border-radius: 5px;
 }
+
 /* background-color: rgba(255, 255, 255, 0.7) */
 
 .overlayLabel {
     font-size: 16px;
     font-weight: bold;
-    color:black;
+    color: black;
 }
 
 .overlayInput {
     margin-top: 10px;
-    width: 200px; /* Adjust width as needed */
+    width: 200px;
+    /* Adjust width as needed */
 }
 
 /* Centered Image overlayed on the background */
 .centeredOverlayImage {
     position: absolute;
-    top: 35%;          /* Position the image vertically in the center */
-    left: 93%;         /* Position the image horizontally in the center */
-    transform: translate(-330%, -330%);  /* Offset by 50% of the image width/height to center it */
-    z-index: 11;       /* Ensure it's on top of the background and other content */
-    width: 100px;      /* Set the desired width for the image */
-    height: auto;      /* Maintain the aspect ratio of the image */
+    top: 35%;
+    /* Position the image vertically in the center */
+    left: 93%;
+    /* Position the image horizontally in the center */
+    transform: translate(-330%, -330%);
+    /* Offset by 50% of the image width/height to center it */
+    z-index: 11;
+    /* Ensure it's on top of the background and other content */
+    width: 100px;
+    /* Set the desired width for the image */
+    height: auto;
+    /* Maintain the aspect ratio of the image */
 }
+
 /* --------------- ----------------------------------------------------*/
 
-.ProductTextInAddProduct{
+.ProductTextInAddProduct {
     font-size: 16px;
     font-weight: bold;
-    color:mediumvioletred;
+    color: mediumvioletred;
 }
 
-.EmptyHBoxforgap{
+.EmptyHBoxforgap {
     margin-left: 10rem;
 }
-.requiredtrucktabhead{
+
+.requiredtrucktabhead {
     color: rgb(248, 119, 7);
 }
+
 .HeaderToolBar {
     background-color: gold !important;
     border-radius: 0.5rem !important;
 }
-.addProductSaveButton{
-    
+
+.addProductSaveButton {
+
     margin-left: 8rem !important;
     width: 10.5rem;
 }
 
-.addingcolor{
+.addingcolor {
     font-weight: bolder;
     font-size: medium;
 }
@@ -256,46 +287,55 @@ height: 125%;
 /* start of required truck CSS */
 .sapMIBar.sapMHeader-CTX {
 
-    background-image: linear-gradient(135deg, #d1f0f4, #f1e6fa,#fff5ea, #fff2e4) !important;
+    background-image: linear-gradient(135deg, #d1f0f4, #f1e6fa, #fff5ea, #fff2e4) !important;
     filter: none;
-  
+
 }
+
 /* End of required truck CSS */
 
-.textSimulate{
-    font-weight:Bold;
-    color:black;
+.textSimulate {
+    font-weight: Bold;
+    color: black;
 }
-.tileLayout{
+
+.tileLayout {
     margin-left: 50%;
 }
 
 
 /* begin of stack fragment CSS */
-.widthDialog{
-width:auto;
+.widthDialog {
+    width: auto;
 }
 
 .sapMPopover .sapUiRespGrid {
     width: 110%;
 }
+
 /* end of stack fragment CSS */
 
 /* Simulater Css*/
 #threejsCanvas {
-    width: 1500px;    /* Custom width */
-    height: 800px;    /* Custom height */
-    aspect-ratio: auto; /* Set aspect ratio */
+    width: 1500px;
+    /* Custom width */
+    height: 800px;
+    /* Custom height */
+    aspect-ratio: auto;
+    /* Set aspect ratio */
 }
+
 /* Wizard class begin*/
-.wizard{
+.wizard {
     margin-right: 20%;
 }
+
 /* Wizard class End*/
 
 /* change password class begin */
-.sapMHeader-CTX1{
-font-size:medium;
-font-weight: bold;
+.sapMHeader-CTX1 {
+    font-size: medium;
+    font-weight: bold;
 }
+
 /* change password class End*/

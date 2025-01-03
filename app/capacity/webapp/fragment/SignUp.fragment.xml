@@ -60,7 +60,7 @@
                             value="{UserModel>/fName}"
                         />
                     </HBox>
-
+ 
                     <HBox id="_IDGenHBoxdd4">
                         <Label
                             id="_IDGenddLabel6"
@@ -208,12 +208,12 @@
                                         text="Auto Save"
                                         select="onSelectCheckBox"
                                     />
-                                  
-                    
+                                 
+                   
                         <Link
                             id="IDchangePassword"
                             text="Change Password"
-                      
+                     
                             press="onChangePasswordBtn"
                         />
                        
@@ -223,3 +223,4 @@
         </content>
     </Dialog>
 </core:FragmentDefinition>
+ 

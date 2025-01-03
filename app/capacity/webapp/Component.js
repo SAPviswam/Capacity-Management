@@ -18,10 +18,10 @@ sap.ui.define([
 
             // set the device model
             this.setModel(models.createDeviceModel(), "device");
-                 // Load config.json
-                 const oConfigModel = new sap.ui.model.json.JSONModel();
-                 oConfigModel.loadData("utils/config.json");
-                 this.setModel(oConfigModel, "config");
+            // Load config.json
+            const oConfigModel = new sap.ui.model.json.JSONModel();
+            oConfigModel.loadData("utils/config.json");
+            this.setModel(oConfigModel, "config");
 
             // enable routing
             this.getRouter().initialize();

@@ -24,7 +24,7 @@
                 id="idc1onnecttosapDetailsForm_CS"
                 editable="true"
                 layout="ResponsiveGridLayout"
-                
+               
             >
                 <VBox
                     id="_IDGenVBox22"
@@ -68,7 +68,7 @@
                             placeholder="Password"
                         />
                     </HBox>
-
+ 
                     <Button
                         id="_IDGenButt22n2"
                         class="sapUiSmallMarginTop"
@@ -77,7 +77,7 @@
                         text="Login"
                         press="onLoginBtnPressInLoginDialog"
                     />
-
+ 
                     <HBox
                         id="_IDGenHBo33x2"
                         justifyContent="SpaceBetween"
@@ -88,7 +88,7 @@
                             text="Auto Save"
                             select="onSelectCheckBox"
                         />
-
+ 
                         <Link
                             id="IDchan22gePassword"
                             text="Change Password"
@@ -100,3 +100,4 @@
         </content>
     </Dialog>
 </core:FragmentDefinition>
+ 

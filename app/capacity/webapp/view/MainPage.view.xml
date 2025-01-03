@@ -16,7 +16,7 @@
                 />
             </tnt:ToolHeader>
         </tnt:header>
-        <!-- side content -->
+        <!--  side content  -->
         <tnt:sideContent>
             <tnt:SideNavigation
                 class="sa"
@@ -33,7 +33,6 @@
                         text="Home"
                         icon="sap-icon://home"
                     />
- 
                     <tnt:NavigationListItem
                         id="idnavlistitem"
                         key="MasterRecords"
@@ -52,7 +51,7 @@
                 </tnt:NavigationList>
             </tnt:SideNavigation>
         </tnt:sideContent>
-        <!-- Main Contents -->
+        <!--  Main Contents  -->
         <tnt:mainContents>
             <NavContainer
                 id="idNavContainer"
@@ -73,8 +72,8 @@
                             text="Welcome To Home Page"
                         />
                     </ScrollContainer>
-                    <!-- Master Details -->
-                      <ScrollContainer
+                    <!--  Master Details  -->
+                    <ScrollContainer
                         id="idScroll2"
                         horizontal="false"
                         vertical="true"
@@ -92,5 +91,3 @@
         </tnt:mainContents>
     </tnt:ToolPage>
 </mvc:View>
- 
- 

@@ -139,12 +139,12 @@
         "TargetHome": {
           "id": "Home",
           "name": "Home"
-        }
-      },
-      "TargetMainPage": {
-          "id": "MainPage",
-          "name": "MainPage"
-        }
+        },
+        "TargetMainPage": {
+        "id": "MainPage",
+        "name": "MainPage"
+      }
+      }
     },
     "rootView": {
       "viewName": "com.app.capacity.view.App",
