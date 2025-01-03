@@ -126,8 +126,8 @@
                                     />
                                     <Link
                                         id="IDchan22gePassword"
-                                        text="Change Password"
-                                        press="onChangePasswordBtn"
+                                        text="Forgot Password"
+                                        press="onForgotPasswordPress"
                                     />
                                 </VBox>
                             </VBox>
