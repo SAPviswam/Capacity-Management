@@ -21,7 +21,7 @@ define entity Users : cuid {
     mailID       : String;
     password     : String;
     profileImage : String;
-    expireDate : String;
+    expireDate   : String;
 }
 
 @assert.unique: {model: [model]
@@ -65,7 +65,7 @@ define entity TruckTypes {
         volume      : String;
         tvuom       : String;
         truckWeight : String;
-        c    : String;
+        capacity    : String;
         tuom        : String;
 }
 
@@ -78,7 +78,7 @@ define entity SelectedProduct {
 
 define entity History : managed {
     key ID        : UUID;
-        productNo : Association to SelectedProduct;
+        productNo : Association to many SelectedProduct;
         truckType : Association to TruckTypes;
 
 }
