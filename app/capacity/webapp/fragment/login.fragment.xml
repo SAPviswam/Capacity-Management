@@ -45,7 +45,7 @@
                             width="20px"
                         />
                         <Input
-                            id="_IDGenInput11"
+                            id="_IDGenInput11_"
                             placeholder="User ID"
                         />
                     </HBox>
@@ -63,14 +63,14 @@
                             width="20px"
                         />
                         <Input
-                            id="_IDGenInput221"
+                            id="_IDGenInput221_"
                             type="Password"
                             placeholder="Password"
                         />
                     </HBox>
  
                     <Button
-                        id="_IDGenButt22n2"
+                        id="_IDGenButt22n2_"
                         class="sapUiSmallMarginTop"
                         type="Emphasized"
                         width="90%"
@@ -79,12 +79,12 @@
                     />
  
                     <HBox
-                        id="_IDGenHBo33x2"
+                        id="_IDGenHBo33x2_"
                         justifyContent="SpaceBetween"
                         width="90%"
                     >
                         <CheckBox
-                            id="_IDGenChe22ckBox"
+                            id="_IDGenChe22ckBox_"
                             text="Auto Save"
                             select="onSelectCheckBox"
                         />

@@ -78,6 +78,61 @@
                                 />
                             </VBox>
                         </HBox>
+                        <HBox
+                            id="_IDGen33HBox28"
+                            justifyContent="Center"
+                            alignItems="Center"
+                            class="centered-up"
+                        >
+                            <!-- Centered Content Block -->
+                            <VBox
+                                id="_IDGenHBox"
+                                width="auto"
+                                height="auto"
+                                class="centered-up"
+                            >
+                                <!-- User:  sap-icon://person-placeholder 
+                                 Password: sap-icon://primary-key -->
+                                <Input
+                                    id="_IDGenInput11"
+                                    placeholder="User ID"
+                                />
+                                <Input
+                                    id="_IDGenInput221"
+                                    type="Password"
+                                    placeholder="Password"
+                                />
+                                <HBox id="_IDGenHBox1">
+                                    <Button
+                                        id="_IDGenButt22n2"
+                                        type="Transparent"
+                                        text="Login"
+                                        press="onLoginBtnPressInLoginDialog"
+                                        class="sapUiMediumMarginEnd"
+                                    />
+                                    <Button
+                                        id="_IDG34enButton0"
+                                        text="{i18n>SignupButton}"
+                                        type="Transparent"
+                                        press="onSignup"
+                                        class="sapUiMediumMarginBegin"
+                                    />
+                                </HBox>
+                                <VBox id="_IDGenHBo33x2">
+                                    <CheckBox
+                                        id="_IDGenChe22ckBox"
+                                        text="Auto Save"
+                                        select="onSelectCheckBox"
+                                    />
+                                    <Link
+                                        id="IDchan22gePassword"
+                                        text="Change Password"
+                                        press="onChangePasswordBtn"
+                                    />
+                                </VBox>
+                            </VBox>
+                        </HBox>
+
                         <HBox id="_IDGenHBeeox4">
                             <Image
                                 id="idImage"
