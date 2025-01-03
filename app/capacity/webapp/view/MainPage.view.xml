@@ -132,9 +132,9 @@
                                     class="backgroundColour"
                                 >
                                 <VBox id="idHbox" width="82%">
+                                <!-- Smart Filters -->
                                     <smartfilterbar:SmartFilterBar
                                         id="idSmartFilters"
-                                         
                                         entitySet="Materials"
                                     >
                                         <smartfilterbar:controlConfiguration>
@@ -158,6 +158,7 @@
                                             />
                                         </smartfilterbar:controlConfiguration>
                                     </smartfilterbar:SmartFilterBar>
+                                    <!-- Smart Table -->
                                     <smarttable:SmartTable
                                         id="idSmartTable"
                                         header="Models Table"
@@ -170,7 +171,6 @@
                                         tableType="ResponsiveTable"
                                         smartFilterId="idSmartFilters"
                                         entitySet="Materials"
-                                        
                                     >
                                     <Table id="idMyTable" mode="MultiSelect"></Table>
                                     </smarttable:SmartTable>
@@ -192,6 +192,21 @@
                                     />
                                     
                                 </IconTabFilter>
+                                <!-- Conatiner Details -->
+                                  <IconTabFilter
+                                    id="IdpageScanning"
+                                    visible="true"
+                                    key="info"
+                                    icon="Image/TruckInIconTabBar.png"
+                                    interactionMode="Auto"
+                                    iconColor="Critical"
+                                    text="Container Details"
+                                    class="backgroundColour"
+                                >
+                                
+                                   
+                                </IconTabFilter>
+
                             </items>
                         </IconTabBar>
                     </ScrollContainer>
