@@ -53,7 +53,29 @@ sap.ui.define([
       }catch{
         MessageBox.error("Error Occurs!");
       }
-      
+      },
+      /**Truck type selection based on click display details */
+      onTruckTypeChange:function(oEvent){
+        let oSelectedItem = oEvent.getParameter('listItem'),
+        oContext = oSelectedItem.getBindingContext();
+      },
+      onContainerDelete:async function(){
+        let oSlectedItems = this.byId("idContianersTable").getSelectedItems();
+      const oModel = this.getView().getModel("ModelV2");
+      if(oSlectedItems.length<1)
+      {
+        return MessageBox.warning("Please Select atleast One Container");
+      }
+      try{
+        for(let Item of oSlectedItems){
+        let sPath = Item.getBindingContext().getPath();
+        await this.deleteData(oModel,sPath);
+        }
+        this.byId("idContianersTable").getBinding("items").refresh();
+        MessageToast.show("successfully Deleted")
+      }catch{
+        MessageBox.error("Error Occurs!");
+      }
       }
     });
   });

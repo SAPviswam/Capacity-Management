@@ -6,7 +6,7 @@
     xmlns:vk="sap.ui.vk"
     xmlns:smartform="sap.ui.comp.smartform"
     xmlns:layout="sap.ui.layout"
- xmlns:form="sap.ui.layout.form"
+    xmlns:form="sap.ui.layout.form"
     xmlns:core="sap.ui.core"
     height="100%"
     xmlns:filterBar="sap.fe.macros.filterBar"
@@ -74,7 +74,7 @@
                         text="Master Records"
                         icon="sap-icon://database"
                     />
-                   
+
                     <tnt:NavigationListItem
                         id="idnavSimulation"
                         key="SimulationCreation"
@@ -89,7 +89,7 @@
             <NavContainer
                 class="backgroundColour"
                 id="idNavContainer"
-                initialPage="idScroll2"
+                initialPage="idScrollConForMasterDetails"
             >
                 <pages>
                     <!-- Master Details -->
@@ -101,7 +101,6 @@
                         width="100%"
                         class="sapUiContentPadding backgroundColour"
                     >
-                        
                         <IconTabBar
                             expanded="true"
                             expandable="false"
@@ -164,21 +163,36 @@
                                             tableType="ResponsiveTable"
                                             smartFilterId="idSmartFiltersForModel"
                                             entitySet="Materials"
-                                        
                                         >
+                                            <smarttable:customToolbar>
+                                                <OverflowToolbar
+                                                    id="idOverFlowForProducts"
+                                                >
+                                                    <ToolbarSpacer
+                                                        id="idToolbarForProducts"
+                                                    />
+                                                    <Button
+                                                        id="idMaterialEditBtn"
+                                                        text="Edit"
+                                                        icon="sap-icon://edit"
+                                                        width="100px"
+                                                        type="Emphasized"
+                                                    />
+                                                    <Button
+                                                        id="idMaterialDeleteBtn"
+                                                        text="Delete"
+                                                        icon="sap-icon://delete"
+                                                        width="100px"
+                                                        type="Negative"
+                                                        press="onModelDelete"
+                                                    />
+                                                </OverflowToolbar>
+                                            </smarttable:customToolbar>
                                             <Table
                                                 id="idModelsTable"
                                                 mode="MultiSelect"
-                                            >
-                                            <headerToolbar>
-                                            <OverflowToolbar id="idOverFlowForProducts">
-                                            <ToolbarSpacer id="idToolbarForProducts">
-                                            </ToolbarSpacer>
-                                            <Button id="idMaterialEditBtn" text="Edit" icon="sap-icon://edit" width="100px"  type="Emphasized" />
-                                             <Button id="idMaterialDeleteBtn" text="Delete" icon="sap-icon://delete" width="100px"  type="Negative" press="onModelDelete"/>
-                                            </OverflowToolbar>
-                                            </headerToolbar>
-                                            </Table>
+                                                selectionChange="onModelChange"
+                                            />
                                         </smarttable:SmartTable>
                                     </VBox>
                                 </IconTabFilter>
@@ -188,7 +202,7 @@
                                     key="info"
                                     icon="sap-icon://add-product"
                                     interactionMode="Auto"
-                                   iconColor="Neutral"   
+                                    iconColor="Neutral"
                                     text="Add Product"
                                     class="backgroundColour"
                                 >
@@ -223,9 +237,7 @@
                                                     />
                                                 </HBox>
 
-                                                <HBox
-                                                    id="idHBoxForEAN"
-                                                >
+                                                <HBox id="idHBoxForEAN">
                                                     <Label
                                                         id="idLabelForEAN"
                                                         text="EAN:"
@@ -240,9 +252,7 @@
                                                         width="100%"
                                                     />
                                                 </HBox>
-                                                <HBox
-                                                    id="idHBoxForModelDesc"
-                                                >
+                                                <HBox id="idHBoxForModelDesc">
                                                     <Label
                                                         id="idLabelForModelDesc"
                                                         text="Description:"
@@ -259,9 +269,7 @@
                                                     />
                                                 </HBox>
 
-                                                <HBox
-                                                    id="idHBoxForModelCat"
-                                                >
+                                                <HBox id="idHBoxForModelCat">
                                                     <Label
                                                         id="idLablelForModelCat"
                                                         text="Material Category:"
@@ -277,9 +285,7 @@
                                                     />
                                                 </HBox>
 
-                                                <HBox
-                                                    id="idHBoxForModelLeng"
-                                                >
+                                                <HBox id="idHBoxForModelLeng">
                                                     <Label
                                                         id="idLableForModelLeng"
                                                         text="Length:"
@@ -294,9 +300,7 @@
                                                     />
                                                 </HBox>
 
-                                                <HBox
-                                                    id="idHBoxForModelWidth"
-                                                >
+                                                <HBox id="idHBoxForModelWidth">
                                                     <Label
                                                         id="idLableForModelWidth"
                                                         text="Width:"
@@ -313,9 +317,7 @@
                                                     />
                                                 </HBox>
 
-                                                <HBox
-                                                    id="idHBoxForModelHeight"
-                                                >
+                                                <HBox id="idHBoxForModelHeight">
                                                     <Label
                                                         id="idLabelForModelHeight"
                                                         text="Height:"
@@ -331,9 +333,7 @@
                                                     />
                                                 </HBox>
 
-                                                <HBox
-                                                    id="idHBoxForModelQuan"
-                                                >
+                                                <HBox id="idHBoxForModelQuan">
                                                     <Label
                                                         id="idLablelForModelQuan"
                                                         text="Quantity:"
@@ -350,9 +350,7 @@
                                                     />
                                                 </HBox>
 
-                                                <HBox
-                                                    id="idHBoxforModelUOM"
-                                                >
+                                                <HBox id="idHBoxforModelUOM">
                                                     <Label
                                                         id="idLablelForModelUOM"
                                                         text="UOM:"
@@ -383,9 +381,7 @@
                                                     </Select>
                                                 </HBox>
 
-                                                <HBox
-                                                    id="idHBoxForModelWeight"
-                                                >
+                                                <HBox id="idHBoxForModelWeight">
                                                     <Label
                                                         id="idLablForModelWeight"
                                                         text="Weight:"
@@ -399,7 +395,9 @@
                                                             placeholder="Enter Weight"
                                                             width="70px"
                                                         />
-                                                        <Select id="idSelectModelWeightUOM">
+                                                        <Select
+                                                            id="idSelectModelWeightUOM"
+                                                        >
                                                             <items>
                                                                 <core:Item
                                                                     id="idModelWeightUOM1"
@@ -431,10 +429,9 @@
                                                     type="Emphasized"
                                                     class="dialogButton_sapconnect addProductSaveButton"
                                                 />
-                                               
                                             </VBox>
                                         </form:SimpleForm>
-                                          </HBox>
+                                    </HBox>
                                 </IconTabFilter>
                                 <!-- Conatiner Details -->
                                 <IconTabFilter
@@ -443,7 +440,7 @@
                                     key="info"
                                     icon="sap-icon://shipping-status"
                                     interactionMode="Auto"
-                                     iconColor="Neutral"
+                                    iconColor="Neutral"
                                     text="Container Details"
                                     class="backgroundColour"
                                 >
@@ -484,20 +481,42 @@
                                             enableExport="true"
                                             tableType="ResponsiveTable"
                                         >
+                                            <smarttable:customToolbar>
+                                                <OverflowToolbar
+                                                    id="idOverFlowForConatiners"
+                                                >
+                                                    <ToolbarSpacer
+                                                        id="idToolbarForContainers"
+                                                    />
+                                                    <Button
+                                                        id="idContainerCreateBtn"
+                                                        text="Create"
+                                                        icon="sap-icon://create"
+                                                        width="100px"
+                                                        type="Accept"
+                                                    />
+                                                    <Button
+                                                        id="idContainerEditBtn"
+                                                        text="Edit"
+                                                        icon="sap-icon://edit"
+                                                        width="100px"
+                                                        type="Emphasized"
+                                                    />
+                                                    <Button
+                                                        id="idContainerDeleteBtn"
+                                                        text="Delete"
+                                                        press="onContainerDelete"
+                                                        icon="sap-icon://delete"
+                                                        width="100px"
+                                                        type="Negative"
+                                                    />
+                                                </OverflowToolbar>
+                                            </smarttable:customToolbar>
                                             <Table
                                                 id="idContianersTable"
                                                 mode="MultiSelect"
-                                            >
-                                            <headerToolbar>
-                                            <OverflowToolbar id="idOverFlowForConatiners">
-                                            <ToolbarSpacer id="idToolbarForContainers">
-                                            </ToolbarSpacer>
-                                            <Button id="idContainerCreateBtn" text="Create" icon="sap-icon://create"  width="100px" type="Accept"/>
-                                            <Button id="idContainerEditBtn" text="Edit" icon="sap-icon://edit"  width="100px"  type="Emphasized" />
-                                             <Button id="idContainerDeleteBtn" text="Delete" icon="sap-icon://delete" width="100px"  type="Negative" />
-                                            </OverflowToolbar>
-                                            </headerToolbar>
-                                            </Table>
+                                                selectionChange="onTruckTypeChange"
+                                            />
                                         </smarttable:SmartTable>
                                     </VBox>
                                 </IconTabFilter>
@@ -527,7 +546,7 @@
                                     key="info"
                                     interactionMode="Auto"
                                     icon="sap-icon://history"
-                                      iconColor="Neutral"
+                                    iconColor="Neutral"
                                     text="Previous Simulations"
                                     class="sapUiTinyMargin"
                                 >
@@ -542,7 +561,7 @@
                                     key="info"
                                     icon="sap-icon://create-form"
                                     interactionMode="Auto"
-                                     iconColor="Neutral"
+                                    iconColor="Neutral"
                                     text="Create Simulation"
                                     textDirection="Inherit"
                                     class="sapUiTinyMargin"

@@ -401,3 +401,11 @@
     font-weight: bold;
     margin: -2px 0 0 2% !important;
 }
+
+.sapUiLabelBold {
+    font-weight: bold;
+}
+
+.myInvisibleClass {
+    display: none; /* This will hide the IconTabFilter */
+}
