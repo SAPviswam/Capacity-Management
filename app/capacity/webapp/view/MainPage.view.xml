@@ -379,7 +379,48 @@
                                                             key="CM"
                                                             text="CM"
                                                         />
+                                                        <core:Item
+                                                            id="idSelectUOM4"
+                                                            key="mm"
+                                                            text="mm"
+                                                        />
                                                     </Select>
+                                                </HBox>
+                                                <HBox
+                                                    id="idHBoxForModelNetWeight"
+                                                >
+                                                    <Label
+                                                        id="idLablelForModelNetWeight"
+                                                        text="Net Weight:"
+                                                        width="125px"
+                                                        class="sapUiTinyMarginTop"
+                                                    />
+                                                    <Input
+                                                        id="idInputForModelNetWeight"
+                                                        value="{CombinedModel>/Product/netWeight}"
+                                                        placeholder="Enter Net Weight"
+                                                        class="customInput"
+                                                        width="100%"
+                                                        maxLength="200"
+                                                    />
+                                                </HBox>
+                                                <HBox
+                                                    id="idHBoxForModelGrossWeight"
+                                                >
+                                                    <Label
+                                                        id="idLablelForModelGrossWeight"
+                                                        text="Gross Weight:"
+                                                        width="125px"
+                                                        class="sapUiTinyMarginTop"
+                                                    />
+                                                    <Input
+                                                        id="idInputForModelGrossWeight"
+                                                        value="{CombinedModel>/Product/grossWeight}"
+                                                        placeholder="Enter Gross Weight"
+                                                        class="customInput"
+                                                        width="100%"
+                                                        maxLength="200"
+                                                    />
                                                 </HBox>
 
                                                 <HBox id="idHBoxForModelWeight">
@@ -389,37 +430,47 @@
                                                         width="125px"
                                                         class="sapUiTinyMarginTop"
                                                     />
-                                                    <HBox id="idks">
-                                                        <Input
-                                                            id="idInputForModelWeight"
-                                                            value="{CombinedModel>/Product/weight}"
-                                                            placeholder="Enter Weight"
-                                                            width="70px"
-                                                        />
-                                                        <Select
-                                                            id="idSelectModelWeightUOM"
-                                                        >
-                                                            <items>
-                                                                <core:Item
-                                                                    id="idModelWeightUOM1"
-                                                                    key="Select"
-                                                                    text="Select"
-                                                                />
-                                                                <core:Item
-                                                                    id="idModelWeightUOM2"
-                                                                    key="KG"
-                                                                    text="Kilograms"
-                                                                />
-                                                                <core:Item
-                                                                    id="idModelWeightUOM3"
-                                                                    key="G"
-                                                                    text="Grams"
-                                                                />
 
-                                                                <!-- Add more UOM options as needed -->
-                                                            </items>
-                                                        </Select>
-                                                    </HBox>
+                                                    <Select
+                                                        id="idSelectModelWeightUOM"
+                                                        width="174px"
+                                                    >
+                                                        <items>
+                                                            <core:Item
+                                                                id="idModelWeightUOM1"
+                                                                key="Select"
+                                                                text="Select"
+                                                            />
+                                                            <core:Item
+                                                                id="idModelWeightUOM2"
+                                                                key="KG"
+                                                                text="Kilograms"
+                                                            />
+                                                            <core:Item
+                                                                id="idModelWeightUOM3"
+                                                                key="G"
+                                                                text="Grams"
+                                                            />
+
+                                                            <!-- Add more UOM options as needed -->
+                                                        </items>
+                                                    </Select>
+                                                </HBox>
+                                                <HBox id="idHBoxForModelStack">
+                                                    <Label
+                                                        id="idLablelForModelStack"
+                                                        text="Stack Level:"
+                                                        width="125px"
+                                                        class="sapUiTinyMarginTop"
+                                                    />
+                                                    <Input
+                                                        id="idInputForModelStack"
+                                                        value="{CombinedModel>/Product/stack}"
+                                                        placeholder="Enter Stack Levels"
+                                                        class="customInput"
+                                                        width="100%"
+                                                        maxLength="200"
+                                                    />
                                                 </HBox>
 
                                                 <Label id="idModelEmptyLabel" />

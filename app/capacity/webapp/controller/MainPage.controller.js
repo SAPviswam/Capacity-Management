@@ -4,13 +4,51 @@ sap.ui.define([
   "sap/m/MessageToast",
   "sap/ui/model/json/JSONModel"
 ],
-  function (BaseController,MessageBox,MessageToast,JSONModel) {
+  function (BaseController, MessageBox, MessageToast, JSONModel) {
     "use strict";
 
     return BaseController.extend("com.app.capacity.controller.MainPage", {
       onInit() {
-       /**Combined Model for Model and Containers */
-       
+        /**Combined Model for Model and Containers */
+        const oCombinedModel = new JSONModel({
+          Product:
+          {
+            ID: "",
+            model: "",
+            EAN: "",
+            length: "",
+            width: "",
+            height: "",
+            volume: "",
+            vuom: "",
+            muom: "",
+            uom: "",
+            mCategory: "",
+            description: "",
+            netWeight: "",
+            grossWeight: "",
+            wuom: "",
+            quantity: "",
+            stack: "",
+            mass: "",
+            color: "",
+          },
+          Vehicle: {
+            truckType: "",
+            length: "",
+            width: "",
+            height: "",
+            uom: "",
+            tvuom: "M³",
+            tuom: "M",
+            volume: "",
+            truckWeight: "",
+            capacity: "",
+          }
+        })
+         // Set the combined model to the view
+         this.getView().setModel(oCombinedModel, "CombinedModel")
+
       },
       /*For ToolMenuCollapse */
       onCollapseExpandPress() {
@@ -38,47 +76,49 @@ sap.ui.define([
         }
 
       },
+      /**Create Product/Model */
+      onCreateProduct:function(){
+
+      },
       /** Deleting Models */
-      onModelDelete:async function(){
-      let oSlectedItems = this.byId("idModelsTable").getSelectedItems();
-      const oModel = this.getView().getModel("ModelV2");
-      if(oSlectedItems.length<1)
-      {
-        return MessageBox.warning("Please Select atleast One Model/Prodcut");
-      }
-      try{
-        for(let Item of oSlectedItems){
-        let sPath = Item.getBindingContext().getPath();
-        await this.deleteData(oModel,sPath);
+      onModelDelete: async function () {
+        let oSlectedItems = this.byId("idModelsTable").getSelectedItems();
+        const oModel = this.getView().getModel("ModelV2");
+        if (oSlectedItems.length < 1) {
+          return MessageBox.warning("Please Select atleast One Model/Prodcut");
         }
-        this.byId("idModelsTable").getBinding("items").refresh();
-        MessageToast.show("successfully Deleted")
-      }catch{
-        MessageBox.error("Error Occurs!");
-      }
+        try {
+          for (let Item of oSlectedItems) {
+            let sPath = Item.getBindingContext().getPath();
+            await this.deleteData(oModel, sPath);
+          }
+          this.byId("idModelsTable").getBinding("items").refresh();
+          MessageToast.show("successfully Deleted")
+        } catch {
+          MessageBox.error("Error Occurs!");
+        }
       },
       /**Truck type selection based on click display details */
-      onTruckTypeChange:function(oEvent){
+      onTruckTypeChange: function (oEvent) {
         let oSelectedItem = oEvent.getParameter('listItem'),
-        oContext = oSelectedItem.getBindingContext();
+          oContext = oSelectedItem.getBindingContext();
       },
-      onContainerDelete:async function(){
+      onContainerDelete: async function () {
         let oSlectedItems = this.byId("idContianersTable").getSelectedItems();
-      const oModel = this.getView().getModel("ModelV2");
-      if(oSlectedItems.length<1)
-      {
-        return MessageBox.warning("Please Select atleast One Container");
-      }
-      try{
-        for(let Item of oSlectedItems){
-        let sPath = Item.getBindingContext().getPath();
-        await this.deleteData(oModel,sPath);
+        const oModel = this.getView().getModel("ModelV2");
+        if (oSlectedItems.length < 1) {
+          return MessageBox.warning("Please Select atleast One Container");
         }
-        this.byId("idContianersTable").getBinding("items").refresh();
-        MessageToast.show("successfully Deleted")
-      }catch{
-        MessageBox.error("Error Occurs!");
-      }
+        try {
+          for (let Item of oSlectedItems) {
+            let sPath = Item.getBindingContext().getPath();
+            await this.deleteData(oModel, sPath);
+          }
+          this.byId("idContianersTable").getBinding("items").refresh();
+          MessageToast.show("successfully Deleted")
+        } catch {
+          MessageBox.error("Error Occurs!");
+        }
       }
     });
   });
