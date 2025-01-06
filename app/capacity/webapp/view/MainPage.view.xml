@@ -184,21 +184,36 @@
                                                     <ToolbarSpacer
                                                         id="idToolbarForProducts"
                                                     />
-                                                    <Button
-                                                        id="idMaterialEditBtn"
-                                                        text="Edit"
-                                                        icon="sap-icon://edit"
-                                                        width="100px"
-                                                        type="Emphasized"
-                                                    />
-                                                    <Button
-                                                        id="idMaterialDeleteBtn"
-                                                        text="Delete"
-                                                        icon="sap-icon://delete"
-                                                        width="100px"
-                                                        type="Negative"
-                                                        press="onModelDelete"
-                                                    />
+                                                    <MenuButton
+                                                        id="idMaterialMenuBtn"
+                                                        text="Actions"
+                                                    >
+                                                        <menu>
+                                                            <Menu
+                                                                id="idMaterialMenu"
+                                                                itemSelected="onMenuAction"
+                                                            >
+                                                                <MenuItem
+                                                                    id="idMaterialEditBtn"
+                                                                    text="Edit"
+                                                                    icon="sap-icon://edit"
+                                                                    press="onPressEditInProductsTable"
+                                                                />
+                                                                <MenuItem
+                                                                    id="idMaterialDeleteBtn"
+                                                                    text="Delete"
+                                                                    icon="sap-icon://delete"
+                                                                    press="onModelDelete"
+                                                                />
+                                                                <MenuItem
+                                                                    id="idMaterialUploadBtn"
+                                                                    text="upload"
+                                                                    icon="sap-icon://upload"
+                                                                    press="onMaterialUploadbtn"
+                                                                />
+                                                            </Menu>
+                                                        </menu>
+                                                    </MenuButton>
                                                 </OverflowToolbar>
                                             </smarttable:customToolbar>
                                             <Table
