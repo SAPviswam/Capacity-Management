@@ -63,6 +63,7 @@ sap.ui.define([
         this.ID = id;
       },
 
+      //Avatar Press function from the MainPage_CM
       onAvatarPress_CapacityManagement: function (oEvent) {
         var oComponent = this.getOwnerComponent();
         // Destroy the existing popover if it exists
@@ -70,8 +71,9 @@ sap.ui.define([
           oComponent.getPopover().destroy();
           oComponent.setPopover(null);
         }
-        this.onPressAvatarPopOverBaseFunction();
-        //this.applyStoredProfileImage();
+
+        // Call the reusable function from BaseController
+        this.onPressAvatarPopOverBaseFunction(oEvent);
       },
 
       /*For ToolMenuCollapse */
