@@ -245,6 +245,128 @@ sap.ui.define([
         } catch {
           MessageBox.error("Error Occurs!");
         }
-      }
+      },
+      //edit product functinality
+
+      onPressEditInProductsTable:async  function() {
+        var oSelectedItem = this.byId("idModelsTable").getSelectedItems();
+        if (!oSelectedItem) {
+          MessageBox.information("Please select at least one Row for edit!");
+          return;
+        }
+        if(oSelectedItem.length > 1){
+          MessageBox.information("Please select only one Row for edit!");
+          return;
+        }
+       let oPayload = oSelectedItem[0].getBindingContext().getObject();
+       this.getView().getModel("CombinedModel").setProperty("/Product",oPayload)
+          if (!this.oEdit) {
+            this.oEdit = await this.loadFragment("EditproductDetails");
+             }
+        this.oEdit.open();
+
+  
+        },
+        onCancelInEditProductDialog: function () {
+        if (this.oEdit.isOpen()) {
+            this.oEdit.close();
+        }
+      },
+
+      onSaveProduct : async function() {
+        // Get the edited data from the fragment model
+        var oModel = this.getView().getModel("CombinedModel");
+        var oUpdatedProduct = oModel.getProperty("/Product");
+    
+        // Get the original product row binding context (from the selected row in the table)
+        var oTable = this.byId("idModelsTable");
+        var oSelectedItem = oTable.getSelectedItem();
+        var oContext = oSelectedItem.getBindingContext();
+    
+        // Use the context to get the path and ID of the selected product for updating
+        var sPath = oContext.getPath(); // The path to the product entry in the OData model
+
+      //   if (oUpdatedProduct.length <= 0 || isNaN(oUpdatedProduct.length)) {
+      //     MessageBox.error("Please enter a valid positive number for Length!");
+      //     return;
+      // }
+      // if (oUpdatedProduct.width <= 0 || isNaN(oUpdatedProduct.width)) {
+      //     MessageBox.error("Please enter a valid positive number for Width!");
+      //     return;
+      // }
+      // if (oUpdatedProduct.height <= 0 || isNaN(oUpdatedProduct.height)) {
+      //     MessageBox.error("Please enter a valid positive number for Height!");
+      //     return;
+      // }
+        
+        // Create the payload for updating the product in the backend
+        var oPayloadmodelupdate = {
+            description: oUpdatedProduct.description,
+            grossWeight:oUpdatedProduct.grossWeight,
+            netWeight: oUpdatedProduct.netWeight,
+            length: oUpdatedProduct.length,
+            width: oUpdatedProduct.width,
+            wuom: oUpdatedProduct.wuom,
+            height: oUpdatedProduct.height,
+            uom: oUpdatedProduct.uom,
+            quantity: oUpdatedProduct.quantity,
+            stack: oUpdatedProduct.stack
+        }; 
+        const oView = this.getView();
+        let raisedErrorsSave = [];
+        const aUserInputsSave = [
+          // { Id: "idDesvbncriptionInput_InitialView", value: oProductPayload.EAN, regex: null, message: "Please enter EAN" },
+          { Id: "editProductNoInput", value: oPayloadmodelupdate.model, regex: null, message: "Enter SAP product number" },
+          { Id: "editproLengthInput", value: oPayloadmodelupdate.length, regex: /^\d+(\.\d+)?$/, message: "Length should be numeric" },
+          { Id: "editprodWidthInput", value: oPayloadmodelupdate.width, regex: /^\d+(\.\d+)?$/, message: "Width should be numeric" },
+          { Id: "editprodHeightInput", value: oPayloadmodelupdate.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
+          // { Id: "idInputForModelCat", value: oPayloadmodelupdate.mCategory, regex: null, message: "Enter category" },
+          { Id: "editDescriptionInput", value: oPayloadmodelupdate.description, regex: null, message: "Enter description" },
+          { Id: "editnetWeightLabel", value: oPayloadmodelupdate.netWeight, regex: /^\d+(\.\d+)?$/, message: "Net Weight should be numeric" },
+          { Id: "editgrossWeightInput", value: oPayloadmodelupdate.grossWeight, regex: /^\d+(\.\d+)?$/, message: "Gross Weight should be numeric" },
+          { Id: "editQuantityInput", value: oPayloadmodelupdate.quantity, regex: /^\d+$/, message: "Quantity should be numeric" },
+          { Id: "editstackInput", value: oPayloadmodelupdate.stack, regex: /^\d+$/, message: "Stack should be numeric" }]
+        // Create an array of promises for validation
+
+        const validationPromisesSave = aUserInputsSave.map(async input => {
+          let aValidationsSave = await this.validateField(oView, input.Id, input.value, input.regex, input.message);
+          if (aValidationsSave.length > 0) {
+            raisedErrorsSave.push(aValidationsSave[0]); // Push first error into array
+          }
+        });
+
+        // Wait for all validations to complete
+        await Promise.all(validationPromisesSave);
+
+        // Check if there are any raised errors
+        if (raisedErrorsSave.length > 0) {
+          // Consolidate errors into a single message
+          const errorMessageSave = raisedErrorsSave.join("\n");
+          MessageBox.information(errorMessageSave); // Show consolidated error messages
+          return;
+        }
+    
+        try {
+            // Call the OData update request to save the edited data in the backend
+            await this.getView().getModel().update(sPath, oPayloadmodelupdate, {
+                success: function() {
+                    // If the update is successful, show a success message
+                    MessageBox.success("Product details updated successfully!");
+    
+                    // Close the fragment
+                    this.oEdit.close();
+    
+                    // Optionally, refresh the table binding to reflect the changes
+                    oTable.getBinding("items").refresh();
+                }.bind(this),
+                error: function(oError) {
+                    // Handle the error scenario (e.g., show error message)
+                    MessageBox.error("Error updating product details: " + oError.message);
+                }
+            });
+        } catch (error) {
+            MessageBox.error("Error updating product details: " + error.message);
+        }
+    }
     });
   });

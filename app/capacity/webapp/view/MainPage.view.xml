@@ -190,6 +190,7 @@
                                                         icon="sap-icon://edit"
                                                         width="100px"
                                                         type="Emphasized"
+                                                        press="onPressEditInProductsTable"
                                                     />
                                                     <Button
                                                         id="idMaterialDeleteBtn"
