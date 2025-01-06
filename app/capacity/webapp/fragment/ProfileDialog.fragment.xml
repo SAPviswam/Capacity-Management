@@ -1,0 +1,131 @@
+<core:FragmentDefinition
+    xmlns:form="sap.ui.layout.form"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Popover
+        id="idPopoverProfileUserDetails_CM"
+        placement="Bottom"
+        verticalScrolling="false"
+        horizontalScrolling="false"
+        class="sapUiResponsivePadding sapMPopover sapMIBar sapMHeader-CTX"
+        contentMinWidth="auto"
+        title="Profile:"
+    >
+        <form:SimpleForm
+            id="idSimpleFormUserdetails"
+            backgroundDesign="Solid"
+        >
+            <VBox id="idVBoxUserdetails">
+                <HBox
+                    id="idUserDeatilsHBox"
+                    alignItems="Start"
+                >
+                    <Avatar
+                        id="idAvatarProfilePopoverImage"
+                        displaySize="S"
+                        press="onPressPopoverProfileImageAvatar_CM"
+                        class="profileAvatar1234"
+                        tooltip="Add profile"
+                    />
+                    <Label
+                        id="idUserDeatilsLabel4_CM"
+                        width="1rem"
+                    />
+                    <VBox
+                        id="idUserDeatilsVBox11_CM"
+                        alignItems="Start"
+                        class="NamePhoneClass"
+                    >
+                        <Text
+                            id="idUserDeatilsTextName_CM"
+                            text="{profile>/Name}"
+                            class="UserNameBold"
+                        />
+                        <Link
+                            id="idUserDeatilsPhoneLink_CM"
+                            text="{profile>/Number}"
+                            class="UserNameBold"
+                        />
+                    </VBox>
+                </HBox>
+                <VBox
+                    id="idUserDeatilsVBox12_CM"
+                    alignItems="Start"
+                    class="onProfileOptions"  
+                >
+                    <Button
+                        id="idUserDeatilsButtonAccountDetails_CM"
+                        icon="sap-icon://person-placeholder"
+                        text="Account Details"
+                        type="Transparent"
+                        press="onPressAccountDetails_CM"
+                        width="auto"
+                    />
+                    <!-- <Button
+                        id="idUserDeatilsButton1Edit"
+                        icon="sap-icon://edit"
+                        text="Edit Tile"
+                        type="Transparent"
+                        press="onEditTileNamePress"
+                        visible="{popoverModel>/showEditTile}"
+                        width="auto"
+                    />
+                    <Button
+                        id="idUserDeatilsButton3Seetings"
+                        icon="sap-icon://settings"
+                        text="Default Settings"
+                        type="Transparent"
+                        press="onPressDefualtSettings"
+                        visible="{popoverModel>/showDefaultSettings}"
+                        width="auto"
+                    />
+                    <Button
+                        id="idUserDeatilsButton4Pallete"
+                        icon="sap-icon://palette"
+                        text="Themes"
+                        type="Transparent"
+                        press="onPressThemesBtnFromProfilePopover"
+                        visible="{popoverModel>/showThemes}"
+                        width="auto"
+                    />
+                    <Button
+                        id="idUserDeatilsButton5Transulate"
+                        icon="sap-icon://translate"
+                        text="Language"
+                        type="Transparent"
+                        press="onPressLanguageTranslation"
+                        visible="{popoverModel>/showLanguage}"
+                    />
+                    <Button
+                        id="idUserDeatilsButton6View"
+                        icon="sap-icon://my-view"
+                        text="Tile View"
+                        type="Transparent"
+                        press="onPressTileViewSettings"
+                        visible="{popoverModel>/showTileView}"
+                        width="auto"
+                    /> -->
+                    <Button
+                        id="idUserDeatilsButton7Help"
+                        icon="sap-icon://sys-help"
+                        text="Help"
+                        type="Transparent"
+                        press="onChatbotButtonPress"
+                        visible="{popoverModel>/showHelp}"
+                        width="auto"
+                    />
+                    <Button
+                        id="idUserDeatilsButton8Logout"
+                        icon="sap-icon://log"
+                        text="Sign Out"
+                        type="Transparent"
+                        press="onSignoutPressed_ResourcePage"
+                        visible="{popoverModel>/showSignOut}"
+                        width="auto"
+                    />
+                </VBox>
+            </VBox>
+        </form:SimpleForm>
+    </Popover>
+</core:FragmentDefinition>
