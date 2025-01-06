@@ -58,6 +58,7 @@ sap.ui.define([
         this.ID = id;
       },
 
+      //Avatar Press function from the MainPage_CM
       onAvatarPress_CapacityManagement: function (oEvent) {
         var oComponent = this.getOwnerComponent();
         // Destroy the existing popover if it exists
@@ -65,8 +66,9 @@ sap.ui.define([
           oComponent.getPopover().destroy();
           oComponent.setPopover(null);
         }
-        this.onPressAvatarPopOverBaseFunction();
-        //this.applyStoredProfileImage();
+
+        // Call the reusable function from BaseController
+        this.onPressAvatarPopOverBaseFunction(oEvent);
       },
 
 
@@ -102,21 +104,21 @@ sap.ui.define([
         }
       },
       /**Container Fragment open for Creation */
-      onContainerCreate:async function(){
+      onContainerCreate: async function () {
         let oSelectedItem = this.byId("idContianersTable").getSelectedItems();
-        if(oSelectedItem.length>0){
+        if (oSelectedItem.length > 0) {
           return MessageBox.warning("Please Unselect the Row For Creation");
         }
         if (!this.oContainerCreate) {
           this.oContainerCreate = await this.loadFragment("CreateContainer");
-      }
-      this.oContainerCreate.open();
+        }
+        this.oContainerCreate.open();
       },
       /**Closing Container Fragment */
-      onCancelCreateContainer:function(){
+      onCancelCreateContainer: function () {
         if (this.oContainerCreate.isOpen()) {
           this.oContainerCreate.close();
-      }
+        }
 
       },
       /**Create Product/Model */
@@ -188,7 +190,7 @@ sap.ui.define([
         oProductPayload.muom = 'PC';
         oProductPayload.vuom = "M³";
         try {
-          await this.createData(oModel,oProductPayload, oPath);
+          await this.createData(oModel, oProductPayload, oPath);
           this.getView().byId("idModelsTable").getBinding("items").refresh();
           this.byId("idForSelectModelLWHUOM").setSelectedKey("");
           this.byId("idSelectModelWeightUOM").setSelectedKey("");
