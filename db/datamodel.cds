@@ -46,7 +46,7 @@ define entity Materials {
         wuom            : String;
         quantity        : String;
         stack           : String;
-        mass            : String;
+        bearingCapacity : String;
         selectedProduct : Association to SelectedProduct
                               on selectedProduct.Productno = $self
 
