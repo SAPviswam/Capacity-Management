@@ -106,7 +106,7 @@
                         visible="{popoverModel>/showTileView}"
                         width="auto"
                     /> -->
-                    <Button
+                    <!-- <Button
                         id="idUserDeatilsButton7Help"
                         icon="sap-icon://sys-help"
                         text="Help"
@@ -114,7 +114,7 @@
                         press="onChatbotButtonPress"
                         visible="{popoverModel>/showHelp}"
                         width="auto"
-                    />
+                    /> -->
                     <Button
                         id="idUserDeatilsButton8Logout"
                         icon="sap-icon://log"
