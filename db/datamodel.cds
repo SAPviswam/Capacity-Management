@@ -21,7 +21,7 @@ define entity Users : cuid {
     mailID       : String;
     password     : String;
     profileImage : String;
-    expireDate : String;
+    expireDate   : String;
 }
 
 @assert.unique: {model: [model]
@@ -29,7 +29,6 @@ define entity Users : cuid {
 }
 
 define entity Materials {
-
     key ID              : UUID;
         model           : string;
         EAN             : String;
@@ -47,15 +46,14 @@ define entity Materials {
         wuom            : String;
         quantity        : String;
         stack           : String;
-        mass            : String;
-        layersHeight    : String;
-        color           : String;
+        bearingCapacity : String;
         selectedProduct : Association to SelectedProduct
                               on selectedProduct.Productno = $self
 
 }
 
 /**Defining Vehicle Entity */
+
 define entity TruckTypes {
     key truckType   : String;
         length      : String;
@@ -65,7 +63,7 @@ define entity TruckTypes {
         volume      : String;
         tvuom       : String;
         truckWeight : String;
-        c    : String;
+        capacity    : String;
         tuom        : String;
 }
 
@@ -73,12 +71,14 @@ define entity SelectedProduct {
     key ID               : UUID;
         Productno        : Association to Materials;
         SelectedQuantity : String;
+        simulationName:String;
+        Color:String;
 }
 
 
 define entity History : managed {
     key ID        : UUID;
-        productNo : Association to SelectedProduct;
+        simulationName:Association  to SelectedProduct;
         truckType : Association to TruckTypes;
 
 }

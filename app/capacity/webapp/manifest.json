@@ -17,11 +17,13 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "/odata/v4/CapSRV/",
+        "uri": "/odata/v2/CapSRV/",
         "type": "OData",
         "settings": {
           "annotations": [],
-          "odataVersion": "4.0"
+          "localUri": "/odata/v2/MyService.xml",
+          "odataVersion": "2.0",
+          "useBatch":"true"
         }
       },
       "mainService2": {
@@ -29,7 +31,9 @@
         "type": "OData",
         "settings": {
           "annotations": [],
-          "odataVersion": "2.0"
+          "localUri": "/odata/v2/MyService.xml",
+          "odataVersion": "2.0",
+          "useBatch":"true"
         }
       }
     },
@@ -129,7 +133,7 @@
         },
         {
           "name": "MainPage",
-          "pattern": "MainPage",
+          "pattern": "MainPage/{id}",
           "target": [
             "TargetMainPage"
           ]
