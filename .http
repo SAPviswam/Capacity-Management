@@ -24,9 +24,7 @@ Content-Type: application/json
             "wuom": "kg",
             "quantity": "100",
             "stack": "5",
-            "mass": "50.00",
-            "layersHeight": "2",
-            "color": "#FF0000"  
+            "mass": "50.00"  
 }
 
 

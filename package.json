@@ -2,7 +2,10 @@
   "name": "capacitymanagement",
   "version": "1.0.0",
   "description": "A simple CAP project.",
-  "repository": "<Add your repository here>",
+  "repository": {
+    "type": "git",
+    "url": "<Add your repository here>"
+  },
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
@@ -29,5 +32,8 @@
         "db": "hana"
       }
     }
-  }
+  },
+  "main": "index.js",
+  "keywords": [],
+  "author": ""
 }
