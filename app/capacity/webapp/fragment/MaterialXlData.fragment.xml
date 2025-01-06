@@ -1,0 +1,199 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    xmlns="sap.m"
+>
+    <Dialog
+        id="knfjk"
+        title="Upload Data"
+        class="dialogSlideIn"
+        resizable="true"
+        draggable="true"
+        contentWidth="85%"
+        contentHeight="85%"
+    >
+        <Table
+            id="_IDGenTswfd_able1"
+            items="{MaterialModel>/items}"
+            mode="MultiSelect"
+        >
+            <headerToolbar>
+                <OverflowToolbar id="idBoorertyksTableHeader">
+                    <ToolbarSpacer id="idTabledsweHeaderSpacer" />
+                    <Button
+                        id="idSubmitdfgfre"
+                        type="Accept"
+                        text="Submit"
+                        press="onBatchSave"
+                    />
+                    <Button
+                        id="idBtsdvwnEditq__"
+                        text="Close"
+                        icon="sap-icon://close"
+                        type="Neutral"
+                        press="onClosePressXlData"
+                    />
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column id="_IDGenColuasmn1_sfdg">
+                    <Label
+                        id="_IDGenLawbel_Sdf2"
+                        text="S.No"
+                    />
+                </Column>
+                <Column id="_IDGenColumn1_sfdg">
+                    <Label
+                        id="_IDGenLabel_Sdf2"
+                        text="Model"
+                    />
+                </Column>
+                <Column id="_IDGenColumrfgn1_sfdg">
+                    <Label
+                        id="_IDGenLaberthl_Sdf2"
+                        text="EAN"
+                    />
+                </Column>
+                <Column id="_IDGenCosaf_lumn3">
+                    <Label
+                        id="_IDGenLabel4_Sfg"
+                        text="Description"
+                    />
+                </Column>
+                <Column id="_IDGenColu_sfgmn4">
+                    <Label
+                        id="_IDGe_SdfnLabel5"
+                        text="Material Category"
+                    />
+                </Column>
+                <Column id="_IDGenlu_sfgmn4">
+                    <Label
+                        id="_IDSdfnLabel5"
+                        text="Length"
+                    />
+                </Column>
+                <Column id="_IDGenCoulu_sfgmn4">
+                    <Label
+                        id="_IDGe_fnLabel5"
+                        text="Width"
+                    />
+                </Column>
+                <Column id="idkanidfn">
+                    <Label
+                        id="fnLabel5"
+                        text="Height"
+                    />
+                </Column>
+                <Column id="idkaesdfgnidfn">
+                    <Label
+                        id="idwwerqw"
+                        text="MUOM"
+                    />
+                </Column>
+                <Column id="idkaergsdfgnidfn">
+                    <Label
+                        id="idwwergrrqw"
+                        text="UOM"
+                    />
+                </Column>
+                <Column id="idkasdfgnidfn">
+                    <Label
+                        id="idwerqw"
+                        text="Quantity"
+                    />
+                </Column>
+                <Column id="idkqwaesdfgnidfn">
+                    <Label
+                        id="idwwwerqw"
+                        text="Gross Weight"
+                    />
+                </Column>
+                <Column id="idkqwaesdfgnidsfgdfn">
+                    <Label
+                        id="iddfgwwwerqw"
+                        text="Net Weight"
+                    />
+                </Column>
+                <Column id="idkqwsdvaesdfgnidsfgdfn">
+                    <Label
+                        id="iddfgwsefwwerqw"
+                        text="WUOM"
+                    />
+                </Column>
+                <Column id="idkqwsdvaesdfwefgnidsfgdfn">
+                    <Label
+                        id="iddfgwsefwefwwerqw"
+                        text="Stack"
+                    />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem id="_IDGensfdg_ColumnListItem1">
+                    <cells>
+                        <Text
+                            id="_IDGeddnText1WE1"
+                            text="{MaterialModel>serialNumber}"
+                        />
+                        <Input
+                            id="_IDGenText1WE1"
+                            value="{MaterialModel>model}"
+                        />
+                        <Input
+                            id="_IDGe_wdffefs"
+                            value="{MaterialModel>EAN}"
+                        />
+                        <Input
+                            id="_IDGe_wdefs"
+                            value="{MaterialModel>description}"
+                        />
+                        <Input
+                            id="_IDGe_wwwdfs"
+                            value="{MaterialModel>mCategory}"
+                        />
+                        <Input
+                            id="_IDGenText3_SWfe"
+                            value="{MaterialModel>length}"
+                        />
+                        <Input
+                            id="_IDGe_wdfs"
+                            value="{MaterialModel>width}"
+                        />
+                        <Input
+                            id="_IDGwwee_wdfs"
+                            value="{MaterialModel>height}"
+                        />
+                        <Input
+                            id="_IDGe_weeddfefs"
+                            value="{MaterialModel>muom}"
+                        />
+                        <Input
+                            id="_IDGe_wsseeddfefs"
+                            value="{MaterialModel>uom}"
+                        />
+                        <Input
+                            id="_IDGe_weedefs"
+                            value="{MaterialModel>quantity}"
+                        />
+
+                        <Input
+                            id="_IDGe_weedfedfes"
+                            value="{MaterialModel>grossWeight}"
+                        />
+                        <Input
+                            id="_IDGe_wedfedfes"
+                            value="{MaterialModel>netWeight}"
+                        />
+                        <Input
+                            id="_IDGe_wertydfedfes"
+                            value="{MaterialModel>wuom}"
+                        />
+                        <Input
+                            id="_IDGe_wertywfedfedfes"
+                            value="{MaterialModel>stack}"
+                        />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Dialog>
+</core:FragmentDefinition>
