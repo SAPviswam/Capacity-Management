@@ -191,6 +191,7 @@
                                             <Table
                                                 id="idModelsTable"
                                                 mode="MultiSelect"
+                                                noDataText="No Models/Products Available"
                                                 selectionChange="onModelChange"
                                             />
                                         </smarttable:SmartTable>
@@ -515,6 +516,7 @@
                                             <Table
                                                 id="idContianersTable"
                                                 mode="MultiSelect"
+                                                noDataText="No Containers/Vehicles Available"
                                                 selectionChange="onTruckTypeChange"
                                             />
                                         </smarttable:SmartTable>

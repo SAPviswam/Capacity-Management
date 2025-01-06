@@ -1,13 +1,16 @@
 sap.ui.define([
   "./BaseController",
   "sap/m/MessageBox",
-  "sap/m/MessageToast"
+  "sap/m/MessageToast",
+  "sap/ui/model/json/JSONModel"
 ],
-  function (BaseController,MessageBox,MessageToast) {
+  function (BaseController,MessageBox,MessageToast,JSONModel) {
     "use strict";
 
     return BaseController.extend("com.app.capacity.controller.MainPage", {
       onInit() {
+       /**Combined Model for Model and Containers */
+       
       },
       /*For ToolMenuCollapse */
       onCollapseExpandPress() {

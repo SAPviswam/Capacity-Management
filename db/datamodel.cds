@@ -29,7 +29,6 @@ define entity Users : cuid {
 }
  
 define entity Materials {
-
     key ID              : UUID;
         model           : string;
         EAN             : String;
@@ -48,7 +47,6 @@ define entity Materials {
         quantity        : String;
         stack           : String;
         mass            : String;
-        layersHeight    : String;
         color           : String;
         selectedProduct : Association to SelectedProduct
                               on selectedProduct.Productno = $self
@@ -69,8 +67,6 @@ define entity TruckTypes {
         capacity    : String;
         tuom        : String;
 }
-
- 
 define entity SelectedProduct {
     key ID               : UUID;
         Productno        : Association to Materials;
