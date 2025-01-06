@@ -197,7 +197,7 @@
                         type="Emphasized"
                         width="90%"
                         text="Sign Up"
-                        enabled="false"
+                        enabled="true"
                         press="onSignUpPress"
                     />
                     <!-- <HBox justifyContent="SpaceBetween">
