@@ -8,7 +8,7 @@ POST http://localhost:4004/odata/v2/CapSRV/Materials
 Content-Type: application/json
 
 {
-            "model": "Model R",
+            "model": "Model A",
             "EAN": "1234567890123",
             "length": "100.00",
             "width": "50.00",
@@ -39,7 +39,7 @@ POST http://localhost:4004/odata/v2/CapSRV/TruckTypes
 Content-Type: application/json
 
 {
-    "truckType": "14FT",
+    "truckType": "17FT",
     "length": "20.00",
     "width": "8.00",
     "height": "4.00",
