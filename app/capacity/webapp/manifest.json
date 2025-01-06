@@ -133,7 +133,7 @@
         },
         {
           "name": "MainPage",
-          "pattern": "MainPage",
+          "pattern": "MainPage/{id}",
           "target": [
             "TargetMainPage"
           ]
