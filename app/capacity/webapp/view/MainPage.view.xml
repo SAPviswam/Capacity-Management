@@ -135,7 +135,7 @@
                                 >
                                     <VBox
                                         id="idVBoxForModelsTable"
-                                        width="82%"
+                                        width="80%"
                                     >
                                         <!-- Smart Filters -->
                                         <smartfilterbar:SmartFilterBar
@@ -199,6 +199,7 @@
                                                                     text="Edit"
                                                                     icon="sap-icon://edit"
                                                                     press="onPressEditInProductsTable"
+                                                                
                                                                 />
                                                                 <MenuItem
                                                                     id="idMaterialDeleteBtn"
@@ -527,7 +528,7 @@
                                 >
                                     <VBox
                                         id="idVBoxForContainers"
-                                        width="82%"
+                                        width="80%"
                                     >
                                         <smartfilterbar:SmartFilterBar
                                             id="idSmarFilterContainerForContainers"

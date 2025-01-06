@@ -10,38 +10,6 @@ sap.ui.define([
     return BaseController.extend("com.app.capacity.controller.MainPage", {
       onInit() {
 
-        // Material upload
-        this.MaterialModel = new JSONModel();
-        this.getView().setModel(this.MaterialModel, "MaterialModel");
-
-        /**Combined Model for Model and Containers */
-        const oRouter = this.getOwnerComponent().getRouter();
-        oRouter.attachRoutePatternMatched(this.onUserDetailsLoadCapacityManagement, this);
-      },
-      onUserDetailsLoadCapacityManagement: async function (oEvent1) {
-        debugger
-        const { id } = oEvent1.getParameter("arguments");
-        this.ID = id;
-      },
-
-      onAvatarPress_CapacityManagement: function (oEvent) {
-        var oComponent = this.getOwnerComponent();
-        // Destroy the existing popover if it exists
-        if (oComponent.getPopover()) {
-          oComponent.getPopover().destroy();
-          oComponent.setPopover(null);
-        }
-        this.onPressAvatarPopOverBaseFunction();
-        //this.applyStoredProfileImage();
-      },
-
-
-
-
-
-
-
-
         /**Combined Model for Model and Containers */
         const oCombinedModel = new JSONModel({
           Product:
@@ -81,7 +49,31 @@ sap.ui.define([
         // Set the combined model to the view
         this.getView().setModel(oCombinedModel, "CombinedModel")
 
+        // Material upload
+        this.MaterialModel = new JSONModel();
+        this.getView().setModel(this.MaterialModel, "MaterialModel");
+
+        /**Combined Model for Model and Containers */
+        const oRouter = this.getOwnerComponent().getRouter();
+        oRouter.attachRoutePatternMatched(this.onUserDetailsLoadCapacityManagement, this);
       },
+      onUserDetailsLoadCapacityManagement: async function (oEvent1) {
+        debugger
+        const { id } = oEvent1.getParameter("arguments");
+        this.ID = id;
+      },
+
+      onAvatarPress_CapacityManagement: function (oEvent) {
+        var oComponent = this.getOwnerComponent();
+        // Destroy the existing popover if it exists
+        if (oComponent.getPopover()) {
+          oComponent.getPopover().destroy();
+          oComponent.setPopover(null);
+        }
+        this.onPressAvatarPopOverBaseFunction();
+        //this.applyStoredProfileImage();
+      },
+
       /*For ToolMenuCollapse */
       onCollapseExpandPress() {
         const oSideNavigation = this.byId("idSidenavigation"),
@@ -454,10 +446,6 @@ sap.ui.define([
           this.oFragment.close();
         }
       },
-      },
-
-
-
       onIconTabSelect: function (oEvent) {
         var oSelectedKey = oEvent.getParameter("key");
 
