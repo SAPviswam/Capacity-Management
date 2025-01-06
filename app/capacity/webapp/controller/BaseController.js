@@ -1,8 +1,10 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator"
 
-], function (Controller, Fragment) {
+], function (Controller, Fragment, Filter, FilterOperator) {
     'use strict';
 
     return Controller.extend("com.app.capacity.controller.BaseController", {
@@ -97,58 +99,37 @@ sap.ui.define([
         },
 
         //Base function for opening the Profile PopOver..
-        onPressAvatarPopOverBaseFunction: function (oEvent, oPopoverContext) {
+        onPressAvatarPopOverBaseFunction: function (oEvent) {
             debugger;
             var This = this;
-            var oView = this.getView();
-            var oModel1 = this.getOwnerComponent().getModel();
+            const oUserId = This.ID;
+            var oView = This.getView();
+            var oModel1 = This.getOwnerComponent().getModel("ModelV2");
 
-            // Default popover visibility model
-            // var oPopoverVisibility = {
-            //     showAccountDetails: oPopoverContext?.showAccountDetails || false,
-            //     showEditTile: oPopoverContext?.showEditTile || false,
-            //     showDefaultSettings: oPopoverContext?.showDefaultSettings || false,
-            //     showThemes: oPopoverContext?.showThemes || false,
-            //     showLanguage: oPopoverContext?.showLanguage || false,
-            //     showTileView: oPopoverContext?.showTileView || false,
-            //     showHelp: oPopoverContext?.showHelp || false,
-            //     showSignOut: oPopoverContext?.showSignOut || false
-            // };            
-            // Create a model for popover visibility
-            //var oPopoverVisibilityModel = new sap.ui.model.json.JSONModel(oPopoverVisibility);
+            oModel1.read(`/Users`, {
+                filters: [new Filter("userID", FilterOperator.EQ, oUserId)],
+                success: function (results) {
+                    // Prepare the profile data
+                    var oProfileData = {
+                        Name: results.fName,
+                        Name1: results.lName,
+                        Number: results.Phonenumber
+                    };
+                    var oProfileModel = new sap.ui.model.json.JSONModel(oProfileData);
 
-            oModel1.read("/RESOURCESSet('" + this.ID + "')", {
-                success: function (oData) {
-                    if (oData.Users.toLowerCase() === "resource") {
-                        // Prepare the profile data
-                        var oProfileData = {
-                            Name: oData.Resourcename,
-                            Number: oData.Phonenumber
-                        };
-                        var oProfileModel = new sap.ui.model.json.JSONModel(oProfileData);
-
-                        if (!This._oPopover) {
-                            This._oPopover = sap.ui.xmlfragment("com.app.capacity.controller.ProfileDialog", This);
-                            oView.addDependent(This._oPopover);
-                        }
-                        // Set both the profile and visibility models to the popover
-                        This._oPopover.setModel(oProfileModel, "profile");
-                        //This._oPopover.setModel(oPopoverVisibilityModel, "popoverModel");
-
-                        // Open the popover near the avatar after the data is set
-                        This._oPopover.openBy(oEvent.getSource());
-                    } else {
-                        sap.m.MessageToast.show("User is not a resource.");
+                    if (!This._oPopover) {
+                        This._oPopover = This.loadFragment("ProfileDialog");
+                        oView.addDependent(This._oPopover);
                     }
+                    // Set both the profile and visibility models to the popover
+                    This._oPopover.setModel(oProfileModel, "profile");
+                    // Open the popover near the avatar after the data is set
+                    This._oPopover.openBy(oEvent.getSource());
                 },
                 error: function () {
                     sap.m.MessageToast.show("User does not exist");
                 }
             });
-            // Set the visibility model to the popover even before opening (if needed)
-            // if (This._oPopover) {
-            //     This._oPopover.setModel(oPopoverVisibilityModel, "popoverModel");
-            // }
         },
         //Account Details press function from popover
         onPressAccountDetails: async function () {
