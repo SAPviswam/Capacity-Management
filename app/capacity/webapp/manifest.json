@@ -22,7 +22,8 @@
         "settings": {
           "annotations": [],
           "localUri": "/odata/v2/MyService.xml",
-          "odataVersion": "2.0"
+          "odataVersion": "2.0",
+          "useBatch":"true"
         }
       },
       "mainService2": {
@@ -31,7 +32,8 @@
         "settings": {
           "annotations": [],
           "localUri": "/odata/v2/MyService.xml",
-          "odataVersion": "2.0"
+          "odataVersion": "2.0",
+          "useBatch":"true"
         }
       }
     },
