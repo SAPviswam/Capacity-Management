@@ -10,6 +10,34 @@ sap.ui.define([
     return BaseController.extend("com.app.capacity.controller.MainPage", {
       onInit() {
         /**Combined Model for Model and Containers */
+        const oRouter = this.getOwnerComponent().getRouter();
+        oRouter.attachRoutePatternMatched(this.onUserDetailsLoadCapacityManagement, this);
+      },
+      onUserDetailsLoadCapacityManagement: async function (oEvent1) {
+        debugger
+        const { id } = oEvent1.getParameter("arguments");
+        this.ID = id;
+      },
+
+      onAvatarPress_CapacityManagement: function (oEvent) {
+        var oComponent = this.getOwnerComponent();
+        // Destroy the existing popover if it exists
+        if (oComponent.getPopover()) {
+          oComponent.getPopover().destroy();
+          oComponent.setPopover(null);
+        }
+        this.onPressAvatarPopOverBaseFunction();
+        //this.applyStoredProfileImage();
+      },
+
+
+
+
+
+
+
+
+        /**Combined Model for Model and Containers */
         const oCombinedModel = new JSONModel({
           Product:
           {
