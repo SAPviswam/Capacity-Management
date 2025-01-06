@@ -56,6 +56,19 @@
                                 text="Capacity Management"
                             />
                         </HBox>
+                        <Avatar
+                            id="idImageMainAvatar_CapacityManagement"
+                            displaySize="XS"
+                            press="onAvatarPress_CapacityManagement"
+                            tooltip="Profile"
+                        >
+                            <layoutData>
+                                <OverflowToolbarLayoutData
+                                    id="idOverflowToolbarLayoutData_CM"
+                                    priority="High"
+                                />
+                            </layoutData>
+                        </Avatar>
                     </HBox>
                 </tnt:content>
             </tnt:ToolHeader>
