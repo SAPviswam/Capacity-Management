@@ -1,0 +1,140 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    xmlns="sap.m"
+>
+    <Dialog
+        id="idCreateContainerDialog"
+        resizable="true"
+        draggable="true"
+        contentWidth="40%"
+        contentHeight="35%"
+        title="Create Container"
+    >
+        <beginButton>
+            <Button
+                id="idCreateContainerCreateBtn"
+                text="Create"
+                press="onSaveContainer"
+                type="Success"
+            />
+        </beginButton>
+        <endButton>
+            <Button
+                id="ididCreateContainerCancelBtn"
+                text="Cancel"
+                press="onCancelCreateContainer"
+                type="Negative"
+            />
+        </endButton>
+        <content>
+            <form:SimpleForm
+                id="idCreateContainerSimpleForm"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="3"
+                labelSpanL="3"
+                labelSpanM="3"
+                labelSpanS="12"
+                adjustLabelSpan="false"
+                emptySpanXL="4"
+                emptySpanL="4"
+                emptySpanM="4"
+                emptySpanS="0"
+                columnsXL="1"
+                columnsL="1"
+                columnsM="1"
+                singleContainerFullSize="false"
+            >
+                <Label
+                    id="idCreateContainerTruckTypeLabel"
+                    text="Truck Type"
+                     design="Bold"
+                />
+
+                <Input
+                    id="idCreateContainerTruckTypeInput"
+                    value="{CombinedModel>/Vehicle/truckType}"
+                    type="Number"
+                />
+
+                <Label
+                    id="idCreateContainerLengthLabel"
+                    text="Length"
+                     design="Bold"
+                />
+
+                <Input
+                    id="idCreateContainerLengthInput"
+                    value="{CombinedModel>/Vehicle/length}"
+                />
+
+                <Label
+                    id="idCreateContainerWidthLable"
+                    text="Width"
+                    design="Bold"
+                />
+
+                <Input
+                    id="idCreateContainerWidthInput"
+                    value="{CombinedModel>/Vehicle/width}"
+                />
+
+                <Label
+                    id="idCreateContainerHeightLabel"
+                    text="Height"
+                     design="Bold"
+                />
+
+                <Input
+                    id="idCreateContainerHeightInput"
+                    value="{CombinedModel>/Vehicle/height}"
+                />
+
+                <Label
+                    id="idCreateContainerUOM"
+                    text="Unit of Measure (UOM)"
+                     design="Bold"
+                />
+
+                 
+                <Select id="idCreateContainerSelectUOM">
+                    <core:Item
+                        id="idCreateContainerUOM1"
+                        key=""
+                        text=""
+                    />
+                    <core:Item
+                        id="idCreateContainerUOM2"
+                        key="M"
+                        text="M"
+                    />
+                </Select>
+
+              
+
+                <Label
+                    id="idCreateContainerTruckWieghtLabel"
+                    text="Truck Weight"
+                     design="Bold"
+                />
+
+                <Input
+                    id="idCreateContainerTruckWieghtInput"
+                    value="{CombinedModel>/Vehicle/truckWeight}"
+                />
+
+                <Label
+                    id="idCreateContainerCapacityLabel"
+                    text="Capacity"
+                     design="Bold"
+                />
+
+                <Input
+                    id="idCreateContainerCapacityInput"
+                    value="{CombinedModel>/Vehicle/capacity}"
+                />
+            </form:SimpleForm>
+        </content>
+    </Dialog>
+</core:FragmentDefinition>

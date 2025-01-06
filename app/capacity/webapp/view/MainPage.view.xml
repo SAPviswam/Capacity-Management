@@ -231,7 +231,7 @@
                                                     />
                                                     <Input
                                                         id="idInputForModelNum"
-                                                        value="{CombinedModel>/Product/sapProductno}"
+                                                        value="{CombinedModel>/Product/model}"
                                                         placeholder="Enter Productno"
                                                         class="customInput"
                                                         width="100%"
@@ -359,7 +359,7 @@
                                                         class="sapUiTinyMarginTop"
                                                     />
                                                     <Select
-                                                        id="idForSelectUOM"
+                                                        id="idForSelectModelLWHUOM"
                                                         width="174px"
                                                     >
                                                         <core:Item
@@ -546,6 +546,7 @@
                                                         icon="sap-icon://create"
                                                         width="100px"
                                                         type="Accept"
+                                                        press="onContainerCreate"
                                                     />
                                                     <Button
                                                         id="idContainerEditBtn"
