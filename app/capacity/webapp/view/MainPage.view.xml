@@ -4,6 +4,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:tnt="sap.tnt"
     xmlns:vk="sap.ui.vk"
+    xmlns:u="sap.ui.unified"
     xmlns:smartform="sap.ui.comp.smartform"
     xmlns:layout="sap.ui.layout"
     xmlns:form="sap.ui.layout.form"
@@ -184,6 +185,7 @@
                                                     <ToolbarSpacer
                                                         id="idToolbarForProducts"
                                                     />
+
                                                     <MenuButton
                                                         id="idMaterialMenuBtn"
                                                         text="Actions"
@@ -214,6 +216,20 @@
                                                             </Menu>
                                                         </menu>
                                                     </MenuButton>
+
+                                                    <u:FileUploader
+                                                        id="FileUploader"
+                                                        sameFilenameAllowed="true"
+                                                        iconOnly="false"
+                                                        buttonOnly="false"
+                                                        fileType="XLSX,xlsx"
+                                                        icon="sap-icon://upload"
+                                                        iconFirst="true"
+                                                        style="Emphasized"
+                                                        change="onbatchUpload"
+                                                        buttonText="Upload File"
+                                                    />
+                                                   
                                                 </OverflowToolbar>
                                             </smarttable:customToolbar>
                                             <Table
