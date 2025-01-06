@@ -591,6 +591,7 @@
                             id="IconTabBarForSimulationHistory"
                             backgroundDesign="Transparent"
                             class="sapUiTinyMargin"
+                            select="onIconTabSelect"
                         >
                             <items>
                                 <IconTabFilter
@@ -611,7 +612,7 @@
                                 <IconTabFilter
                                     id="idIconTabFilterForCreateSimulation"
                                     visible="true"
-                                    key="info"
+                                    key="createSimulation"
                                     icon="sap-icon://create-form"
                                     interactionMode="Auto"
                                     iconColor="Neutral"
