@@ -218,6 +218,49 @@ sap.ui.define([
         } catch {
           MessageBox.error("Error Occurs!");
         }
-      }
+      },
+
+
+
+      onIconTabSelect: function (oEvent) {
+        var oSelectedKey = oEvent.getParameter("key");
+
+        // Only open the fragment if the "Create Simulation" tab is selected
+        if (oSelectedKey === "createSimulation") {
+            this._openCreateSimulationFragment();
+        }
+    },
+
+    // Open the Create Simulation fragment
+    _openCreateSimulationFragment:async function () {
+        var oView = this.getView();
+
+        // Check if the fragment is already loaded
+        if (!this._oFragment) {
+            // Load the fragment if it's not already loaded
+            this._oFragment= await  this.loadFragment("CreateNewSimulaton")
+        }  
+        this._oFragment.open();
+    },
+
+    // Close the fragment (can be attached to a "Close" button in the fragment)
+    onCloseDialogSimulate: function () {
+        if (this._oFragment) {
+            this._oFragment.close();
+        }
+    },
+
+    // Submit the simulation (for example, a submit button in the fragment)
+    onSubmitSimulation: function () {
+        var oInput = this.byId("simulationInput");
+        var sValue = oInput.getValue();
+        
+        if (sValue) {
+            MessageToast.show("Simulation Created: " + sValue);
+        } else {
+            MessageToast.show("Please enter a simulation name.");
+        }
+    }
+
     });
   });
