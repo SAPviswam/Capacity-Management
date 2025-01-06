@@ -6,7 +6,7 @@
     xmlns:vk="sap.ui.vk"
     xmlns:smartform="sap.ui.comp.smartform"
     xmlns:layout="sap.ui.layout"
- xmlns:form="sap.ui.layout.form"
+    xmlns:form="sap.ui.layout.form"
     xmlns:core="sap.ui.core"
     height="100%"
     xmlns:filterBar="sap.fe.macros.filterBar"
@@ -14,43 +14,45 @@
     xmlns:smarttable="sap.ui.comp.smarttable"
 >
     <tnt:ToolPage
-        id="toolPage"
+        id="idtoolPage"
         class="backgroundColour"
     >
         <!-- Tool Page heder -->
         <tnt:header>
             <tnt:ToolHeader
-                id="idTool"
+                id="idToolHeader"
                 class="backgroundColour"
             >
                 <tnt:content>
                     <HBox
-                        id="_IDGenHBox1"
+                        id="IdHBoxForBurgerIcon"
                         width="100%"
                         alignItems="Center"
                         class="backgroundColour"
                     >
                         <!-- Button positioned on the left -->
                         <Button
-                            id="skksws"
+                            id="idForBugerSymbol"
                             icon="sap-icon://menu2"
                             press=".onCollapseExpandPress"
                             class="sapUiLargeMarginEnd"
                         />
                         <Image
-                            id="idArtihcusIn_Mainpage"
+                            id="idForImage"
                             height="1.5rem"
                             class="sapUiTinyMarginBegin"
                             src="https://www.daikin.com/-/media/Project/Daikin/daikin_com/dg_common/images/logo_daikin-png.png"
                         />
                         <!-- Title centered in the remaining space -->
                         <HBox
-                            id="_IDGenHBox2"
+                            id="idHBoxForPageTitle"
                             justifyContent="Center"
                             width="100%"
                         >
                             <Title
                                 id="idPageTitle"
+                                level="Auto"
+                                titleStyle="H6"
                                 text="Capacity Management"
                             />
                         </HBox>
@@ -66,30 +68,13 @@
                 itemSelect="onItemSelect"
             >
                 <tnt:NavigationList id="idnavigationList">
-                    <!-- <tnt:NavigationListItem
-                        id="idnavhome"
-                        key="Home"
-                        text="Home"
-                        icon="sap-icon://home"
-                    /> -->
-
                     <tnt:NavigationListItem
                         id="idnavMasterRecords"
                         key="MasterRecords"
                         text="Master Records"
                         icon="sap-icon://database"
-                    >
-                        <!-- <tnt:NavigationListItem
-                            id="idnavContainerDetails"
-                            key="ContainerDetails"
-                            text="Container Details"
-                        />
-                        <tnt:NavigationListItem
-                            id="idnavProductDetails"
-                            key="ProductDetails"
-                            text="Product Details"
-                        /> -->
-                    </tnt:NavigationListItem>
+                    />
+
                     <tnt:NavigationListItem
                         id="idnavSimulation"
                         key="SimulationCreation"
@@ -104,31 +89,28 @@
             <NavContainer
                 class="backgroundColour"
                 id="idNavContainer"
-                initialPage="idScroll2"
+                initialPage="idScrollConForMasterDetails"
             >
                 <pages>
                     <!-- Master Details -->
                     <ScrollContainer
-                        id="idScroll2"
+                        id="idScrollConForMasterDetails"
                         horizontal="false"
                         vertical="true"
                         height="100%"
                         width="100%"
                         class="sapUiContentPadding backgroundColour"
                     >
-                        <!-- <Button id="idDisplay" text="Display Products" class="sapUiTinyMargin" ></Button>
-                      <Button id="idDisplayCOnt" text="Containers" class="sapUiTinyMargin"></Button>
-                      <Button id="idModelCreation" text="Create Model" class="sapUiTinyMargin"></Button> -->
                         <IconTabBar
                             expanded="true"
                             expandable="false"
-                            id="IconTabBar"
+                            id="idIconTabBarForProductList"
                             backgroundDesign="Transparent"
                             class="backgroundColour iconTabBar"
                         >
                             <items>
                                 <IconTabFilter
-                                    id="IdpageScanning1"
+                                    id="idIcontabFilterforProductsTable"
                                     visible="true"
                                     key="info"
                                     interactionMode="Auto"
@@ -138,12 +120,12 @@
                                     class="backgroundColour"
                                 >
                                     <VBox
-                                        id="idHbox"
+                                        id="idVBoxForModelsTable"
                                         width="82%"
                                     >
                                         <!-- Smart Filters -->
                                         <smartfilterbar:SmartFilterBar
-                                            id="idSmartFilters"
+                                            id="idSmartFiltersForModel"
                                             filterBarExpanded="true"
                                             entitySet="Materials"
                                         >
@@ -151,19 +133,19 @@
                                             >
                                                 <smartfilterbar:ControlConfiguration
                                                     visibleInAdvancedArea="true"
-                                                    id="idControl1"
+                                                    id="idModelControl"
                                                     label="Model"
                                                     key="model"
                                                 />
                                                 <smartfilterbar:ControlConfiguration
                                                     visibleInAdvancedArea="true"
-                                                    id="idControl2"
+                                                    id="idDescriptionControl"
                                                     label="Description"
                                                     key="description"
                                                 />
                                                 <smartfilterbar:ControlConfiguration
                                                     visibleInAdvancedArea="true"
-                                                    id="idControl"
+                                                    id="idCategoryControl"
                                                     label="Material Category"
                                                     key="mCategory"
                                                 />
@@ -171,7 +153,7 @@
                                         </smartfilterbar:SmartFilterBar>
                                         <!-- Smart Table -->
                                         <smarttable:SmartTable
-                                            id="idSmartTable"
+                                            id="idModelsSmartTable"
                                             header="Models/Products"
                                             headerLevel="H6"
                                             showRowCount="false"
@@ -179,60 +161,76 @@
                                             enableAutoBinding="true"
                                             enableExport="true"
                                             tableType="ResponsiveTable"
-                                            smartFilterId="idSmartFilters"
+                                            smartFilterId="idSmartFiltersForModel"
                                             entitySet="Materials"
                                         >
+                                            <smarttable:customToolbar>
+                                                <OverflowToolbar
+                                                    id="idOverFlowForProducts"
+                                                >
+                                                    <ToolbarSpacer
+                                                        id="idToolbarForProducts"
+                                                    />
+                                                    <Button
+                                                        id="idMaterialEditBtn"
+                                                        text="Edit"
+                                                        icon="sap-icon://edit"
+                                                        width="100px"
+                                                        type="Emphasized"
+                                                    />
+                                                    <Button
+                                                        id="idMaterialDeleteBtn"
+                                                        text="Delete"
+                                                        icon="sap-icon://delete"
+                                                        width="100px"
+                                                        type="Negative"
+                                                        press="onModelDelete"
+                                                    />
+                                                </OverflowToolbar>
+                                            </smarttable:customToolbar>
                                             <Table
-                                                id="idMyTable"
+                                                id="idModelsTable"
                                                 mode="MultiSelect"
-                                            >
-                                            <headerToolbar>
-                                            <OverflowToolbar id="idOverFlow1">
-                                            <ToolbarSpacer id="idToolbar1">
-                                            </ToolbarSpacer>
-                                            <Button id="idMaterialEdit" text="Edit" icon="sap-icon://edit" width="100px"  type="Emphasized" />
-                                             <Button id="idMaterialDelete" text="Delete" icon="sap-icon://delete" width="100px"  type="Negative" />
-                                            </OverflowToolbar>
-                                            </headerToolbar>
-                                            </Table>
+                                                noDataText="No Models/Products Available"
+                                                selectionChange="onModelChange"
+                                            />
                                         </smarttable:SmartTable>
                                     </VBox>
                                 </IconTabFilter>
                                 <IconTabFilter
-                                    id="IdpageScanning2"
+                                    id="idIconTabForAddProduct"
                                     visible="true"
                                     key="info"
                                     icon="sap-icon://add-product"
                                     interactionMode="Auto"
-                                   iconColor="Neutral"   
+                                    iconColor="Neutral"
                                     text="Add Product"
                                     class="backgroundColour"
                                 >
                                     <HBox
-                                        id="_IDGenHBox8"
+                                        id="idHBoxForCreateModel"
                                         class="backgroundColour"
                                         width="80%"
                                     >
                                         <form:SimpleForm
-                                            id="_IDGenSimpleForm"
+                                            id="idForModelCreationForm"
                                             layout="ResponsiveGridLayout"
                                             backgroundDesign="Transparent"
                                             width="100%"
                                         >
                                             <VBox
-                                                class="vboxAdd"
-                                                id="idConfigSapSysVbox_InitialView"
+                                                id="idVBoxforModelCreation"
                                                 visible="true"
                                             >
-                                                <HBox id="idhboxDescription">
+                                                <HBox id="idHboxForModelNum">
                                                     <Label
-                                                        id="idLableDescription_InitialView"
+                                                        id="idLabelForModelNum"
                                                         text="Product Number:"
                                                         width="125px"
                                                         class="sapUiTinyMarginTop"
                                                     />
                                                     <Input
-                                                        id="idDescriptionInput_InitialView"
+                                                        id="idInputForModelNum"
                                                         value="{CombinedModel>/Product/sapProductno}"
                                                         placeholder="Enter Productno"
                                                         class="customInput"
@@ -240,34 +238,30 @@
                                                     />
                                                 </HBox>
 
-                                                <HBox
-                                                    id="idhboxvghDesdfrghcription"
-                                                >
+                                                <HBox id="idHBoxForEAN">
                                                     <Label
-                                                        id="idLabvbnleDescription_InitialView"
+                                                        id="idLabelForEAN"
                                                         text="EAN:"
                                                         width="125px"
                                                         class="sapUiTinyMarginTop"
                                                     />
                                                     <Input
-                                                        id="idDesvbncriptionInput_InitialView"
+                                                        id="idInputForEAN"
                                                         value="{CombinedModel>/Product/EAN}"
                                                         placeholder="Enter EAN"
                                                         class="customInput"
                                                         width="100%"
                                                     />
                                                 </HBox>
-                                                <HBox
-                                                    id="idHBOXDescription_InitialView"
-                                                >
+                                                <HBox id="idHBoxForModelDesc">
                                                     <Label
-                                                        id="idLabelDes_InitialView"
+                                                        id="idLabelForModelDesc"
                                                         text="Description:"
                                                         width="125px"
                                                         class="sapUiTinyMarginTop"
                                                     />
                                                     <Input
-                                                        id="idInputDes_InitialView"
+                                                        id="idInputForModelDesc"
                                                         value="{CombinedModel>/Product/description}"
                                                         placeholder="Enter Description"
                                                         class="customInput"
@@ -276,17 +270,15 @@
                                                     />
                                                 </HBox>
 
-                                                <HBox
-                                                    id="iDhboxSystem_InitialView"
-                                                >
+                                                <HBox id="idHBoxForModelCat">
                                                     <Label
-                                                        id="idLableSystemId_InitweialView"
+                                                        id="idLablelForModelCat"
                                                         text="Material Category:"
                                                         width="125px"
                                                         class="sapUiTinyMarginTop"
                                                     />
                                                     <Input
-                                                        id="idSystemIdInput_InitialView"
+                                                        id="idInputForModelCat"
                                                         value="{CombinedModel>/Product/mCategory}"
                                                         placeholder="Material Category"
                                                         width="100%"
@@ -294,34 +286,30 @@
                                                     />
                                                 </HBox>
 
-                                                <HBox
-                                                    id="ighboxInstanceNumber_initialView"
-                                                >
+                                                <HBox id="idHBoxForModelLeng">
                                                     <Label
-                                                        id="idLableInstanceNumber_InitialView"
+                                                        id="idLableForModelLeng"
                                                         text="Length:"
                                                         width="125px"
                                                         class="sapUiTinyMarginTop"
                                                     />
                                                     <Input
-                                                        id="idInstanceNumberInput_InitialView"
+                                                        id="idInputForModelLeng"
                                                         value="{CombinedModel>/Product/length}"
                                                         placeholder="Enter Length"
                                                         width="100%"
                                                     />
                                                 </HBox>
 
-                                                <HBox
-                                                    id="idhboxClient_InitialView"
-                                                >
+                                                <HBox id="idHBoxForModelWidth">
                                                     <Label
-                                                        id="idLableClient_InitialView"
+                                                        id="idLableForModelWidth"
                                                         text="Width:"
                                                         width="125px"
                                                         class="sapUiTinyMarginTop"
                                                     />
                                                     <Input
-                                                        id="idClientInput_InitialView"
+                                                        id="idInputForModelWidth"
                                                         value="{CombinedModel>/Product/width}"
                                                         placeholder="Enter Width"
                                                         maxLength="5"
@@ -330,17 +318,15 @@
                                                     />
                                                 </HBox>
 
-                                                <HBox
-                                                    id="idhboxApplicationServer_InitialView"
-                                                >
+                                                <HBox id="idHBoxForModelHeight">
                                                     <Label
-                                                        id="idLableApplicationServer_InitialView"
+                                                        id="idLabelForModelHeight"
                                                         text="Height:"
                                                         width="125px"
                                                         class="sapUiTinyMarginTop"
                                                     />
                                                     <Input
-                                                        id="idApplicationServerInput_InitialView"
+                                                        id="idInputForModelHeight"
                                                         value="{CombinedModel>/Product/height}"
                                                         placeholder="Enter Height"
                                                         class="customInput"
@@ -348,17 +334,15 @@
                                                     />
                                                 </HBox>
 
-                                                <HBox
-                                                    id="idhboxApplicationServer_MainPage"
-                                                >
+                                                <HBox id="idHBoxForModelQuan">
                                                     <Label
-                                                        id="idLableApplicationServer_MainPage"
+                                                        id="idLablelForModelQuan"
                                                         text="Quantity:"
                                                         width="125px"
                                                         class="sapUiTinyMarginTop"
                                                     />
                                                     <Input
-                                                        id="idApplicationServerInput_MainPage"
+                                                        id="idInputForModelQuan"
                                                         value="{CombinedModel>/Product/quantity}"
                                                         placeholder="Enter Quantity"
                                                         class="customInput"
@@ -367,76 +351,67 @@
                                                     />
                                                 </HBox>
 
-                                                <HBox
-                                                    id="idhboxService_InitialView"
-                                                >
+                                                <HBox id="idHBoxforModelUOM">
                                                     <Label
-                                                        id="idLableService_InitialView"
+                                                        id="idLablelForModelUOM"
                                                         text="UOM:"
                                                         width="125px"
                                                         class="sapUiTinyMarginTop"
                                                     />
                                                     <Select
-                                                        id="idselectuom"
+                                                        id="idForSelectUOM"
                                                         width="174px"
                                                     >
                                                         <core:Item
-                                                            id="idselit0"
+                                                            id="idSelectUOM1"
                                                             key="Select"
                                                             text="Select"
                                                         />
 
                                                         <core:Item
-                                                            id="idselit2"
+                                                            id="idSelectUOM2"
                                                             key="M"
                                                             text="M"
                                                         />
 
                                                         <core:Item
-                                                            id="idselit4"
+                                                            id="idSelectUOM3"
                                                             key="CM"
                                                             text="CM"
                                                         />
                                                     </Select>
-                                                    <!-- <Input
-                                        id="idServiceInput_InitialView"
-                                        value="{ProductModel>/uom}"
-                                        placeholder="Enter UOM"
-                                        class="customInput"
-                                        width="100%"
-                                    /> -->
                                                 </HBox>
 
-                                                <HBox
-                                                    id="idHboxWeight_InitialView"
-                                                >
+                                                <HBox id="idHBoxForModelWeight">
                                                     <Label
-                                                        id="idLableWeight_InitialView"
+                                                        id="idLablForModelWeight"
                                                         text="Weight:"
                                                         width="125px"
                                                         class="sapUiTinyMarginTop"
                                                     />
                                                     <HBox id="idks">
                                                         <Input
-                                                            id="idWeightinput_InitialView"
+                                                            id="idInputForModelWeight"
                                                             value="{CombinedModel>/Product/weight}"
                                                             placeholder="Enter Weight"
                                                             width="70px"
                                                         />
-                                                        <Select id="uomSelect">
+                                                        <Select
+                                                            id="idSelectModelWeightUOM"
+                                                        >
                                                             <items>
                                                                 <core:Item
-                                                                    id="_IDGenIt"
+                                                                    id="idModelWeightUOM1"
                                                                     key="Select"
                                                                     text="Select"
                                                                 />
                                                                 <core:Item
-                                                                    id="_IDGenItem1"
+                                                                    id="idModelWeightUOM2"
                                                                     key="KG"
                                                                     text="Kilograms"
                                                                 />
                                                                 <core:Item
-                                                                    id="_IDGenItem2"
+                                                                    id="idModelWeightUOM3"
                                                                     key="G"
                                                                     text="Grams"
                                                                 />
@@ -447,49 +422,48 @@
                                                     </HBox>
                                                 </HBox>
 
-                                                <Label id="idEmptyLabel" />
+                                                <Label id="idModelEmptyLabel" />
                                                 <Button
-                                                    id="idconnectsapcancelButton_InitialView"
+                                                    id="idBtnForModelSave"
                                                     text="Save"
                                                     press="onCreateProduct"
                                                     type="Emphasized"
                                                     class="dialogButton_sapconnect addProductSaveButton"
                                                 />
-                                               
                                             </VBox>
                                         </form:SimpleForm>
-                                          </HBox>
+                                    </HBox>
                                 </IconTabFilter>
                                 <!-- Conatiner Details -->
                                 <IconTabFilter
-                                    id="IdpageScanning"
+                                    id="idIconTabForContainerDetails"
                                     visible="true"
                                     key="info"
                                     icon="sap-icon://shipping-status"
                                     interactionMode="Auto"
-                                     iconColor="Neutral"
+                                    iconColor="Neutral"
                                     text="Container Details"
                                     class="backgroundColour"
                                 >
                                     <VBox
-                                        id="idHBoxTruck"
+                                        id="idVBoxForContainers"
                                         width="82%"
                                     >
                                         <smartfilterbar:SmartFilterBar
-                                            id="idSmarFilterContainer"
+                                            id="idSmarFilterContainerForContainers"
                                             filterBarExpanded="true"
                                             entitySet="TruckTypes"
                                         >
                                             <smartfilterbar:controlConfiguration
                                             >
                                                 <smartfilterbar:ControlConfiguration
-                                                    id="idControlsVehTypes"
+                                                    id="idForTruckTypeCon"
                                                     key="truckType"
                                                     visibleInAdvancedArea="true"
                                                     label="TruckTpe"
                                                 />
                                                 <smartfilterbar:ControlConfiguration
-                                                    id="idControlsVehTypes1"
+                                                    id="idForTruckCap"
                                                     key="capacity"
                                                     visibleInAdvancedArea="true"
                                                     label="Truck Capacity"
@@ -497,7 +471,8 @@
                                             </smartfilterbar:controlConfiguration>
                                         </smartfilterbar:SmartFilterBar>
                                         <smarttable:SmartTable
-                                            id="idSmartTableContainer"
+                                            id="idSmartTableForContainer"
+                                            smartFilterId="idSmarFilterContainerForContainers"
                                             entitySet="TruckTypes"
                                             headerLevel="H6"
                                             header="Containers"
@@ -507,20 +482,43 @@
                                             enableExport="true"
                                             tableType="ResponsiveTable"
                                         >
+                                            <smarttable:customToolbar>
+                                                <OverflowToolbar
+                                                    id="idOverFlowForConatiners"
+                                                >
+                                                    <ToolbarSpacer
+                                                        id="idToolbarForContainers"
+                                                    />
+                                                    <Button
+                                                        id="idContainerCreateBtn"
+                                                        text="Create"
+                                                        icon="sap-icon://create"
+                                                        width="100px"
+                                                        type="Accept"
+                                                    />
+                                                    <Button
+                                                        id="idContainerEditBtn"
+                                                        text="Edit"
+                                                        icon="sap-icon://edit"
+                                                        width="100px"
+                                                        type="Emphasized"
+                                                    />
+                                                    <Button
+                                                        id="idContainerDeleteBtn"
+                                                        text="Delete"
+                                                        press="onContainerDelete"
+                                                        icon="sap-icon://delete"
+                                                        width="100px"
+                                                        type="Negative"
+                                                    />
+                                                </OverflowToolbar>
+                                            </smarttable:customToolbar>
                                             <Table
                                                 id="idContianersTable"
                                                 mode="MultiSelect"
-                                            >
-                                            <headerToolbar>
-                                            <OverflowToolbar id="idOverFlow2">
-                                            <ToolbarSpacer id="idToolbar2">
-                                            </ToolbarSpacer>
-                                            <Button id="idContainerCreate" text="Create" icon="sap-icon://create"  width="100px" type="Accept"/>
-                                            <Button id="idContainerEdit" text="Edit" icon="sap-icon://edit"  width="100px"  type="Emphasized" />
-                                             <Button id="idContainerDelete" text="Delete" icon="sap-icon://delete" width="100px"  type="Negative" />
-                                            </OverflowToolbar>
-                                            </headerToolbar>
-                                            </Table>
+                                                noDataText="No Containers/Vehicles Available"
+                                                selectionChange="onTruckTypeChange"
+                                            />
                                         </smarttable:SmartTable>
                                     </VBox>
                                 </IconTabFilter>
@@ -529,7 +527,7 @@
                     </ScrollContainer>
                     <!-- Simulation new -->
                     <ScrollContainer
-                        id="idScroll5"
+                        id="idScollContainerForSimulation"
                         horizontal="false"
                         vertical="true"
                         height="100%"
@@ -539,18 +537,18 @@
                         <IconTabBar
                             expanded="true"
                             expandable="false"
-                            id="IconTabBar1"
+                            id="IconTabBarForSimulationHistory"
                             backgroundDesign="Transparent"
                             class="sapUiTinyMargin"
                         >
                             <items>
                                 <IconTabFilter
-                                    id="IdpageScanning3"
+                                    id="idIconTabFilterForSimulationHistory"
                                     visible="true"
                                     key="info"
                                     interactionMode="Auto"
                                     icon="sap-icon://history"
-                                      iconColor="Neutral"
+                                    iconColor="Neutral"
                                     text="Previous Simulations"
                                     class="sapUiTinyMargin"
                                 >
@@ -560,12 +558,12 @@
                                     />
                                 </IconTabFilter>
                                 <IconTabFilter
-                                    id="IdpageScanning4"
+                                    id="idIconTabFilterForCreateSimulation"
                                     visible="true"
                                     key="info"
                                     icon="sap-icon://create-form"
                                     interactionMode="Auto"
-                                     iconColor="Neutral"
+                                    iconColor="Neutral"
                                     text="Create Simulation"
                                     textDirection="Inherit"
                                     class="sapUiTinyMargin"
