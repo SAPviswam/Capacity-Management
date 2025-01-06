@@ -294,7 +294,7 @@ sap.ui.define([
         } else {
             MessageToast.show("Please enter a simulation name.");
         }
-    }
+    },
 
       onbatchUpload: async function (e) {
         if (!this.oFragment) {
