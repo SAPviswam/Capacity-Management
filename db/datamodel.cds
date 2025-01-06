@@ -47,7 +47,6 @@ define entity Materials {
         quantity        : String;
         stack           : String;
         mass            : String;
-        color           : String;
         selectedProduct : Association to SelectedProduct
                               on selectedProduct.Productno = $self
 
