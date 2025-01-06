@@ -98,6 +98,22 @@ sap.ui.define([
 
                 }
             },
+
+            // for forgot password dialog box opens
+            onForgotPasswordPress: async function () {
+                if (!this.oForgotPasswordDialog) {
+                    this.oForgotPasswordDialog = await this.loadFragment("ForgotPassword");
+                }
+
+                this.oForgotPasswordDialog.open();
+            },
+
+            onCancelBtnPressForgotPassword: function () {
+                if (this.oForgotPasswordDialog.isOpen()) {
+                    this.oForgotPasswordDialog.close();
+                }
+            },
+
             onLoginBtnPressInLoginDialog: async function () {
                 debugger
                 const oModel = this.getOwnerComponent().getModel("ModelV2"),
@@ -108,6 +124,27 @@ sap.ui.define([
 
 
                 // validations
+                // test
+                const aUserInputs = [
+                    { Id: "_IDGenInput11", value: sUserEnteredUserID, regex: null, message: "Please enter registered user ID" },
+                    { Id: "_IDGenInput221", value: sUserEnteredPassword, regex: null, message: "Enter your password" }
+                ],
+                    raisedErrors = [];
+
+                aUserInputs.forEach(async input => {
+                    let aValidations = this.validateField(oUserView, input.Id, input.value, input.regex, input.message)
+                    if (aValidations.length > 0) {
+                        raisedErrors.push(aValidations[0]) // pushning error into empty array
+                    }
+                })
+
+                if (raisedErrors.length > 0) {
+                    for (let error of raisedErrors) {
+                        MessageBox.information(error) // showing error msg 
+                        return;
+                    }
+                }
+                // test
                 var flag = true;
                 if (!sUserEnteredUserID) {
                     oUserView.byId("_IDGenInput11").setValueState("Warning");
@@ -499,6 +536,108 @@ sap.ui.define([
                 } catch (error) {
                     sap.m.MessageToast.show("Something went wrong try again later....");
                     console.error("Failed to create record." + error);
+                }
+            },
+            onUpdatePasswordPress: async function () {
+                const oModel = this.getOwnerComponent().getModel("ModelV2"),
+                    oUserView = this.getView(),
+                    sPath = "/Users",
+                    sUserEnteredUserID = this.getView().byId("UserIdInputForgotPassword_cs").getValue(),
+                    sUserEnteredMobile = this.getView().byId("InputMobNoForgotPassword_cs").getValue(),
+                    sUserEnteredPass = this.getView().byId("InputNewPasswordForgotPassword_cs").getValue(),
+                    sConfirmPass = this.getView().byId("InputconfirmPasswordForgotPassword_cs").getValue();
+                // validations
+                const aUserInputs = [
+
+                    { Id: "UserIdInputForgotPassword_cs", value: sUserEnteredUserID, regex: null, message: "Enter User ID" },
+                    { Id: "InputMobNoForgotPassword_cs", value: sUserEnteredMobile, regex: /^\d+$/, message: "Enter registered mobile number" },
+                    {
+                        Id: "InputNewPasswordForgotPassword_cs", value: sUserEnteredPass, regex: /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/,
+                        message: "Password\n*At least 8 characters long.\n*Contains at least one Uppercase.\n*Contains at least one special character (e.g., @, #, $, etc.).\n*Contains at least one numeric digit."
+                    }
+                ],
+                raisedErrors =[];
+                
+                aUserInputs.forEach(async input => {
+                    let aValidations = this.validateField(oUserView, input.Id, input.value, input.regex, input.message)
+                    if (aValidations.length > 0) {
+                        raisedErrors.push(aValidations[0]) // pushning error into empty array
+                    }
+                })
+
+                if (raisedErrors.length > 0) {
+                    for (let error of raisedErrors) {
+                        MessageBox.information(error) // showing error msg 
+                        return;
+                    }
+                }
+
+                if (sUserEnteredPass !== sConfirmPass) {
+                    MessageBox.information("password must match")
+                    return
+                }
+
+                try {
+
+                    const aRegisteredUserID = new sap.ui.model.Filter("userID", sap.ui.model.FilterOperator.EQ, sUserEnteredUserID);
+                    const aRegisteredMobile = new sap.ui.model.Filter("phoneNo", sap.ui.model.FilterOperator.EQ, sUserEnteredMobile);
+
+                    // Combine the filters with AND
+                    const aFilters = new sap.ui.model.Filter({
+                        filters: [aRegisteredUserID, aRegisteredMobile],
+                        and: true // Change to false if you want OR logic
+                    });
+
+                    const oResponse = await this.readData(oModel, sPath, aFilters)
+                    if (oResponse.results.length > 0) {
+                        const sRegisteredUserID = oResponse.results[0].userID,
+                            sRegisteredPhnNumber = oResponse.results[0].phoneNo,
+                            sStoredPassword = oResponse.results[0].password;
+
+                        if (sRegisteredUserID === sUserEnteredUserID && sRegisteredPhnNumber === sUserEnteredMobile) {
+
+                            // get the actual password
+                            const sNewPassword = this.getView().byId("InputNewPasswordForgotPassword_cs").getValue();
+
+                            // Use SHA256 for hashing (CryptoJS)
+                            const sEncrytpedPass = CryptoJS.SHA256(sNewPassword).toString(); // encryption with CryptoJS
+                            if (sStoredPassword === sEncrytpedPass) {
+                                sap.m.MessageBox.information("New Password can not be same as previous password");
+                                return;
+                            }
+                            const oPayload = {
+                                password: sEncrytpedPass
+                            }
+                            try {
+
+                                // update call
+                                const oResponse = await this.updateData(oModel, `${sPath}('${sUserEnteredUserID}')`, oPayload);
+                                sap.m.MessageToast.show("Password Changed Successfully")
+                                const oUserView = this.getView();
+                                // after successfull  value states
+                                oUserView.byId("InputMobNoForgotPassword_cs").setValueState("None");
+                                oUserView.byId("UserIdInputForgotPassword_cs").setValueState("None");
+                                oUserView.byId("InputNewPasswordForgotPassword_cs").setValueState("None");
+
+                                // clear fields
+                                oUserView.byId("InputMobNoForgotPassword_cs").setValue("");
+                                oUserView.byId("UserIdInputForgotPassword_cs").setValue("");
+                                oUserView.byId("InputNewPasswordForgotPassword_cs").setValue("");
+                                // close the fragment
+                                this.oForgotPasswordDialog.close();
+
+                            } catch (error) {
+                                sap.m.MessageToast.show("Failed to reset password" + error)
+                            }
+                        } else {
+                            sap.m.MessageToast.show("ID and phone number mismatch")
+                        }
+                    } else {
+                        sap.m.MessageToast.show("ID and phone number mismatch")
+                    }
+
+                } catch (error) {
+                    sap.m.MessageToast.show("Failed to read data " + error)
                 }
             },
         });
