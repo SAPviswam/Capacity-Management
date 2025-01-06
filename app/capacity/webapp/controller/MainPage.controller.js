@@ -405,10 +405,6 @@ sap.ui.define([
           this.oFragment.close();
         }
       },
-      },
-
-
-
       onIconTabSelect: function (oEvent) {
         var oSelectedKey = oEvent.getParameter("key");
 
