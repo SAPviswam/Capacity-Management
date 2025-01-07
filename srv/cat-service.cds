@@ -67,13 +67,13 @@ annotate MyService.Materials with @(UI: {
             Value: uom,
             Label: 'Dimension Units'
         },
- 
+         
         {
             $Type: 'UI.DataField',
             Value: volume,
             Label: 'Volume'
         },
-
+          
         {
             $Type: 'UI.DataField',
             Value: stack,
@@ -179,7 +179,6 @@ annotate MyService.SelectedProduct with @(UI: {
     ]
 });
 
-
 annotate MyService.History with @(UI: {
     HeaderInfo     : {
         $Type         : 'UI.HeaderInfoType',
@@ -193,8 +192,8 @@ annotate MyService.History with @(UI: {
        createdBy,
        modifiedAt,
        modifiedBy
-        
-        
+       
+       
     ],
     LineItem       : [
         {
@@ -202,7 +201,7 @@ annotate MyService.History with @(UI: {
             Value:  simulationName_ID,
              Label: 'Simulation Name'
         },
-        
+       
         {
             $Type: 'UI.DataField',
             Value: createdAt,
@@ -224,9 +223,3 @@ annotate MyService.History with @(UI: {
         }
     ]
 });
-
- 
-annotate MyService.Materials with @(
-    UI.Identification: [],
-    cds.odata.valuelist,
-);
