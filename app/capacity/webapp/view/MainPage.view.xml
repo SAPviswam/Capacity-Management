@@ -619,6 +619,7 @@
                                             </smarttable:customToolbar>
                                             <Table
                                                 id="idContianersTable"
+                                               
                                                 mode="MultiSelect"
                                                 noDataText="No Containers/Vehicles Available"
                                                 selectionChange="onTruckTypeChange"
@@ -697,6 +698,7 @@
                                             enableAutoBinding="true"
                                             enableExport="true"
                                             tableType="ResponsiveTable"
+                                            initiallyVisibleFields="ID"
                                         >
                                             <smarttable:customToolbar>
                                                 <OverflowToolbar

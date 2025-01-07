@@ -46,7 +46,7 @@ sap.ui.define([
             height: "",
             uom: "",
             tvuom: "M³",
-            tuom: "M",
+            tuom: "KG",
             volume: "",
             truckWeight: "",
             capacity: "",
@@ -123,6 +123,7 @@ sap.ui.define([
       onCancelCreateContainer: function () {
         if (this.oContainerCreate.isOpen()) {
           this.oContainerCreate.close();
+          this.getView().getModel("CombinedModel").setProperty("/Vehicle", {});
         }
       },
       /**Opening ModelEdit Fragment */
@@ -136,7 +137,7 @@ sap.ui.define([
       onCloseEditModel: function () {
         if (this.oEdit.isOpen()) {
           this.oEdit.close();
-          this.getView().getModel("CombinedModel").setProperty("/Product",{});
+          this.getView().getModel("CombinedModel").setProperty("/Product", {});
         }
 
       },
@@ -251,7 +252,7 @@ sap.ui.define([
           MessageToast.show("successfully Deleted")
         } catch {
           MessageBox.error("Error Occurs!");
-        }finally{
+        } finally {
           this._oBusyDialog.close()
         }
       },
@@ -277,8 +278,8 @@ sap.ui.define([
           MessageBox.error("Error Occurs!");
         }
       },
-       /*edit product functinality*/
-     onModelEdit: async function () {
+      /*edit product functinality*/
+      onModelEdit: async function () {
         var oSelectedItem = this.byId("idModelsTable").getSelectedItems();
         if (oSelectedItem.length == 0) {
           MessageBox.information("Please select at least one Row for edit!");
@@ -321,7 +322,7 @@ sap.ui.define([
           stack: oUpdatedProduct.stack,
           volume: oUpdatedProduct.volume,
         };
-        
+
         let raisedErrorsSave = [];
         const aUserInputsSave = [
           // { Id: "idDesvbncriptionInput_InitialView", value: oProductPayload.EAN, regex: null, message: "Please enter EAN" },
@@ -375,40 +376,40 @@ sap.ui.define([
 
         // Only open the fragment if the "Create Simulation" tab is selected
         if (oSelectedKey === "createSimulation") {
-            this._openCreateSimulationFragment();
+          this._openCreateSimulationFragment();
         }
-    },
+      },
 
-    // Open the Create Simulation fragment
-    _openCreateSimulationFragment:async function () {
+      // Open the Create Simulation fragment
+      _openCreateSimulationFragment: async function () {
         var oView = this.getView();
 
         // Check if the fragment is already loaded
         if (!this._oFragment) {
-            // Load the fragment if it's not already loaded
-            this._oFragment= await  this.loadFragment("CreateNewSimulaton")
-        }  
-        this._oFragment.open();
-    },
-
-    // Close the fragment (can be attached to a "Close" button in the fragment)
-    onCloseDialogSimulate: function () {
-        if (this._oFragment) {
-            this._oFragment.close();
+          // Load the fragment if it's not already loaded
+          this._oFragment = await this.loadFragment("CreateNewSimulaton")
         }
-    },
+        this._oFragment.open();
+      },
 
-    // Submit the simulation (for example, a submit button in the fragment)
-    onSubmitSimulation: function () {
+      // Close the fragment (can be attached to a "Close" button in the fragment)
+      onCloseDialogSimulate: function () {
+        if (this._oFragment) {
+          this._oFragment.close();
+        }
+      },
+
+      // Submit the simulation (for example, a submit button in the fragment)
+      onSubmitSimulation: function () {
         var oInput = this.byId("simulationInput");
         var sValue = oInput.getValue();
-        
+
         if (sValue) {
-            MessageToast.show("Simulation Created: " + sValue);
+          MessageToast.show("Simulation Created: " + sValue);
         } else {
-            MessageToast.show("Please enter a simulation name.");
+          MessageToast.show("Please enter a simulation name.");
         }
-    },
+      },
 
       onbatchUpload: async function (e) {
         if (!this.oFragment) {
@@ -570,7 +571,7 @@ sap.ui.define([
           this.oFragment.close();
         }
       },
-     // test
+      // test
       onMaterialUploadbtn: function () {
         var oFileInput = document.createElement('input');
         oFileInput.type = 'file';
@@ -626,26 +627,104 @@ sap.ui.define([
           reader.readAsArrayBuffer(file);
         }
       },
-      onContainerEditPress:async  function() {
+      onContainerEditPress: async function () {
         var oSelectedItem = this.byId("idContianersTable").getSelectedItems();
         if (oSelectedItem.length == 0) {
           MessageBox.information("Please select at least one Row for edit!");
           return;
         }
-        if(oSelectedItem.length > 1){
+        if (oSelectedItem.length > 1) {
           MessageBox.information("Please select only one Row for edit!");
           return;
         }
-       let oPayload = oSelectedItem[0].getBindingContext().getObject();
-       this.getView().getModel("CombinedModel").setProperty("/Vehicle",oPayload)
-          if (!this.oEdit) {
-            this.oEdit = await this.loadFragment("EditContainerDetails");
-             }
+        let oPayload = oSelectedItem[0].getBindingContext().getObject();
+        this.getView().getModel("CombinedModel").setProperty("/Vehicle", oPayload)
+        if (!this.oEdit) {
+          this.oEdit = await this.loadFragment("EditContainerDetails");
+        }
         this.oEdit.open();
-        },
-        onCancelInEditContainerDialog: function () {
+      },
+      onCancelInEditContainerDialog: function () {
         if (this.oEdit.isOpen()) {
-            this.oEdit.close();
+          this.oEdit.close();
+        }
+      },
+
+      /***Creating New Containers */
+      onSaveCreateContainer: async function () {
+        let oView = this.getView(),
+          oDataModel = oView.getModel("CombinedModel"),
+          oProductData = oDataModel.getProperty("/Vehicle"),
+          oModel = oView.getModel("ModelV2"),
+          oPath = "/TruckTypes";
+
+        if (!oProductData.truckType ||
+          !oProductData.length ||
+          !oProductData.width ||
+          !oProductData.height ||
+          !oProductData.truckWeight ||
+          !oProductData.capacity) {
+          MessageBox.warning("Please Enter all Values");
+          return;
+        }
+
+        oProductData.truckType = `${oProductData.truckType}FT`
+        oProductData.volume = String((oProductData.length * oProductData.width * oProductData.height).toFixed(2));
+        var oSelectedUOM = this.byId("idCreateContainerSelectUOM").getSelectedKey();
+        if (oSelectedUOM === '') {
+          return MessageBox.warning("Please Select UOM")
+        }
+        oProductData.uom = oSelectedUOM;
+
+        /**Error check */
+        let raisedErrorsCreateContainer = [];
+        const aUserInputsCreateContainer = [
+          // { Id: "idDesvbncriptionInput_InitialView", value: oProductPayload.EAN, regex: null, message: "Please enter EAN" },
+          { Id: "idCreateContainerTruckTypeInput", value: oProductData.truckType, regex: null, message: "Enter Truck Type" },
+          { Id: "idCreateContainerLengthInput", value: oProductData.length, regex: /^\d+(\.\d+)?$/, message: "Length should be numeric" },
+          { Id: "idCreateContainerWidthInput", value: oProductData.width, regex: /^\d+(\.\d+)?$/, message: "Width should be numeric" },
+          { Id: "idCreateContainerHeightInput", value: oProductData.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
+          { Id: "idCreateContainerCapacityInput", value: oProductData.capacity, regex: /^\d+$/, message: "Capacity should be numeric" },
+          { Id: "idCreateContainerTruckWieghtInput", value: oProductData.truckWeight, regex: /^\d+$/, message: "Truck Weight should be numeric" }]
+        // Create an array of promises for validation
+
+        const validationPromisesCreateContainer = aUserInputsCreateContainer.map(async input => {
+          let aValidationsCreateContainer = await this.validateField(oView, input.Id, input.value, input.regex, input.message);
+          if (aValidationsCreateContainer.length > 0) {
+            raisedErrorsCreateContainer.push(aValidationsCreateContainer[0]); // Push first error into array
+          }
+        });
+
+        // Wait for all validations to complete
+        await Promise.all(validationPromisesCreateContainer);
+
+        // Check if there are any raised errors
+        if (raisedErrorsCreateContainer.length > 0) {
+          // Consolidate errors into a single message
+          const errorMessageSave = raisedErrorsCreateContainer.join("\n");
+          MessageBox.information(errorMessageSave); // Show consolidated error messages
+          return;
+        }
+        oProductData.tvuom = "M³";
+        oProductData.tuom = "KG";
+        try {
+          await this.createData(oModel, oProductData, oPath);
+          MessageToast.show("Successfully Created!!");
+          this.onCancelCreateContainer();
+          this.byId("idContianersTable").getBinding("items").refresh();
+          this.byId("idCreateContainerSelectUOM").setSelectedKey("");
+        } catch (error) {
+          MessageBox.error("Error Occurs at the Time of Creation!!");
+          this.onCancelCreateContainer();
+          this.byId("idCreateContainerSelectUOM").setSelectedKey("");
+          this.byId("idContianersTable").getBinding("items").refresh();
+
+        }
+      },
+      onLiveChangeForContainerType: function (oEvent) {
+        var sValue = oEvent.getParameter("value");
+        if (sValue.length > 2) {
+          oEvent.getSource().setValue(sValue.substring(0, 2));
         }
       }
     });
