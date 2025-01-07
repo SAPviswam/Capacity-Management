@@ -143,6 +143,21 @@ sap.ui.define([
         }
 
       },
+      /**Open Container Edit */
+      onOpenContainerEdit: async function () {
+        if (!this.oEditContainer) {
+          this.oEditContainer = await this.loadFragment("EditContainerDetails");
+
+        }
+        this.oEditContainer.open();
+      },
+      /**closing Editing Container */
+      onCancelEditContainer: function () {
+        if (this.oEditContainer.isOpen()) {
+          this.oEditContainer.close();
+          this.getView().getModel("CombinedModel").setProperty("/Vehicle", {});
+        }
+      },
       /**Create Product/Model */
       onCreateProduct: async function () {
         const oView = this.getView(),
@@ -658,97 +673,91 @@ sap.ui.define([
           return;
         }
         let oPayload = oSelectedItem[0].getBindingContext().getObject();
-        this.getView().getModel("CombinedModel").setProperty("/Vehicle", oPayload)
-        if (!this.oEdit) {
-          this.oEdit = await this.loadFragment("EditContainerDetails");
-        }
-        this.oEdit.open();
+        this.getView().getModel("CombinedModel").setProperty("/Vehicle", oPayload);
+        this.onOpenContainerEdit();
+
       },
-      onCancelInEditContainerDialog: function () {
-        if (this.oEdit.isOpen()) {
-          this.oEdit.close();
-        }
-      },
+
 
       //Edit function for the Container table. Present there is no requirment 
       // for any additional functionality or validation requirements Add this Code
       onSaveEditContainerPress: async function () {
         // Get the edited data from the fragment model
         const oView = this.getView(),
-              oContainerModel = oView.getModel("CombinedModel"),
-              oUpdateContainer = oContainerModel.getProperty("/Vehicle"),
-              // Get the original product row binding context (from the selected row in the table)
-              oTable = this.byId("idContianersTable"),
-              oSelectedItem = oTable.getSelectedItem(),
-              oContext = oSelectedItem.getBindingContext(),
-              // Use the context to get the path and ID of the selected product for updating
-              sPath = oContext.getPath(), // The path to the product entry in the OData model
-              oModel = oView.getModel("ModelV2");
-    
+          oContainerModel = oView.getModel("CombinedModel"),
+          oUpdateContainer = oContainerModel.getProperty("/Vehicle"),
+          // Get the original product row binding context (from the selected row in the table)
+          oTable = this.byId("idContianersTable"),
+          oSelectedItem = oTable.getSelectedItem(),
+          oContext = oSelectedItem.getBindingContext(),
+          // Use the context to get the path and ID of the selected product for updating
+          sPath = oContext.getPath(), // The path to the product entry in the OData model
+          oModel = oView.getModel("ModelV2");
+
         // Create the payload for updating the product in the backend
         var oPayloadmodelupdate = {
-            truckType: oUpdateContainer.truckType,
-            length: oUpdateContainer.length,
-            width: oUpdateContainer.width,
-            height: oUpdateContainer.height,
-            uom: oUpdateContainer.uom,
-            volume: oUpdateContainer.volume,
-            tvuom: oUpdateContainer.tvuom,
-            truckWeight: oUpdateContainer.truckWeight,
-            capacity: oUpdateContainer.capacity,
-            tuom: oUpdateContainer.tuom, // Add any additional properties if needed
+          truckType: oUpdateContainer.truckType,
+          length: oUpdateContainer.length,
+          width: oUpdateContainer.width,
+          height: oUpdateContainer.height,
+          uom: oUpdateContainer.uom,
+          volume: oUpdateContainer.volume,
+          tvuom: oUpdateContainer.tvuom,
+          truckWeight: oUpdateContainer.truckWeight,
+          capacity: oUpdateContainer.capacity,
+          tuom: oUpdateContainer.tuom, // Add any additional properties if needed
         }
-    
+
         let raisedErrorsSave = [];
         const aUserInputsSave = [
-            { Id: "IdContainerLength_Input", value: oPayloadmodelupdate.length, regex: /^\d+(\.\d+)?$/, message: "Length should be numeric" },
-            { Id: "idContainerWidth_Input", value: oPayloadmodelupdate.width, regex: /^\d+(\.\d+)?$/, message: "Width should be numeric" },
-            { Id: "idContainerHeight_Input", value: oPayloadmodelupdate.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
-            { Id: "idContainerCapacity_Input", value: oPayloadmodelupdate.capacity, regex: /^\d+(\.\d+)?$/, message: "Capacity should be numeric" },
-            { Id: "idContainerTruckWeight_Input", value: oPayloadmodelupdate.truckWeight, regex: /^\d+(\.\d+)?$/, message: "Truck Weight should be numeric" }
+          { Id: "IdContainerLength_Input", value: oPayloadmodelupdate.length, regex: /^\d+(\.\d+)?$/, message: "Length should be numeric" },
+          { Id: "idContainerWidth_Input", value: oPayloadmodelupdate.width, regex: /^\d+(\.\d+)?$/, message: "Width should be numeric" },
+          { Id: "idContainerHeight_Input", value: oPayloadmodelupdate.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
+          { Id: "idContainerCapacity_Input", value: oPayloadmodelupdate.capacity, regex: /^\d+(\.\d+)?$/, message: "Capacity should be numeric" },
+          { Id: "idContainerTruckWeight_Input", value: oPayloadmodelupdate.truckWeight, regex: /^\d+(\.\d+)?$/, message: "Truck Weight should be numeric" }
         ];
-    
+
         // Add validation for empty fields
         aUserInputsSave.forEach(input => {
-            if (input.value === "" || input.value === null || input.value === undefined) {
-                raisedErrorsSave.push(input.message + " cannot be empty.");
-            }
+          if (input.value === "" || input.value === null || input.value === undefined) {
+            raisedErrorsSave.push(input.message + " cannot be empty.");
+          }
         });
-    
+
         const validationPromisesSave = aUserInputsSave.map(async input => {
-            if (input.value !== "" && input.value !== null && input.value !== undefined) {
-                let aValidationsSave = await this.validateField(oView, input.Id, input.value, input.regex, input.message);
-                if (aValidationsSave.length > 0) {
-                    raisedErrorsSave.push(aValidationsSave[0]); // Push first error into array
-                }
+          if (input.value !== "" && input.value !== null && input.value !== undefined) {
+            let aValidationsSave = await this.validateField(oView, input.Id, input.value, input.regex, input.message);
+            if (aValidationsSave.length > 0) {
+              raisedErrorsSave.push(aValidationsSave[0]); // Push first error into array
             }
+          }
         });
-    
+
         // Wait for all validations to complete
         await Promise.all(validationPromisesSave);
-    
+
         // Check if there are any raised errors
         if (raisedErrorsSave.length > 0) {
-            // Consolidate errors into a single message
-            const errorMessageSave = raisedErrorsSave.join("\n");
-            MessageBox.warning(errorMessageSave); // Show consolidated error messages
-            return;
+          // Consolidate errors into a single message
+          const errorMessageSave = raisedErrorsSave.join("\n");
+          MessageBox.warning(errorMessageSave); // Show consolidated error messages
+          return;
         }
-    
+
         oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(2));
-    
+
         try {
-            await this.updateData(oModel, oPayloadmodelupdate, sPath);
-            MessageBox.success("Container details updated successfully!");
-            // Close the fragment
-            this.onCloseEditModel();
-            // Optionally, refresh the table binding to reflect the changes
-            oTable.getBinding("items").refresh();
+          await this.updateData(oModel, oPayloadmodelupdate, sPath);
+          MessageBox.success("Container details updated successfully!");
+          // Close the fragment
+          this.onCancelEditContainer();
+          // Optionally, refresh the table binding to reflect the changes
+          oTable.getBinding("items").refresh();
         } catch (oError) {
-            MessageBox.error("Error updating Container details: " + oError.message);
-            this.onCloseEditModel();
+          MessageBox.error("Error updating Container details: " + oError.message);
+          this.onCancelEditContainer();
         }
-    },
+      },
       /***Creating New Containers */
       onSaveCreateContainer: async function () {
         let oView = this.getView(),
@@ -826,23 +835,21 @@ sap.ui.define([
           oEvent.getSource().setValue(sValue.substring(0, 2));
         }
       },
-//         if(oSelectedItem.length > 1){
-//           MessageBox.information("Please select only one Row for edit!");
-//           return;
-//         }
-//        let oPayload = oSelectedItem[0].getBindingContext().getObject();
-//        this.getView().getModel("CombinedModel").setProperty("/Vehicle",oPayload)
-//           if (!this.oEdit) {
-//             this.oEdit = await this.loadFragment("EditContainerDetails");
-//              }
-//         this.oEdit.open();
-//         },
-//         onCancelInEditContainerDialog: function () {
-//         if (this.oEdit.isOpen()) {
-//             this.oEdit.close();
-//         }
-//       }
-
-
+      //         if(oSelectedItem.length > 1){
+      //           MessageBox.information("Please select only one Row for edit!");
+      //           return;
+      //         }
+      //        let oPayload = oSelectedItem[0].getBindingContext().getObject();
+      //        this.getView().getModel("CombinedModel").setProperty("/Vehicle",oPayload)
+      //           if (!this.oEdit) {
+      //             this.oEdit = await this.loadFragment("EditContainerDetails");
+      //              }
+      //         this.oEdit.open();
+      //         },
+      //         onCancelInEditContainerDialog: function () {
+      //         if (this.oEdit.isOpen()) {
+      //             this.oEdit.close();
+      //         }
+      //       }
     });
   });
