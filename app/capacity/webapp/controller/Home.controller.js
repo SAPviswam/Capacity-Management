@@ -115,7 +115,6 @@ sap.ui.define([
             },
 
             onLoginBtnPressInLoginDialog: async function () {
-                debugger
                 const oModel = this.getOwnerComponent().getModel("ModelV2"),
                     oUserView = this.getView(),
                     sPath = "/Users",
@@ -222,6 +221,7 @@ sap.ui.define([
             },
             _onLoginSuccess(sUserEnteredUserID) {
                 // Clear input fields
+
                 this.getView().byId("_IDGenInput11").setValue("");
                 this.getView().byId("_IDGenInput221").setValue("");
 
@@ -230,7 +230,7 @@ sap.ui.define([
 
                 // Navigate to the Initial Screen
                 const oRouter = this.getOwnerComponent().getRouter();
-                oRouter.navTo("MainPage");
+                oRouter.navTo("MainPage", { id: sUserEnteredUserID });
                 // window.location.reload(true);
 
             },
@@ -556,8 +556,8 @@ sap.ui.define([
                         message: "Password\n*At least 8 characters long.\n*Contains at least one Uppercase.\n*Contains at least one special character (e.g., @, #, $, etc.).\n*Contains at least one numeric digit."
                     }
                 ],
-                raisedErrors =[];
-                
+                    raisedErrors = [];
+
                 aUserInputs.forEach(async input => {
                     let aValidations = this.validateField(oUserView, input.Id, input.value, input.regex, input.message)
                     if (aValidations.length > 0) {

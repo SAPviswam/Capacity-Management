@@ -25,6 +25,12 @@ sap.ui.define([
 
             // enable routing
             this.getRouter().initialize();
-        }
+        },
+        getPopover: function () {
+            return this._oPopover;
+        },
+        setPopover: function (oPopover) {
+            this._oPopover = oPopover;
+        },
     });
 });
