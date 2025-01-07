@@ -72,9 +72,19 @@ annotate MyService.Materials with @(UI: {
             $Type: 'UI.DataField',
             Value: volume,
             Label: 'Volume'
+        },
+          
+        {
+            $Type: 'UI.DataField',
+            Value: stack,
+            Label: 'Stack Levels'
+        },
+          
+        {
+            $Type: 'UI.DataField',
+            Value: quantity,
+            Label: 'Quantity'
         }
-
-
     ],
 });
 

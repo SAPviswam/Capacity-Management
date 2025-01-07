@@ -198,7 +198,7 @@
                                                                     id="idMaterialEditBtn"
                                                                     text="Edit"
                                                                     icon="sap-icon://edit"
-                                                                    press="onPressEditInProductsTable"
+                                                                    press="onModelEdit"
                                                                 
                                                                 />
                                                                 <MenuItem

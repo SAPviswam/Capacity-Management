@@ -23,7 +23,7 @@
             <Button
                 id="idCancesslbnmButton"
                 text="Cancel"
-                press="onCancelInEditProductDialog"
+                press="onCloseEditModel"
                 type="Negative"
             />
         </endButton>
