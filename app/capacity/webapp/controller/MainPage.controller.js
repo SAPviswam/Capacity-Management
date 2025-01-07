@@ -215,12 +215,20 @@ sap.ui.define([
       },
       /** Deleting Models */
       onModelDelete: async function () {
+
+        this._oBusyDialog = new sap.m.BusyDialog({
+          text: "Deleting Data"
+        });
+        this._oBusyDialog.open()
         let oSlectedItems = this.byId("idModelsTable").getSelectedItems();
         const oModel = this.getView().getModel("ModelV2");
         if (oSlectedItems.length < 1) {
+          this._oBusyDialog.close()
           return MessageBox.warning("Please Select atleast One Model/Prodcut");
         }
         try {
+          // delay the for buffer
+          await new Promise((resolve) => setTimeout(resolve, 500));
           for (let Item of oSlectedItems) {
             let sPath = Item.getBindingContext().getPath();
             await this.deleteData(oModel, sPath);
@@ -229,6 +237,8 @@ sap.ui.define([
           MessageToast.show("successfully Deleted")
         } catch {
           MessageBox.error("Error Occurs!");
+        }finally{
+          this._oBusyDialog.close()
         }
       },
       /**Truck type selection based on click display details */
@@ -253,6 +263,7 @@ sap.ui.define([
           MessageBox.error("Error Occurs!");
         }
       },
+
 
       //edit product functinality
 
@@ -459,6 +470,7 @@ sap.ui.define([
           reader.readAsArrayBuffer(file);
         }
       },
+
       onBatchSave: async function () {
         var that = this;
         var addedProdCodeModel = this.getView().getModel("MaterialModel").getData();
@@ -578,6 +590,64 @@ sap.ui.define([
           this.oFragment.close();
         }
       },
+
+      // test
+      onMaterialUploadbtn: function () {
+        var oFileInput = document.createElement('input');
+        oFileInput.type = 'file';
+
+        // Trigger the file input click event to open the file dialog
+        oFileInput.click();
+        oFileInput.addEventListener('change', this._onFileSelected.bind(this, oFileInput));
+      },
+
+      _onFileSelected: async function (oFileInput) {
+        // Retrieve the selected file
+        var oFile = oFileInput.files[0];
+
+        if (oFile) {
+          // Here, you can implement the logic to handle the file
+          // Example of handling the file upload logic.
+          if (!this.oFragment) {
+            this.oFragment = await this.loadFragment("MaterialXlData");
+          }
+          this.oFragment.open();
+          await this._importData(oFile);
+        }
+      },
+      _importData: function (file) {
+        var that = this;
+        var excelData = {};
+        if (file && window.FileReader) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var data = new Uint8Array(e.target.result);
+            var workbook = XLSX.read(data, {
+              type: 'array'
+            });
+            workbook.SheetNames.forEach(function (sheetName) {
+              // Here is your object for every sheet in workbook
+              excelData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+              // adding serial numbers
+              excelData.forEach(function (item, index) {
+                item.serialNumber = index + 1; // Serial number starts from 1
+              });
+
+            });
+
+            // Setting the data to the local model
+            that.MaterialModel.setData({
+              items: excelData
+            });
+            that.MaterialModel.refresh(true);
+          };
+          reader.onerror = function (ex) {
+            console.log(ex);
+          };
+          reader.readAsArrayBuffer(file);
+        }
+      },
+
 
     });
   });

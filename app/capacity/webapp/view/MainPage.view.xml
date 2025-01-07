@@ -210,7 +210,7 @@
                                                                 />
                                                                 <MenuItem
                                                                     id="idMaterialUploadBtn"
-                                                                    text="upload"
+                                                                    text="Upload File"
                                                                     icon="sap-icon://upload"
                                                                     press="onMaterialUploadbtn"
                                                                 />
@@ -218,18 +218,6 @@
                                                         </menu>
                                                     </MenuButton>
 
-                                                    <u:FileUploader
-                                                        id="FileUploader"
-                                                        sameFilenameAllowed="true"
-                                                        iconOnly="false"
-                                                        buttonOnly="false"
-                                                        fileType="XLSX,xlsx"
-                                                        icon="sap-icon://upload"
-                                                        iconFirst="true"
-                                                        style="Emphasized"
-                                                        change="onbatchUpload"
-                                                        buttonText="Upload File"
-                                                    />
                                                 </OverflowToolbar>
                                             </smarttable:customToolbar>
                                             <Table
