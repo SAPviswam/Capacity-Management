@@ -62,6 +62,7 @@
                 <Input
                     id="IdContainerLength_Input"
                     value="{CombinedModel>/Vehicle/length}"
+                    type="Number"
                 />
 
                 <Label
@@ -71,6 +72,7 @@
                 <Input
                     id="idContainerWidth_Input"
                     value="{CombinedModel>/Vehicle/width}"
+                    type="Number"
                 />
 
                 <Label
@@ -80,6 +82,7 @@
                 <Input
                     id="idContainerHeight_Input"
                     value="{CombinedModel>/Vehicle/height}"
+                    type="Number"
                 />
 
                 <Label
@@ -89,6 +92,7 @@
                 <Input
                     id="idContainerCapacity_Input"
                     value="{CombinedModel>/Vehicle/capacity}"
+                    type="Number"
                 />
                 <Label
                     id="idContainerTruckWeight_Label"
@@ -97,6 +101,7 @@
                 <Input
                     id="idContainerTruckWeight_Input"
                     value="{CombinedModel>/Vehicle/truckWeight}"
+                    type="Number"
                 />
                 <!-- <Label
                     id="idContainerTuom_Label"
