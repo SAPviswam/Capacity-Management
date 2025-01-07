@@ -67,6 +67,8 @@ sap.ui.define([
         debugger
         const { id } = oEvent1.getParameter("arguments");
         this.ID = id;
+        // Apply the stored profile image to all avatars in the app
+        this.applyStoredProfileImage();
       },
 
       //Avatar Press function from the MainPage_CM
