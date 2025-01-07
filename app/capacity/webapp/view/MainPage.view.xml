@@ -4,6 +4,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:tnt="sap.tnt"
     xmlns:vk="sap.ui.vk"
+    xmlns:u="sap.ui.unified"
     xmlns:smartform="sap.ui.comp.smartform"
     xmlns:layout="sap.ui.layout"
     xmlns:form="sap.ui.layout.form"
@@ -52,10 +53,24 @@
                             <Title
                                 id="idPageTitle"
                                 level="Auto"
-                                titleStyle="H6"
+                                titleStyle="H1"
                                 text="Capacity Management"
+                                class="capacityManagement"
                             />
                         </HBox>
+                        <Avatar
+                            id="idImageMainAvatar_CapacityManagement"
+                            displaySize="XS"
+                            press="onAvatarPress_CapacityManagement"
+                            tooltip="Profile"
+                        >
+                            <layoutData>
+                                <OverflowToolbarLayoutData
+                                    id="idOverflowToolbarLayoutData_CM"
+                                    priority="High"
+                                />
+                            </layoutData>
+                        </Avatar>
                     </HBox>
                 </tnt:content>
             </tnt:ToolHeader>
@@ -121,7 +136,7 @@
                                 >
                                     <VBox
                                         id="idVBoxForModelsTable"
-                                        width="82%"
+                                        width="80%"
                                     >
                                         <!-- Smart Filters -->
                                         <smartfilterbar:SmartFilterBar
@@ -171,21 +186,45 @@
                                                     <ToolbarSpacer
                                                         id="idToolbarForProducts"
                                                     />
-                                                    <Button
-                                                        id="idMaterialEditBtn"
-                                                        text="Edit"
-                                                        icon="sap-icon://edit"
-                                                        width="100px"
-                                                        type="Emphasized"
-                                                    />
-                                                    <Button
-                                                        id="idMaterialDeleteBtn"
-                                                        text="Delete"
-                                                        icon="sap-icon://delete"
-                                                        width="100px"
-                                                        type="Negative"
-                                                        press="onModelDelete"
-                                                    />
+
+                                                    <MenuButton
+                                                        id="idMaterialMenuBtn"
+                                                        text="Actions"
+                                                    >
+                                                        <menu>
+                                                            <Menu
+                                                                id="idMaterialMenu"
+                                                                itemSelected="onMenuAction"
+                                                            >
+                                                                <MenuItem
+                                                                    id="idMaterialEditBtn"
+                                                                    text="Edit"
+                                                                    icon="sap-icon://edit"
+                                                                    press="onModelEdit"
+
+                                                                />
+<!--                                                                <MenuItem
+                                                                    id="idMaterialEditBtn"
+                                                                    text="Edit"
+                                                                    icon="sap-icon://edit"
+                                                                    press="onPressEditInProductsTable"
+                                                                /> -->
+                                                                <MenuItem
+                                                                    id="idMaterialDeleteBtn"
+                                                                    text="Delete"
+                                                                    icon="sap-icon://delete"
+                                                                    press="onModelDelete"
+                                                                />
+                                                                <MenuItem
+                                                                    id="idMaterialUploadBtn"
+                                                                    text="Upload"
+                                                                    icon="sap-icon://upload"
+                                                                    press="onMaterialUploadbtn"
+                                                                />
+                                                            </Menu>
+                                                        </menu>
+                                                    </MenuButton>
+
                                                 </OverflowToolbar>
                                             </smarttable:customToolbar>
                                             <Table
@@ -231,7 +270,7 @@
                                                     />
                                                     <Input
                                                         id="idInputForModelNum"
-                                                        value="{CombinedModel>/Product/sapProductno}"
+                                                        value="{CombinedModel>/Product/model}"
                                                         placeholder="Enter Productno"
                                                         class="customInput"
                                                         width="100%"
@@ -359,7 +398,7 @@
                                                         class="sapUiTinyMarginTop"
                                                     />
                                                     <Select
-                                                        id="idForSelectUOM"
+                                                        id="idForSelectModelLWHUOM"
                                                         width="174px"
                                                     >
                                                         <core:Item
@@ -379,7 +418,48 @@
                                                             key="CM"
                                                             text="CM"
                                                         />
+                                                        <core:Item
+                                                            id="idSelectUOM4"
+                                                            key="mm"
+                                                            text="mm"
+                                                        />
                                                     </Select>
+                                                </HBox>
+                                                <HBox
+                                                    id="idHBoxForModelNetWeight"
+                                                >
+                                                    <Label
+                                                        id="idLablelForModelNetWeight"
+                                                        text="Net Weight:"
+                                                        width="125px"
+                                                        class="sapUiTinyMarginTop"
+                                                    />
+                                                    <Input
+                                                        id="idInputForModelNetWeight"
+                                                        value="{CombinedModel>/Product/netWeight}"
+                                                        placeholder="Enter Net Weight"
+                                                        class="customInput"
+                                                        width="100%"
+                                                        maxLength="200"
+                                                    />
+                                                </HBox>
+                                                <HBox
+                                                    id="idHBoxForModelGrossWeight"
+                                                >
+                                                    <Label
+                                                        id="idLablelForModelGrossWeight"
+                                                        text="Gross Weight:"
+                                                        width="125px"
+                                                        class="sapUiTinyMarginTop"
+                                                    />
+                                                    <Input
+                                                        id="idInputForModelGrossWeight"
+                                                        value="{CombinedModel>/Product/grossWeight}"
+                                                        placeholder="Enter Gross Weight"
+                                                        class="customInput"
+                                                        width="100%"
+                                                        maxLength="200"
+                                                    />
                                                 </HBox>
 
                                                 <HBox id="idHBoxForModelWeight">
@@ -389,37 +469,47 @@
                                                         width="125px"
                                                         class="sapUiTinyMarginTop"
                                                     />
-                                                    <HBox id="idks">
-                                                        <Input
-                                                            id="idInputForModelWeight"
-                                                            value="{CombinedModel>/Product/weight}"
-                                                            placeholder="Enter Weight"
-                                                            width="70px"
-                                                        />
-                                                        <Select
-                                                            id="idSelectModelWeightUOM"
-                                                        >
-                                                            <items>
-                                                                <core:Item
-                                                                    id="idModelWeightUOM1"
-                                                                    key="Select"
-                                                                    text="Select"
-                                                                />
-                                                                <core:Item
-                                                                    id="idModelWeightUOM2"
-                                                                    key="KG"
-                                                                    text="Kilograms"
-                                                                />
-                                                                <core:Item
-                                                                    id="idModelWeightUOM3"
-                                                                    key="G"
-                                                                    text="Grams"
-                                                                />
 
-                                                                <!-- Add more UOM options as needed -->
-                                                            </items>
-                                                        </Select>
-                                                    </HBox>
+                                                    <Select
+                                                        id="idSelectModelWeightUOM"
+                                                        width="174px"
+                                                    >
+                                                        <items>
+                                                            <core:Item
+                                                                id="idModelWeightUOM1"
+                                                                key="Select"
+                                                                text="Select"
+                                                            />
+                                                            <core:Item
+                                                                id="idModelWeightUOM2"
+                                                                key="KG"
+                                                                text="Kilograms"
+                                                            />
+                                                            <core:Item
+                                                                id="idModelWeightUOM3"
+                                                                key="G"
+                                                                text="Grams"
+                                                            />
+
+                                                            <!-- Add more UOM options as needed -->
+                                                        </items>
+                                                    </Select>
+                                                </HBox>
+                                                <HBox id="idHBoxForModelStack">
+                                                    <Label
+                                                        id="idLablelForModelStack"
+                                                        text="Stack Level:"
+                                                        width="125px"
+                                                        class="sapUiTinyMarginTop"
+                                                    />
+                                                    <Input
+                                                        id="idInputForModelStack"
+                                                        value="{CombinedModel>/Product/stack}"
+                                                        placeholder="Enter Stack Levels"
+                                                        class="customInput"
+                                                        width="100%"
+                                                        maxLength="200"
+                                                    />
                                                 </HBox>
 
                                                 <Label id="idModelEmptyLabel" />
@@ -447,7 +537,7 @@
                                 >
                                     <VBox
                                         id="idVBoxForContainers"
-                                        width="82%"
+                                        width="80%"
                                     >
                                         <smartfilterbar:SmartFilterBar
                                             id="idSmarFilterContainerForContainers"
@@ -489,32 +579,47 @@
                                                     <ToolbarSpacer
                                                         id="idToolbarForContainers"
                                                     />
-                                                    <Button
-                                                        id="idContainerCreateBtn"
-                                                        text="Create"
-                                                        icon="sap-icon://create"
-                                                        width="100px"
-                                                        type="Accept"
-                                                    />
-                                                    <Button
-                                                        id="idContainerEditBtn"
-                                                        text="Edit"
-                                                        icon="sap-icon://edit"
-                                                        width="100px"
-                                                        type="Emphasized"
-                                                    />
-                                                    <Button
-                                                        id="idContainerDeleteBtn"
-                                                        text="Delete"
-                                                        press="onContainerDelete"
-                                                        icon="sap-icon://delete"
-                                                        width="100px"
-                                                        type="Negative"
-                                                    />
+                                                    <MenuButton
+                                                        id="idContainerMenuBtn"
+                                                        text="Actions"
+                                                    >
+                                                        <menu>
+                                                            <Menu
+                                                                id="idContainerlMenu"
+                                                                itemSelected="onMenuAction"
+                                                            >
+                                                                <MenuItem
+                                                                    id="idContainerCreateBtn"
+                                                                    text="Create"
+                                                                    icon="sap-icon://create"
+                                                                    press="onContainerCreate"
+                                                                />
+                                                                <MenuItem
+                                                                    id="idContainerEditBtn"
+                                                                    text="Edit"
+                                                                    icon="sap-icon://edit"
+                                                                    press="onContainerEditPress"
+                                                                />
+                                                                <MenuItem
+                                                                    id="idContainerDeleteBtn"
+                                                                    text="Delete"
+                                                                    press="onContainerDelete"
+                                                                    icon="sap-icon://delete"
+                                                                />
+                                                                <MenuItem
+                                                                    id="idContainerUploadBtn"
+                                                                    text="UpLoad"
+                                                                    press="onContainerUpload"
+                                                                    icon="sap-icon://upload"
+                                                                />
+                                                            </Menu>
+                                                        </menu>
+                                                    </MenuButton>
                                                 </OverflowToolbar>
                                             </smarttable:customToolbar>
                                             <Table
                                                 id="idContianersTable"
+                                               
                                                 mode="MultiSelect"
                                                 noDataText="No Containers/Vehicles Available"
                                                 selectionChange="onTruckTypeChange"
@@ -540,6 +645,7 @@
                             id="IconTabBarForSimulationHistory"
                             backgroundDesign="Transparent"
                             class="sapUiTinyMargin"
+                            select="onIconTabSelect"
                         >
                             <items>
                                 <IconTabFilter
@@ -556,11 +662,88 @@
                                         id="idList2"
                                         text="Previous Simulations"
                                     />
+                                      <VBox
+                                        id="idVBoxForPreviousSimulation"
+                                        
+                                    >
+                                        <smartfilterbar:SmartFilterBar
+                                            id="idSmarFilterContainerFor_previous_simulation"
+                                            filterBarExpanded="true"
+                                            entitySet="History"
+                                        >
+                                            <smartfilterbar:controlConfiguration
+                                            >
+                                                <smartfilterbar:ControlConfiguration
+                                                    id="idFor_simulation_name"
+                                                    key="simulationName_ID"
+                                                    visibleInAdvancedArea="true"
+                                                    label="Simulation Name"
+                                                />
+                                                <!-- <smartfilterbar:ControlConfiguration
+                                                    id="idForTruckCap"
+                                                    key="capacity"
+                                                    visibleInAdvancedArea="true"
+                                                    label="Truck Capacity"
+                                                /> -->
+                                            </smartfilterbar:controlConfiguration>
+                                        </smartfilterbar:SmartFilterBar>
+                                        <smarttable:SmartTable
+                                            id="idSmartTableFor_previous_simulation"
+                                            smartFilterId="idSmarFilterContainerFor_previous_simulation"
+                                            entitySet="History"
+                                            headerLevel="H6"
+                                            header="Previous Simulation"
+                                            showRowCount="false"
+                                            showFullScreenButton="true"
+                                            enableAutoBinding="true"
+                                            enableExport="true"
+                                            tableType="ResponsiveTable"
+                                        >
+                                            <smarttable:customToolbar>
+                                                <OverflowToolbar
+                                                    id="idOverFlowFor_previous_simulation"
+                                                >
+                                                    <ToolbarSpacer
+                                                        id="idToolbarFor_previous_simulation"
+                                                    />
+                                                    <!-- <Button
+                                                        id="idContainerCreateBtn"
+                                                        text="Create"
+                                                        icon="sap-icon://create"
+                                                        width="100px"
+                                                        type="Accept"
+                                                        press="onContainerCreate"
+                                                    />
+                                                    <Button
+                                                        id="idContainerEditBtn"
+                                                        text="Edit"
+                                                        icon="sap-icon://edit"
+                                                        width="100px"
+                                                        type="Emphasized"
+                                                    />
+                                                    <Button
+                                                        id="idContainerDeleteBtn"
+                                                        text="Delete"
+                                                        press="onContainerDelete"
+                                                        icon="sap-icon://delete"
+                                                        width="100px"
+                                                        type="Negative"
+                                                    /> -->
+                                                </OverflowToolbar>
+                                            </smarttable:customToolbar>
+                                            <Table
+                                                id="id_previous_simulation_table"
+                                                mode="MultiSelect"
+                                                noDataText="No Previous Simulation "
+                                                selectionChange="onTruckTypeChange"
+                                            />
+                                        </smarttable:SmartTable>
+                                    </VBox>
                                 </IconTabFilter>
                                 <IconTabFilter
                                     id="idIconTabFilterForCreateSimulation"
                                     visible="true"
-                                    key="info"
+                                    key="createSimulation"
                                     icon="sap-icon://create-form"
                                     interactionMode="Auto"
                                     iconColor="Neutral"
@@ -572,6 +755,7 @@
                                         id="idList4"
                                         text="Create Simulations"
                                     />
+                                    
                                 </IconTabFilter>
                             </items>
                         </IconTabBar>

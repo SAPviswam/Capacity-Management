@@ -1,0 +1,166 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    xmlns="sap.m"
+>
+    <Dialog
+        id="idEditProductDssialog"
+        resizable="true"
+        draggable="true"
+        contentWidth="50%"
+        contentHeight="50%"
+        title="Edit Product"
+    >
+        <beginButton>
+            <Button
+                id="idCreatssevgbhjkButton"
+                text="Save"
+                press="onSaveProduct"
+                type="Success"
+            />
+        </beginButton>
+        <endButton>
+            <!-- <Button
+                id="idCancesslbnmButton"
+                text="Cancel"
+                press="onCancelInEditProductDialog"
+                type="Negative"
+            /> -->
+          <Button
+                id="idCancesslbnmButton"
+                text="Cancel"
+                press="onCloseEditModel"
+                type="Negative"
+            />
+        </endButton>
+        <content>
+            <form:SimpleForm
+                id="idStarDesstanmilsForm"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="3"
+                labelSpanL="3"
+                labelSpanM="3"
+                labelSpanS="12"
+                adjustLabelSpan="false"
+                emptySpanXL="4"
+                emptySpanL="4"
+                emptySpanM="4"
+                emptySpanS="0"
+                columnsXL="1"
+                columnsL="1"
+                columnsM="1"
+                singleContainerFullSize="false"
+            >
+                <Label
+                    id="editProductNoLabel"
+                    text="Product Number"
+                />
+                <Input
+                    id="editProductNoInput"
+                    value="{CombinedModel>/Product/model}"
+                    editable="false"
+                />
+
+                <Label
+                    id="editDescriptionLabel"
+                    text="Description"
+                />
+                <Input
+                    id="editDescriptionInput"
+                       value="{CombinedModel>/Product/description}"
+                       editable="false"
+                />
+
+                <Label
+                    id="editgrossWeightLabel"
+                    text="grossWeight"
+                />
+                <Input
+                    id="editgrossWeightInput"
+                   value="{CombinedModel>/Product/grossWeight}"
+                   editable="false"
+                />
+
+                <Label
+                    id="editnetWeightLabel"
+                    text="netWeight"
+                />
+                <Input
+                    id="editnetWeightInput"
+                     value="{CombinedModel>/Product/netWeight}"
+                     editable="false"
+                />
+
+                <Label
+                    id="editwuomLabel"
+                    text="wuom"
+                />
+                <Input
+                    id="editwuomInput"
+                 value="{CombinedModel>/Product/wuom}"
+                 editable="false"
+                />
+
+                <Label
+                    id="editHeightLabel"
+                    text="Height"
+                />
+                <Input
+                    id="editprodHeightInput"
+                   value="{CombinedModel>/Product/height}"
+                   editable="false"
+                />
+
+                <Label
+                    id="editLengthLabel"
+                    text="Length"
+                />
+                <Input
+                    id="editproLengthInput"
+                    value="{CombinedModel>/Product/length}"
+                    editable="false"
+                />
+
+                <Label
+                    id="editWidthLabel"
+                    text="Width"
+                />
+                <Input
+                    id="editprodWidthInput"
+                     value="{CombinedModel>/Product/width}"
+                     editable="false"
+                />
+
+                
+                 <Label
+                    id="edituomabel"
+                    text="uom"
+                />
+                <Input
+                   id="edituomInput"
+                   value="{CombinedModel>/Product/uom}"
+                   editable="false"
+                /> 
+                <Label
+                    id="editQuantityabel"
+                    text="quantity"
+                />
+                <Input
+                    id="editQuantityInput"
+                   value="{CombinedModel>/Product/quantity}"
+                /> 
+                <Label
+                    id="editstackLabel"
+                    text="stack"
+                />
+                <Input
+                    id="editstackInput"
+                   value="{CombinedModel>/Product/stack}"
+                   editable="false"
+                /> 
+
+            </form:SimpleForm>
+        </content>
+    </Dialog>
+</core:FragmentDefinition>

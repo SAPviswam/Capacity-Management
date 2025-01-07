@@ -24,9 +24,7 @@ Content-Type: application/json
             "wuom": "kg",
             "quantity": "100",
             "stack": "5",
-            "mass": "50.00",
-            "layersHeight": "2",
-            "color": "#FF0000"  
+            "bearingCapacity": "50.00"
 }
 
 
@@ -49,4 +47,19 @@ Content-Type: application/json
     "truckWeight": "5000",  
     "capacity": "10000",   
     "tuom": "kg"         
+}
+
+###
+POST http://localhost:4004/odata/v2/CapSRV/Users
+Content-Type: application/json
+
+{
+  "userID": "ARTDKN0001",
+  "fName": "John",
+  "lName": "Doe",
+  "phoneNo": "8886725925",
+  "mailID": "johndoe@example.com",
+  "password": "Subhash@47",
+  "profileImage": "",
+  "expireDate": ""
 }
