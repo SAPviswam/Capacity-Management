@@ -82,7 +82,7 @@
 }
 
 .textHbox {
-    margin: 10% 0% 0%;
+    margin: 12% 0% 0%;
     /*top right bottom left*/
 
 }
@@ -447,7 +447,7 @@
     font-size: 2rem;
     color: #ff8c00;
     font-weight: bold;
-    margin: -2px 0 0 2% !important;
+    margin-top: -50rem;
 }
 
 .sapUiLabelBold {
@@ -457,3 +457,27 @@
 .myInvisibleClass {
     display: none; /* This will hide the IconTabFilter */
 }
+
+/* Custom styles for capacity management section (Title)*/
+.capacityManagement{
+    font: 1.5rem sans-serif !important;
+    font-weight: bold !important;
+}
+
+
+   /* login container starts */
+ 
+  .loginContainer {
+  background-color: rgba(248, 244, 244, 0.107); /* Semi-transparent background */
+  padding: 3rem;
+  border-radius: 30px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), 0 6px 6px rgba(0, 0, 0, 0.22); /* Improved shadow */
+  max-width: 370px;
+  width: auto; /* Fixed scaling issue */
+  text-align: start;
+  margin-top:50%;
+  transition: all 0.5s ease-out;
+  }
+/* login container ends */
+   
+ 
