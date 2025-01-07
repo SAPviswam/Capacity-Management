@@ -144,28 +144,6 @@ sap.ui.define([
                     }
                 }
                 // test
-                var flag = true;
-                if (!sUserEnteredUserID) {
-                    oUserView.byId("_IDGenInput11").setValueState("Warning");
-                    oUserView.byId("_IDGenInput11").setValueStateText("Please enter registered user ID");
-                    flag = false;
-                } else {
-                    oUserView.byId("_IDGenInput11").setValueState("None");
-                }
-                if (!sUserEnteredPassword) {
-                    oUserView.byId("_IDGenInput221").setValueState("Warning");
-                    oUserView.byId("_IDGenInput221").setValueStateText("Enter your password");
-                    flag = false;
-                } else {
-                    oUserView.byId("_IDGenInput221").setValueState("None");
-                }
-                if (!flag) {
-                    sap.m.MessageToast.show("Please enter required credentials")
-                    // Close busy dialog
-                    this._oBusyDialog.close();
-                    return;
-                }
-
                 const fUser = new sap.ui.model.Filter("userID", sap.ui.model.FilterOperator.EQ, sUserEnteredUserID),
                     // fPassword = new sap.ui.model.Filter("Password", sap.ui.model.FilterOperator.EQ, sUserEnteredPassword),
                     aFilters = new sap.ui.model.Filter({

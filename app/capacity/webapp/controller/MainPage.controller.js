@@ -213,37 +213,8 @@ sap.ui.define([
         }
 
       },
-      
+
       /** Deleting Models */
-      // onModelDeletes: async function () {
-
-      //   this._oBusyDialog = new sap.m.BusyDialog({
-      //     text: "Deleting Data"
-      //   });
-      //   this._oBusyDialog.open()
-      //   let oSlectedItems = this.byId("idModelsTable").getSelectedItems();
-      //   const oModel = this.getView().getModel("ModelV2");
-      //   if (oSlectedItems.length < 1) {
-      //     this._oBusyDialog.close()
-      //     return MessageBox.warning("Please Select atleast One Model/Prodcut");
-      //   }
-      //   try {
-      //     // delay the for buffer
-      //     await new Promise((resolve) => setTimeout(resolve, 500));
-      //     for (let Item of oSlectedItems) {
-      //       let sPath = Item.getBindingContext().getPath();
-      //       await this.deleteData(oModel, sPath);
-      //     }
-      //     this.byId("idModelsTable").getBinding("items").refresh();
-      //     MessageToast.show("successfully Deleted")
-      //   } catch {
-      //     MessageBox.error("Error Occurs!");
-      //   } finally {
-      //     this._oBusyDialog.close()
-      //   }
-      // },
-
-
       onModelDelete: async function () {
         let oSlectedItems = this.byId("idModelsTable").getSelectedItems();
         if (oSlectedItems.length < 1) {
