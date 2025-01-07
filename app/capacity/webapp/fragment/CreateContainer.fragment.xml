@@ -15,7 +15,7 @@
             <Button
                 id="idCreateContainerCreateBtn"
                 text="Create"
-                press="onSaveContainer"
+                press="onSaveCreateContainer"
                 type="Success"
             />
         </beginButton>
@@ -55,6 +55,8 @@
                 <Input
                     id="idCreateContainerTruckTypeInput"
                     value="{CombinedModel>/Vehicle/truckType}"
+                    maxLength="2"
+                    liveChange="onLiveChangeForContainerType"
                     type="Number"
                 />
 
@@ -67,6 +69,8 @@
                 <Input
                     id="idCreateContainerLengthInput"
                     value="{CombinedModel>/Vehicle/length}"
+                     liveChange="onLiveChangeForConatainerLength"
+                     type="Number"
                 />
 
                 <Label
@@ -78,6 +82,8 @@
                 <Input
                     id="idCreateContainerWidthInput"
                     value="{CombinedModel>/Vehicle/width}"
+                    liveChange="onLiveChangeForContainerWidth"
+                    type="Number"
                 />
 
                 <Label
@@ -89,6 +95,8 @@
                 <Input
                     id="idCreateContainerHeightInput"
                     value="{CombinedModel>/Vehicle/height}"
+                    liveChange="onLiveChangeForContainerHeight"
+                            type="Number"
                 />
 
                 <Label
@@ -127,12 +135,13 @@
                 <Label
                     id="idCreateContainerCapacityLabel"
                     text="Capacity"
-                     design="Bold"
+                    design="Bold"
                 />
 
                 <Input
                     id="idCreateContainerCapacityInput"
                     value="{CombinedModel>/Vehicle/capacity}"
+                 
                 />
             </form:SimpleForm>
         </content>

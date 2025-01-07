@@ -1,6 +1,6 @@
 <mvc:View
     controllerName="com.app.capacity.controller.Home"
-     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
     xmlns="sap.m"
 >
@@ -24,23 +24,8 @@
                             class="sapUiTinyMarginBegin"
                             src="https://artihcus.com/assets/img/AG-logo.png"
                         />
-                        <HBox
-                            id="_IDGenH22Box1"
-                            class="sapUiTinyMarginEnd"
-                        >
-                            <Button
-                                id="_IDGenButton"
-                                text="{i18n>LoginButton}"
-                                type="Transparent"
-                                press="onLogin"
-                            />
-                            <Button
-                                id="_IDG34enButton1"
-                                text="{i18n>SignupButton}"
-                                type="Transparent"
-                                press="onSignup"
-                            />
-                        </HBox>
+                       
+                        
                     </HBox>
                     <HBox
                         id="_IDGen33HBox2"
@@ -87,25 +72,68 @@
                             <!-- Centered Content Block -->
                             <VBox
                                 id="_IDGenHBox"
-                                width="auto"
-                                height="auto"
-                                class="centered-up"
+                               
+                                class="centered-up loginContainer sapUiLargeMarginTop"
                             >
-                                <!-- User:  sap-icon://person-placeholder 
+                                <Avatar
+                                    id="Avatar"
+                                    class="sapUiMediumMarginTop"
+                                    displaySize="L"
+                                    backgroundColor="Accent6"
+                                />
+                                <VBox
+                                    id="userIdHbox"
+                                    class="sapUiSmallMarginTop"
+                                >
+                                    <Title
+                                        id="userIdLabel"
+                                        text="User Id"
+                                    />
+                                    <!-- User:  sap-icon://person-placeholder 
                                  Password: sap-icon://primary-key -->
-                                <Input
-                                    id="_IDGenInput11"
-                                    placeholder="User ID"
-                                />
-                                <Input
-                                    id="_IDGenInput221"
-                                    type="Password"
-                                    placeholder="Password"
-                                />
-                                <HBox id="_IDGenHBox1">
+                                    <Input
+                                        id="_IDGenInput11"
+                                        type="Text"
+                                        placeholder="Enter userId"
+                                        autocomplete="true"
+                                    />
+                                </VBox>
+                                <VBox
+                                    id="passwordHbox"
+                                    class="sapUiSmallMarginTop"
+                                >
+                                    <Title
+                                        id="passwordLabel"
+                                        text="Password"
+                                    />
+                                    <Input
+                                        id="_IDGenInput221"
+                                        type="Password"
+                                        placeholder="Enter Password"
+                                        autocomplete="true"
+                                    />
+                                </VBox>
+                                <HBox
+                                    id="_IDGenHBox1"
+                                    class="sapUiSmallMarginTop"
+                                >
+                                    <CheckBox
+                                        id="_IDGenChe22ckBox"
+                                        text="Auto Save"
+                                        select="onSelectCheckBox"
+                                        class="sapUiSmallMarginEnd"
+                                    />
+                                    <Link
+                                        id="IDchan22gePassword"
+                                        text="Forgot Password"
+                                        press="onForgotPasswordPress"
+                                        class="sapUiTinyMarginTop"
+                                    />
+                                </HBox>
+                                <HBox class="sapUiTinyMarginTop">
                                     <Button
                                         id="_IDGenButt22n2"
-                                        type="Transparent"
+                                        type="Emphasized"
                                         text="Login"
                                         press="onLoginBtnPressInLoginDialog"
                                         class="sapUiMediumMarginEnd"
@@ -113,37 +141,27 @@
                                     <Button
                                         id="_IDG34enButton0"
                                         text="{i18n>SignupButton}"
-                                        type="Transparent"
+                                        type="Emphasized"
                                         press="onSignup"
                                         class="sapUiMediumMarginBegin"
                                     />
                                 </HBox>
-                                <VBox id="_IDGenHBo33x2">
-                                    <CheckBox
-                                        id="_IDGenChe22ckBox"
-                                        text="Auto Save"
-                                        select="onSelectCheckBox"
-                                    />
-                                    <Link
-                                        id="IDchan22gePassword"
-                                        text="Forgot Password"
-                                        press="onForgotPasswordPress"
-                                    />
-                                </VBox>
                             </VBox>
                         </HBox>
 
                         <HBox id="_IDGenHBeeox4">
                             <Image
                                 id="idImage"
-                                src="Image/truckWithGoods.gif"
+                                src="Image/logintruck.png"
+                                height="500px"
+                                width="600px"
                             />
                         </HBox>
                     </HBox>
                     <Text
                         id="_IDGenTeeext4"
                         width="40%"
-                        text="&quot;Let's create something amazing together.&quot;"
+                        text="&quot;Let's create something amazing together by Artihcus©.&quot;"
                         class="quoteText"
                     />
                     <!--  <Text text="Together.&quot;" class="quoteText"/>  -->

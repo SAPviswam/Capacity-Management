@@ -14,13 +14,13 @@ sap.ui.define([
         this.MaterialModel = new JSONModel();
         this.getView().setModel(this.MaterialModel, "MaterialModel");
 
+
             // Container upload
             this.ContainerModel = new JSONModel();
             this.getView().setModel(this.ContainerModel, "ContainerModel");
 
+
         /**Combined Model for Model and Containers */
-        const oRouter = this.getOwnerComponent().getRouter();
-        oRouter.attachRoutePatternMatched(this.onUserDetailsLoadCapacityManagement, this);
 
         const oCombinedModel = new JSONModel({
           Product:
@@ -51,7 +51,7 @@ sap.ui.define([
             height: "",
             uom: "",
             tvuom: "M³",
-            tuom: "M",
+            tuom: "KG",
             volume: "",
             truckWeight: "",
             capacity: "",
@@ -60,11 +60,20 @@ sap.ui.define([
         // Set the combined model to the view
         this.getView().setModel(oCombinedModel, "CombinedModel")
 
+        // Material upload
+        this.MaterialModel = new JSONModel();
+        this.getView().setModel(this.MaterialModel, "MaterialModel");
+
+        /**Combined Model for Model and Containers */
+        const oRouter = this.getOwnerComponent().getRouter();
+        oRouter.attachRoutePatternMatched(this.onUserDetailsLoadCapacityManagement, this);
       },
       onUserDetailsLoadCapacityManagement: async function (oEvent1) {
         debugger
         const { id } = oEvent1.getParameter("arguments");
         this.ID = id;
+        // Apply the stored profile image to all avatars in the app
+        this.applyStoredProfileImage();
       },
 
       //Avatar Press function from the MainPage_CM
@@ -79,13 +88,6 @@ sap.ui.define([
         // Call the reusable function from BaseController
         this.onPressAvatarPopOverBaseFunction(oEvent);
       },
-
-
-
-
-
-
-
 
       /*For ToolMenuCollapse */
       onCollapseExpandPress() {
@@ -112,6 +114,7 @@ sap.ui.define([
           navContainer.to(this.getView().createId(targetId));
         }
       },
+      /**Fragment's open and Close logics */
       /**Container Fragment open for Creation */
       onContainerCreate: async function () {
         let oSelectedItem = this.byId("idContianersTable").getSelectedItems();
@@ -127,8 +130,40 @@ sap.ui.define([
       onCancelCreateContainer: function () {
         if (this.oContainerCreate.isOpen()) {
           this.oContainerCreate.close();
+          this.oContainerCreate.destroy();
+        
         }
+        this.getView().getModel("CombinedModel").setProperty("/Vehicle", {});
+      },
+      /**Opening ModelEdit Fragment */
+      onModelEditFragment: async function () {
+        if (!this.oEdit) {
+          this.oEdit = await this.loadFragment("EditproductDetails");
+        }
+        this.oEdit.open();
+      },
+      /**closing Edit Model Fragment */
+      onCloseEditModel: function () {
+        if (this.oEdit.isOpen()) {
+          this.oEdit.close();
+        }
+        this.getView().getModel("CombinedModel").setProperty("/Product", {});
 
+      },
+      /**Open Container Edit */
+      onOpenContainerEdit: async function () {
+        if (!this.oEditContainer) {
+          this.oEditContainer = await this.loadFragment("EditContainerDetails");
+
+        }
+        this.oEditContainer.open();
+      },
+      /**closing Editing Container */
+      onCancelEditContainer: function () {
+        if (this.oEditContainer.isOpen()) {
+          this.oEditContainer.close();
+          this.getView().getModel("CombinedModel").setProperty("/Vehicle", {});
+        }
       },
       /**Create Product/Model */
       onCreateProduct: async function () {
@@ -241,7 +276,7 @@ sap.ui.define([
           MessageToast.show("successfully Deleted")
         } catch {
           MessageBox.error("Error Occurs!");
-        }finally{
+        } finally {
           this._oBusyDialog.close()
         }
       },
@@ -267,75 +302,52 @@ sap.ui.define([
           MessageBox.error("Error Occurs!");
         }
       },
-
-
-      //edit product functinality
-
-      onPressEditInProductsTable:async  function() {
+      /*edit product functinality*/
+      onModelEdit: async function () {
         var oSelectedItem = this.byId("idModelsTable").getSelectedItems();
         if (oSelectedItem.length == 0) {
           MessageBox.information("Please select at least one Row for edit!");
           return;
         }
-        if(oSelectedItem.length > 1){
+        if (oSelectedItem.length > 1) {
           MessageBox.information("Please select only one Row for edit!");
           return;
         }
-       let oPayload = oSelectedItem[0].getBindingContext().getObject();
-       this.getView().getModel("CombinedModel").setProperty("/Product",oPayload)
-          if (!this.oEdit) {
-            this.oEdit = await this.loadFragment("EditproductDetails");
-             }
-        this.oEdit.open();
-
-  
-        },
-        onCancelInEditProductDialog: function () {
-        if (this.oEdit.isOpen()) {
-            this.oEdit.close();
-        }
+        let oPayload = oSelectedItem[0].getBindingContext().getObject();
+        this.getView().getModel("CombinedModel").setProperty("/Product", oPayload);
+        this.onModelEditFragment();
       },
-
-      onSaveProduct : async function() {
+      /**save After Modifications */
+      onSaveProduct: async function () {
+        debugger
         // Get the edited data from the fragment model
-        var oModel = this.getView().getModel("CombinedModel");
-        var oUpdatedProduct = oModel.getProperty("/Product");
-    
-        // Get the original product row binding context (from the selected row in the table)
-        var oTable = this.byId("idModelsTable");
-        var oSelectedItem = oTable.getSelectedItem();
-        var oContext = oSelectedItem.getBindingContext();
-    
-        // Use the context to get the path and ID of the selected product for updating
-        var sPath = oContext.getPath(); // The path to the product entry in the OData model
+        const oView = this.getView(),
+          oProductModel = oView.getModel("CombinedModel"),
+          oUpdatedProduct = oProductModel.getProperty("/Product"),
+          // Get the original product row binding context (from the selected row in the table)
+          oTable = this.byId("idModelsTable"),
+          oSelectedItem = oTable.getSelectedItem(),
+          oContext = oSelectedItem.getBindingContext(),
+          // Use the context to get the path and ID of the selected product for updating
+          sPath = oContext.getPath(), // The path to the product entry in the OData model
+          oModel = oView.getModel("ModelV2");
 
-      //   if (oUpdatedProduct.length <= 0 || isNaN(oUpdatedProduct.length)) {
-      //     MessageBox.error("Please enter a valid positive number for Length!");
-      //     return;
-      // }
-      // if (oUpdatedProduct.width <= 0 || isNaN(oUpdatedProduct.width)) {
-      //     MessageBox.error("Please enter a valid positive number for Width!");
-      //     return;
-      // }
-      // if (oUpdatedProduct.height <= 0 || isNaN(oUpdatedProduct.height)) {
-      //     MessageBox.error("Please enter a valid positive number for Height!");
-      //     return;
-      // }
-        
         // Create the payload for updating the product in the backend
         var oPayloadmodelupdate = {
-            description: oUpdatedProduct.description,
-            grossWeight:oUpdatedProduct.grossWeight,
-            netWeight: oUpdatedProduct.netWeight,
-            length: oUpdatedProduct.length,
-            width: oUpdatedProduct.width,
-            wuom: oUpdatedProduct.wuom,
-            height: oUpdatedProduct.height,
-            uom: oUpdatedProduct.uom,
-            quantity: oUpdatedProduct.quantity,
-            stack: oUpdatedProduct.stack
-        }; 
-        const oView = this.getView();
+          model: oUpdatedProduct.model,
+          description: oUpdatedProduct.description,
+          grossWeight: oUpdatedProduct.grossWeight,
+          netWeight: oUpdatedProduct.netWeight,
+          length: oUpdatedProduct.length,
+          width: oUpdatedProduct.width,
+          wuom: oUpdatedProduct.wuom,
+          height: oUpdatedProduct.height,
+          uom: oUpdatedProduct.uom,
+          quantity: oUpdatedProduct.quantity,
+          stack: oUpdatedProduct.stack,
+          volume: oUpdatedProduct.volume,
+        };
+
         let raisedErrorsSave = [];
         const aUserInputsSave = [
           // { Id: "idDesvbncriptionInput_InitialView", value: oProductPayload.EAN, regex: null, message: "Please enter EAN" },
@@ -345,7 +357,7 @@ sap.ui.define([
           { Id: "editprodHeightInput", value: oPayloadmodelupdate.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
           // { Id: "idInputForModelCat", value: oPayloadmodelupdate.mCategory, regex: null, message: "Enter category" },
           { Id: "editDescriptionInput", value: oPayloadmodelupdate.description, regex: null, message: "Enter description" },
-          { Id: "editnetWeightLabel", value: oPayloadmodelupdate.netWeight, regex: /^\d+(\.\d+)?$/, message: "Net Weight should be numeric" },
+          { Id: "editnetWeightInput", value: oPayloadmodelupdate.netWeight, regex: /^\d+(\.\d+)?$/, message: "Net Weight should be numeric" },
           { Id: "editgrossWeightInput", value: oPayloadmodelupdate.grossWeight, regex: /^\d+(\.\d+)?$/, message: "Gross Weight should be numeric" },
           { Id: "editQuantityInput", value: oPayloadmodelupdate.quantity, regex: /^\d+$/, message: "Quantity should be numeric" },
           { Id: "editstackInput", value: oPayloadmodelupdate.stack, regex: /^\d+$/, message: "Stack should be numeric" }]
@@ -368,71 +380,61 @@ sap.ui.define([
           MessageBox.information(errorMessageSave); // Show consolidated error messages
           return;
         }
-    
+
+
+        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(2));
+        oPayloadmodelupdate.bearingCapacity = String(oPayloadmodelupdate.stack * oPayloadmodelupdate.grossWeight);
         try {
-            // Call the OData update request to save the edited data in the backend
-            await this.getView().getModel().update(sPath, oPayloadmodelupdate, {
-                success: function() {
-                    // If the update is successful, show a success message
-                    MessageBox.success("Product details updated successfully!");
-    
-                    // Close the fragment
-                    this.oEdit.close();
-    
-                    // Optionally, refresh the table binding to reflect the changes
-                    oTable.getBinding("items").refresh();
-                }.bind(this),
-                error: function(oError) {
-                    // Handle the error scenario (e.g., show error message)
-                    MessageBox.error("Error updating product details: " + oError.message);
-                }
-            });
-        } catch (error) {
-            MessageBox.error("Error updating product details: " + error.message);
+          await this.updateData(oModel, oPayloadmodelupdate, sPath);
+          MessageBox.success("Product details updated successfully!");
+          // Close the fragment
+          this.onCloseEditModel();
+          // Optionally, refresh the table binding to reflect the changes
+          oTable.getBinding("items").refresh();
+        } catch (oError) {
+          MessageBox.error("Error updating product details: " + oError.message);
+          this.onCloseEditModel()
         }
-    },
-
-
-
+      },
       onIconTabSelect: function (oEvent) {
         var oSelectedKey = oEvent.getParameter("key");
 
         // Only open the fragment if the "Create Simulation" tab is selected
         if (oSelectedKey === "createSimulation") {
-            this._openCreateSimulationFragment();
+          this._openCreateSimulationFragment();
         }
-    },
+      },
 
-    // Open the Create Simulation fragment
-    _openCreateSimulationFragment:async function () {
+      // Open the Create Simulation fragment
+      _openCreateSimulationFragment: async function () {
         var oView = this.getView();
 
         // Check if the fragment is already loaded
         if (!this._oFragment) {
-            // Load the fragment if it's not already loaded
-            this._oFragment= await  this.loadFragment("CreateNewSimulaton")
-        }  
-        this._oFragment.open();
-    },
-
-    // Close the fragment (can be attached to a "Close" button in the fragment)
-    onCloseDialogSimulate: function () {
-        if (this._oFragment) {
-            this._oFragment.close();
+          // Load the fragment if it's not already loaded
+          this._oFragment = await this.loadFragment("CreateNewSimulaton")
         }
-    },
+        this._oFragment.open();
+      },
 
-    // Submit the simulation (for example, a submit button in the fragment)
-    onSubmitSimulation: function () {
+      // Close the fragment (can be attached to a "Close" button in the fragment)
+      onCloseDialogSimulate: function () {
+        if (this._oFragment) {
+          this._oFragment.close();
+        }
+      },
+
+      // Submit the simulation (for example, a submit button in the fragment)
+      onSubmitSimulation: function () {
         var oInput = this.byId("simulationInput");
         var sValue = oInput.getValue();
-        
+
         if (sValue) {
-            MessageToast.show("Simulation Created: " + sValue);
+          MessageToast.show("Simulation Created: " + sValue);
         } else {
-            MessageToast.show("Please enter a simulation name.");
+          MessageToast.show("Please enter a simulation name.");
         }
-    },
+      },
 
       onbatchUpload: async function (e) {
         if (!this.oFragment) {
@@ -595,7 +597,6 @@ sap.ui.define([
           this.oFragment.close();
         }
       },
-
       // test
       onMaterialUploadbtn: function () {
         var oFileInput = document.createElement('input');
@@ -609,6 +610,22 @@ sap.ui.define([
       _onFileSelected: async function (oFileInput) {
         // Retrieve the selected file
         var oFile = oFileInput.files[0];
+        // test
+
+        // Get the file name and MIME type
+        var fileName = oFile.name;
+
+        // Allowed extensions for Excel files
+        var allowedExtensions = ['.xls', '.xlsx', '.xlsm'];
+
+        // Check if the file extension is valid
+        var fileExtension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+
+        if (!allowedExtensions.includes(fileExtension)) {
+          alert("Please select a valid Excel file (.xls, .xlsx, .xlsm)");
+          return;
+        }
+        // test
 
         if (oFile) {
           // Here, you can implement the logic to handle the file
@@ -652,6 +669,7 @@ sap.ui.define([
           reader.readAsArrayBuffer(file);
         }
       },
+
 
 // Function to handle the batch upload event
 onbatchUpload: async function (e) {
@@ -876,6 +894,231 @@ _importData: function (file) {
   }
 },
 
+      onContainerEditPress: async function () {
+        var oSelectedItem = this.byId("idContianersTable").getSelectedItems();
+        if (oSelectedItem.length == 0) {
+          MessageBox.warning("Please select at least one Record edit!");
+          return;
+        }
+        if (oSelectedItem.length > 1) {
+          MessageBox.warning("Please select only one Record for edit!");
+          return;
+        }
+        let oPayload = oSelectedItem[0].getBindingContext().getObject();
+        this.getView().getModel("CombinedModel").setProperty("/Vehicle", oPayload);
+        this.onOpenContainerEdit();
+
+      },
+
+
+      //Edit function for the Container table. Present there is no requirment 
+      // for any additional functionality or validation requirements Add this Code
+      onSaveEditContainerPress: async function () {
+        // Get the edited data from the fragment model
+        const oView = this.getView(),
+          oContainerModel = oView.getModel("CombinedModel"),
+          oUpdateContainer = oContainerModel.getProperty("/Vehicle"),
+          // Get the original product row binding context (from the selected row in the table)
+          oTable = this.byId("idContianersTable"),
+          oSelectedItem = oTable.getSelectedItem(),
+          oContext = oSelectedItem.getBindingContext(),
+          // Use the context to get the path and ID of the selected product for updating
+          sPath = oContext.getPath(), // The path to the product entry in the OData model
+          oModel = oView.getModel("ModelV2");
+
+        // Create the payload for updating the product in the backend
+        var oPayloadmodelupdate = {
+          truckType: oUpdateContainer.truckType,
+          length: oUpdateContainer.length,
+          width: oUpdateContainer.width,
+          height: oUpdateContainer.height,
+          uom: oUpdateContainer.uom,
+          volume: oUpdateContainer.volume,
+          tvuom: oUpdateContainer.tvuom,
+          truckWeight: oUpdateContainer.truckWeight,
+          capacity: oUpdateContainer.capacity,
+          tuom: oUpdateContainer.tuom, // Add any additional properties if needed
+        }
+
+        let raisedErrorsSave = [];
+        const aUserInputsSave = [
+          { Id: "IdContainerLength_Input", value: oPayloadmodelupdate.length, regex: /^\d+(\.\d+)?$/, message: "Length should be numeric" },
+          { Id: "idContainerWidth_Input", value: oPayloadmodelupdate.width, regex: /^\d+(\.\d+)?$/, message: "Width should be numeric" },
+          { Id: "idContainerHeight_Input", value: oPayloadmodelupdate.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
+          { Id: "idContainerCapacity_Input", value: oPayloadmodelupdate.capacity, regex: /^\d+(\.\d+)?$/, message: "Capacity should be numeric" },
+          { Id: "idContainerTruckWeight_Input", value: oPayloadmodelupdate.truckWeight, regex: /^\d+(\.\d+)?$/, message: "Truck Weight should be numeric" }
+        ];
+
+        // Add validation for empty fields
+        aUserInputsSave.forEach(input => {
+          if (input.value === "" || input.value === null || input.value === undefined) {
+            raisedErrorsSave.push(input.message + " cannot be empty.");
+          }
+        });
+
+        const validationPromisesSave = aUserInputsSave.map(async input => {
+          if (input.value !== "" && input.value !== null && input.value !== undefined) {
+            let aValidationsSave = await this.validateField(oView, input.Id, input.value, input.regex, input.message);
+            if (aValidationsSave.length > 0) {
+              raisedErrorsSave.push(aValidationsSave[0]); // Push first error into array
+            }
+          }
+        });
+
+        // Wait for all validations to complete
+        await Promise.all(validationPromisesSave);
+
+        // Check if there are any raised errors
+        if (raisedErrorsSave.length > 0) {
+          // Consolidate errors into a single message
+          const errorMessageSave = raisedErrorsSave.join("\n");
+          MessageBox.warning(errorMessageSave); // Show consolidated error messages
+          return;
+        }
+
+        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(2));
+
+        try {
+          await this.updateData(oModel, oPayloadmodelupdate, sPath);
+          MessageBox.success("Container details updated successfully!");
+          // Close the fragment
+          this.onCancelEditContainer();
+          // Optionally, refresh the table binding to reflect the changes
+          oTable.getBinding("items").refresh();
+        } catch (oError) {
+          MessageBox.error("Error updating Container details: " + oError.message);
+          this.onCancelEditContainer();
+        }
+      },
+      /***Creating New Containers */
+      onSaveCreateContainer: async function () {
+        let oView = this.getView(),
+          oDataModel = oView.getModel("CombinedModel"),
+          oProductData = oDataModel.getProperty("/Vehicle"),
+          oModel = oView.getModel("ModelV2"),
+          oPath = "/TruckTypes";
+
+        if (!oProductData.truckType ||
+          !oProductData.length ||
+          !oProductData.width ||
+          !oProductData.height ||
+          !oProductData.truckWeight ||
+          !oProductData.capacity) {
+          MessageBox.warning("Please Enter all Values");
+          return;
+        }
+
+        oProductData.truckType = `${oProductData.truckType}FT`
+        oProductData.volume = String((oProductData.length * oProductData.width * oProductData.height).toFixed(2));
+        var oSelectedUOM = this.byId("idCreateContainerSelectUOM").getSelectedKey();
+        if (oSelectedUOM === '') {
+          return MessageBox.warning("Please Select UOM")
+        }
+        oProductData.uom = oSelectedUOM;
+
+        /**Error check */
+        let raisedErrorsCreateContainer = [];
+        const aUserInputsCreateContainer = [
+          // { Id: "idDesvbncriptionInput_InitialView", value: oProductPayload.EAN, regex: null, message: "Please enter EAN" },
+          { Id: "idCreateContainerTruckTypeInput", value: oProductData.truckType, regex: null, message: "Enter Truck Type" },
+          { Id: "idCreateContainerLengthInput", value: oProductData.length, regex: /^\d+(\.\d+)?$/, message: "Length should be numeric" },
+          { Id: "idCreateContainerWidthInput", value: oProductData.width, regex: /^\d+(\.\d+)?$/, message: "Width should be numeric" },
+          { Id: "idCreateContainerHeightInput", value: oProductData.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
+          { Id: "idCreateContainerCapacityInput", value: oProductData.capacity, regex: /^\d+$/, message: "Capacity should be numeric" },
+          { Id: "idCreateContainerTruckWieghtInput", value: oProductData.truckWeight, regex: /^\d+$/, message: "Truck Weight should be numeric" }]
+        // Create an array of promises for validation
+
+        const validationPromisesCreateContainer = aUserInputsCreateContainer.map(async input => {
+          let aValidationsCreateContainer = await this.validateField(oView, input.Id, input.value, input.regex, input.message);
+          if (aValidationsCreateContainer.length > 0) {
+            raisedErrorsCreateContainer.push(aValidationsCreateContainer[0]); // Push first error into array
+          }
+        });
+
+        // Wait for all validations to complete
+        await Promise.all(validationPromisesCreateContainer);
+
+        // Check if there are any raised errors
+        if (raisedErrorsCreateContainer.length > 0) {
+          // Consolidate errors into a single message
+          const errorMessageSave = raisedErrorsCreateContainer.join("\n");
+          MessageBox.information(errorMessageSave); // Show consolidated error messages
+          return;
+        }
+        oProductData.tvuom = "M³";
+        oProductData.tuom = "KG";
+        try {
+          await this.createData(oModel, oProductData, oPath);
+          MessageToast.show("Successfully Created!!");
+          this.onCancelCreateContainer();
+          this.byId("idContianersTable").getBinding("items").refresh();
+          this.byId("idCreateContainerSelectUOM").setSelectedKey("");
+        } catch (error) {
+          MessageBox.error("Error Occurs at the Time of Creation!!");
+          this.onCancelCreateContainer();
+          this.byId("idCreateContainerSelectUOM").setSelectedKey("");
+          this.byId("idContianersTable").getBinding("items").refresh();
+
+        }
+      },
+      onLiveChangeForContainerType: function (oEvent) {
+        var sValue = oEvent.getParameter("value");
+        if (sValue.length > 2) {
+          oEvent.getSource().setValue(sValue.substring(0, 2));
+        }
+      },
+      onLiveChangeForConatainerLength: function (oEvent) {
+        var sValue = oEvent.getParameter("value");
+        if (sValue.length > 2) {
+          oEvent.getSource().setValue(sValue.substring(0, 5));
+        }
+      },
+      onLiveChangeForContainerWidth: function (oEvent) {
+        var sValue = oEvent.getParameter("value");
+        if (sValue.length > 2) {
+          oEvent.getSource().setValue(sValue.substring(0, 5));
+        }
+      },
+      onLiveChangeForContainerHeight: function (oEvent) {
+        var sValue = oEvent.getParameter("value");
+        if (sValue.length > 2) {
+          oEvent.getSource().setValue(sValue.substring(0, 5));
+        }
+      },
+//         if(oSelectedItem.length > 1){
+//           MessageBox.information("Please select only one Row for edit!");
+//           return;
+//         }
+//        let oPayload = oSelectedItem[0].getBindingContext().getObject();
+//        this.getView().getModel("CombinedModel").setProperty("/Vehicle",oPayload)
+//           if (!this.oEdit) {
+//             this.oEdit = await this.loadFragment("EditContainerDetails");
+//              }
+//         this.oEdit.open();
+//         },
+//         onCancelInEditContainerDialog: function () {
+//         if (this.oEdit.isOpen()) {
+//             this.oEdit.close();
+//         }
+//       }
+
+
+      //         if(oSelectedItem.length > 1){
+      //           MessageBox.information("Please select only one Row for edit!");
+      //           return;
+      //         }
+      //        let oPayload = oSelectedItem[0].getBindingContext().getObject();
+      //        this.getView().getModel("CombinedModel").setProperty("/Vehicle",oPayload)
+      //           if (!this.oEdit) {
+      //             this.oEdit = await this.loadFragment("EditContainerDetails");
+      //              }
+      //         this.oEdit.open();
+      //         },
+      //         onCancelInEditContainerDialog: function () {
+      //         if (this.oEdit.isOpen()) {
+      //             this.oEdit.close();
+      //         }
+      //       }
 
 
     });

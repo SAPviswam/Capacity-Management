@@ -20,10 +20,16 @@
             />
         </beginButton>
         <endButton>
-            <Button
+            <!-- <Button
                 id="idCancesslbnmButton"
                 text="Cancel"
                 press="onCancelInEditProductDialog"
+                type="Negative"
+            /> -->
+          <Button
+                id="idCancesslbnmButton"
+                text="Cancel"
+                press="onCloseEditModel"
                 type="Negative"
             />
         </endButton>
@@ -63,6 +69,7 @@
                 <Input
                     id="editDescriptionInput"
                        value="{CombinedModel>/Product/description}"
+                       editable="false"
                 />
 
                 <Label
@@ -72,6 +79,7 @@
                 <Input
                     id="editgrossWeightInput"
                    value="{CombinedModel>/Product/grossWeight}"
+                   editable="false"
                 />
 
                 <Label
@@ -81,6 +89,7 @@
                 <Input
                     id="editnetWeightInput"
                      value="{CombinedModel>/Product/netWeight}"
+                     editable="false"
                 />
 
                 <Label
@@ -100,6 +109,7 @@
                 <Input
                     id="editprodHeightInput"
                    value="{CombinedModel>/Product/height}"
+                   editable="false"
                 />
 
                 <Label
@@ -108,8 +118,8 @@
                 />
                 <Input
                     id="editproLengthInput"
-                    
                     value="{CombinedModel>/Product/length}"
+                    editable="false"
                 />
 
                 <Label
@@ -119,6 +129,7 @@
                 <Input
                     id="editprodWidthInput"
                      value="{CombinedModel>/Product/width}"
+                     editable="false"
                 />
 
                 
@@ -127,8 +138,9 @@
                     text="uom"
                 />
                 <Input
-                    id="edituomInput"
+                   id="edituomInput"
                    value="{CombinedModel>/Product/uom}"
+                   editable="false"
                 /> 
                 <Label
                     id="editQuantityabel"
@@ -145,6 +157,7 @@
                 <Input
                     id="editstackInput"
                    value="{CombinedModel>/Product/stack}"
+                   editable="false"
                 /> 
 
             </form:SimpleForm>
