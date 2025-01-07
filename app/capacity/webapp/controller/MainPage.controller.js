@@ -67,6 +67,8 @@ sap.ui.define([
         debugger
         const { id } = oEvent1.getParameter("arguments");
         this.ID = id;
+        // Apply the stored profile image to all avatars in the app
+        this.applyStoredProfileImage();
       },
 
       //Avatar Press function from the MainPage_CM
@@ -295,6 +297,7 @@ sap.ui.define([
       },
       /**save After Modifications */
       onSaveProduct: async function () {
+        debugger
         // Get the edited data from the fragment model
         const oView = this.getView(),
           oProductModel = oView.getModel("CombinedModel"),
@@ -584,6 +587,22 @@ sap.ui.define([
       _onFileSelected: async function (oFileInput) {
         // Retrieve the selected file
         var oFile = oFileInput.files[0];
+        // test
+
+        // Get the file name and MIME type
+        var fileName = oFile.name;
+
+        // Allowed extensions for Excel files
+        var allowedExtensions = ['.xls', '.xlsx', '.xlsm'];
+
+        // Check if the file extension is valid
+        var fileExtension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+
+        if (!allowedExtensions.includes(fileExtension)) {
+          alert("Please select a valid Excel file (.xls, .xlsx, .xlsm)");
+          return;
+        }
+        // test
 
         if (oFile) {
           // Here, you can implement the logic to handle the file
@@ -627,7 +646,9 @@ sap.ui.define([
           reader.readAsArrayBuffer(file);
         }
       },
+
       onContainerEditPress: async function () {
+
         var oSelectedItem = this.byId("idContianersTable").getSelectedItems();
         if (oSelectedItem.length == 0) {
           MessageBox.information("Please select at least one Row for edit!");
@@ -727,5 +748,22 @@ sap.ui.define([
           oEvent.getSource().setValue(sValue.substring(0, 2));
         }
       }
+//         if(oSelectedItem.length > 1){
+//           MessageBox.information("Please select only one Row for edit!");
+//           return;
+//         }
+//        let oPayload = oSelectedItem[0].getBindingContext().getObject();
+//        this.getView().getModel("CombinedModel").setProperty("/Vehicle",oPayload)
+//           if (!this.oEdit) {
+//             this.oEdit = await this.loadFragment("EditContainerDetails");
+//              }
+//         this.oEdit.open();
+//         },
+//         onCancelInEditContainerDialog: function () {
+//         if (this.oEdit.isOpen()) {
+//             this.oEdit.close();
+//         }
+//       }
+
     });
   });

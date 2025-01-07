@@ -457,6 +457,7 @@
 .myInvisibleClass {
     display: none; /* This will hide the IconTabFilter */
 }
+
 /* Custom styles for capacity management section (Title)*/
 .capacityManagement{
     font: 1.5rem sans-serif !important;

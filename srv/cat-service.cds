@@ -208,8 +208,48 @@ annotate MyService.SelectedProduct with @(UI: {
         }
     ]
 });
- 
-annotate MyService.Materials with @(
-    UI.Identification: [],
-    cds.odata.valuelist,
-);
+
+annotate MyService.History with @(UI: {
+    HeaderInfo     : {
+        $Type         : 'UI.HeaderInfoType',
+        TypeName      : 'History',
+        TypeNamePlural: 'History'
+    },
+    SelectionFields: [
+       simulationName_ID,
+       truckType_truckType,
+       createdAt,
+       createdBy,
+       modifiedAt,
+       modifiedBy
+       
+       
+    ],
+    LineItem       : [
+        {
+            $Type: 'UI.DataField',
+            Value:  simulationName_ID,
+             Label: 'Simulation Name'
+        },
+       
+        {
+            $Type: 'UI.DataField',
+            Value: createdAt,
+            Label:'Date and Time'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: createdBy,
+            Label:'Created By'
+        }, {
+            $Type: 'UI.DataField',
+            Value: modifiedAt,
+            Label:'MOdified Date and Time'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: modifiedBy,
+            Label:'Modified By'
+        }
+    ]
+});

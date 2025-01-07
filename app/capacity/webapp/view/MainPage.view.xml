@@ -698,7 +698,6 @@
                                             enableAutoBinding="true"
                                             enableExport="true"
                                             tableType="ResponsiveTable"
-                                            initiallyVisibleFields="ID"
                                         >
                                             <smarttable:customToolbar>
                                                 <OverflowToolbar
