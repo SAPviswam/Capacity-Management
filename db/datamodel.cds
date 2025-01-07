@@ -71,12 +71,14 @@ define entity SelectedProduct {
     key ID               : UUID;
         Productno        : Association to Materials;
         SelectedQuantity : String;
+        simulationName:String;
+        Color:String;
 }
 
 
 define entity History : managed {
     key ID        : UUID;
-        productNo : Association to SelectedProduct;
+        simulationName:Association  to SelectedProduct;
         truckType : Association to TruckTypes;
 
 }
