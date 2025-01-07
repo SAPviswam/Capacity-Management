@@ -143,7 +143,37 @@ annotate MyService.TruckTypes with @(UI: {
             $Type: 'UI.DataField',
             Value: height,
             Label: 'Height'
-        }
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: uom,
+            Label: 'Uom'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: volume,
+            Label: 'Volume'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: tvuom,
+            Label: 'Tvuom'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: truckWeight,
+            Label: 'Truck Weight'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: capacity,
+            Label: 'Capacity'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: tuom,
+            Label: 'Tuom'
+        }  
     ]
 });
 
