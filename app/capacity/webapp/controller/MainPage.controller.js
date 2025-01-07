@@ -16,8 +16,6 @@ sap.ui.define([
 
 
         /**Combined Model for Model and Containers */
-        const oRouter = this.getOwnerComponent().getRouter();
-        oRouter.attachRoutePatternMatched(this.onUserDetailsLoadCapacityManagement, this);
 
         const oCombinedModel = new JSONModel({
           Product:
@@ -279,16 +277,8 @@ sap.ui.define([
           MessageBox.error("Error Occurs!");
         }
       },
-
-//       /*edit product functinality*/
-//       onModelEdit: async function () {
-
-
-
-//       //edit product functinality
-
-      onPressEditInProductsTable:async  function() {
-
+       /*edit product functinality*/
+     onModelEdit: async function () {
         var oSelectedItem = this.byId("idModelsTable").getSelectedItems();
         if (oSelectedItem.length == 0) {
           MessageBox.information("Please select at least one Row for edit!");
@@ -332,69 +322,6 @@ sap.ui.define([
           volume: oUpdatedProduct.volume,
         };
         
-        let raisedErrorsSave = [];
-        const aUserInputsSave = [
-          // { Id: "idDesvbncriptionInput_InitialView", value: oProductPayload.EAN, regex: null, message: "Please enter EAN" },
-
-        if(oSelectedItem.length > 1){
-          MessageBox.information("Please select only one Row for edit!");
-          return;
-        }
-       let oPayload = oSelectedItem[0].getBindingContext().getObject();
-       this.getView().getModel("CombinedModel").setProperty("/Product",oPayload)
-          if (!this.oEdit) {
-            this.oEdit = await this.loadFragment("EditproductDetails");
-             }
-        this.oEdit.open();
-
-  
-        },
-        onCancelInEditProductDialog: function () {
-        if (this.oEdit.isOpen()) {
-            this.oEdit.close();
-        }
-      },
-
-      onSaveProduct : async function() {
-        // Get the edited data from the fragment model
-        var oModel = this.getView().getModel("CombinedModel");
-        var oUpdatedProduct = oModel.getProperty("/Product");
-    
-        // Get the original product row binding context (from the selected row in the table)
-        var oTable = this.byId("idModelsTable");
-        var oSelectedItem = oTable.getSelectedItem();
-        var oContext = oSelectedItem.getBindingContext();
-    
-        // Use the context to get the path and ID of the selected product for updating
-        var sPath = oContext.getPath(); // The path to the product entry in the OData model
-
-      //   if (oUpdatedProduct.length <= 0 || isNaN(oUpdatedProduct.length)) {
-      //     MessageBox.error("Please enter a valid positive number for Length!");
-      //     return;
-      // }
-      // if (oUpdatedProduct.width <= 0 || isNaN(oUpdatedProduct.width)) {
-      //     MessageBox.error("Please enter a valid positive number for Width!");
-      //     return;
-      // }
-      // if (oUpdatedProduct.height <= 0 || isNaN(oUpdatedProduct.height)) {
-      //     MessageBox.error("Please enter a valid positive number for Height!");
-      //     return;
-      // }
-        
-        // Create the payload for updating the product in the backend
-        var oPayloadmodelupdate = {
-            description: oUpdatedProduct.description,
-            grossWeight:oUpdatedProduct.grossWeight,
-            netWeight: oUpdatedProduct.netWeight,
-            length: oUpdatedProduct.length,
-            width: oUpdatedProduct.width,
-            wuom: oUpdatedProduct.wuom,
-            height: oUpdatedProduct.height,
-            uom: oUpdatedProduct.uom,
-            quantity: oUpdatedProduct.quantity,
-            stack: oUpdatedProduct.stack
-        }; 
-        const oView = this.getView();
         let raisedErrorsSave = [];
         const aUserInputsSave = [
           // { Id: "idDesvbncriptionInput_InitialView", value: oProductPayload.EAN, regex: null, message: "Please enter EAN" },
@@ -442,34 +369,7 @@ sap.ui.define([
           MessageBox.error("Error updating product details: " + oError.message);
           this.onCloseEditModel()
         }
-      }
-
-    
-        try {
-            // Call the OData update request to save the edited data in the backend
-            await this.getView().getModel().update(sPath, oPayloadmodelupdate, {
-                success: function() {
-                    // If the update is successful, show a success message
-                    MessageBox.success("Product details updated successfully!");
-    
-                    // Close the fragment
-                    this.oEdit.close();
-    
-                    // Optionally, refresh the table binding to reflect the changes
-                    oTable.getBinding("items").refresh();
-                }.bind(this),
-                error: function(oError) {
-                    // Handle the error scenario (e.g., show error message)
-                    MessageBox.error("Error updating product details: " + oError.message);
-                }
-            });
-        } catch (error) {
-            MessageBox.error("Error updating product details: " + error.message);
-        }
-    },
-
-
-
+      },
       onIconTabSelect: function (oEvent) {
         var oSelectedKey = oEvent.getParameter("key");
 
@@ -670,8 +570,7 @@ sap.ui.define([
           this.oFragment.close();
         }
       },
-
-      // test
+     // test
       onMaterialUploadbtn: function () {
         var oFileInput = document.createElement('input');
         oFileInput.type = 'file';
