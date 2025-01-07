@@ -23,9 +23,15 @@
             <Button
                 id="idCancesslbnmButton"
                 text="Cancel"
-                press="onCloseEditModel"
+                press="onCancelInEditProductDialog"
                 type="Negative"
             />
+<!--           <Button
+                id="idCancesslbnmButton"
+                text="Cancel"
+                press="onCloseEditModel"
+                type="Negative"
+            /> -->
         </endButton>
         <content>
             <form:SimpleForm
