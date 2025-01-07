@@ -294,6 +294,7 @@ sap.ui.define([
       },
       /**save After Modifications */
       onSaveProduct: async function () {
+        debugger
         // Get the edited data from the fragment model
         const oView = this.getView(),
           oProductModel = oView.getModel("CombinedModel"),
