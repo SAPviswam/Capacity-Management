@@ -252,34 +252,58 @@ sap.ui.define([
         }
 
       },
+
       /** Deleting Models */
       onModelDelete: async function () {
+        let oSlectedItems = this.byId("idModelsTable").getSelectedItems();
+        if (oSlectedItems.length < 1) {
+          return MessageBox.warning("Please Select atleast One Model/Prodcut");
+        }
 
         this._oBusyDialog = new sap.m.BusyDialog({
           text: "Deleting Data"
         });
         this._oBusyDialog.open()
-        let oSlectedItems = this.byId("idModelsTable").getSelectedItems();
-        const oModel = this.getView().getModel("ModelV2");
-        if (oSlectedItems.length < 1) {
-          this._oBusyDialog.close()
-          return MessageBox.warning("Please Select atleast One Model/Prodcut");
-        }
+
         try {
-          // delay the for buffer
           await new Promise((resolve) => setTimeout(resolve, 500));
-          for (let Item of oSlectedItems) {
-            let sPath = Item.getBindingContext().getPath();
-            await this.deleteData(oModel, sPath);
-          }
-          this.byId("idModelsTable").getBinding("items").refresh();
-          MessageToast.show("successfully Deleted")
-        } catch {
-          MessageBox.error("Error Occurs!");
+
+          const oModel = this.getView().getModel("ModelV2");
+          // Create a batch group ID to group the delete requests
+          var sBatchGroupId = "deleteBatchGroup";
+          // Start a batch operation
+          oModel.setUseBatch(true);
+          oModel.setDeferredGroups([sBatchGroupId]);
+          oSlectedItems.forEach(async (item) => {
+            let sPath = item.getBindingContext().getPath();
+            await this.deleteData(oModel, sPath, sBatchGroupId);
+
+          })
+          // Submit the batch request
+          oModel.submitChanges({
+            groupId: sBatchGroupId,
+            success: this._onBatchSuccess.bind(this),
+            error: this._onBatchError.bind(this),
+            refresh: this.byId("idModelsTable").getBinding("items").refresh()
+          });
+
+        } catch (error) {
+          MessageBox.error("Technical deletion error");
         } finally {
           this._oBusyDialog.close()
         }
       },
+
+      // Success callback after the batch request
+      _onBatchSuccess: function (oData) {
+        MessageToast.show("successfully Deleted");
+      },
+
+      // Error callback after the batch request
+      _onBatchError: function (oError) {
+        MessageToast.show("Batch delete failed. Please try again.");
+      },
+      //test  
       /**Truck type selection based on click display details */
       onTruckTypeChange: function (oEvent) {
         let oSelectedItem = oEvent.getParameter('listItem'),
@@ -302,8 +326,10 @@ sap.ui.define([
           MessageBox.error("Error Occurs!");
         }
       },
+
       /*edit product functinality*/
       onModelEdit: async function () {
+
         var oSelectedItem = this.byId("idModelsTable").getSelectedItems();
         if (oSelectedItem.length == 0) {
           MessageBox.information("Please select at least one Row for edit!");
@@ -314,6 +340,50 @@ sap.ui.define([
           return;
         }
         let oPayload = oSelectedItem[0].getBindingContext().getObject();
+
+        this.getView().getModel("CombinedModel").setProperty("/Product", oPayload)
+        if (!this.oEdit) {
+          this.oEdit = await this.loadFragment("EditproductDetails");
+        }
+        this.oEdit.open();
+
+
+      },
+      onCancelInEditProductDialog: function () {
+        if (this.oEdit.isOpen()) {
+          this.oEdit.close();
+        }
+      },
+
+      onSaveProduct: async function () {
+        // Get the edited data from the fragment model
+        var oModel = this.getView().getModel("CombinedModel");
+        var oUpdatedProduct = oModel.getProperty("/Product");
+
+        // Get the original product row binding context (from the selected row in the table)
+        var oTable = this.byId("idModelsTable");
+        var oSelectedItem = oTable.getSelectedItem();
+        var oContext = oSelectedItem.getBindingContext();
+
+        // Use the context to get the path and ID of the selected product for updating
+        var sPath = oContext.getPath(); // The path to the product entry in the OData model
+
+        //   if (oUpdatedProduct.length <= 0 || isNaN(oUpdatedProduct.length)) {
+        //     MessageBox.error("Please enter a valid positive number for Length!");
+        //     return;
+        // }
+        // if (oUpdatedProduct.width <= 0 || isNaN(oUpdatedProduct.width)) {
+        //     MessageBox.error("Please enter a valid positive number for Width!");
+        //     return;
+        // }
+        // if (oUpdatedProduct.height <= 0 || isNaN(oUpdatedProduct.height)) {
+        //     MessageBox.error("Please enter a valid positive number for Height!");
+        //     return;
+        // }
+
+        // Create the payload for updating the product in the backend
+        var oPayloadmodelupdate = {
+
         this.getView().getModel("CombinedModel").setProperty("/Product", oPayload);
         this.onModelEditFragment();
       },
@@ -335,6 +405,7 @@ sap.ui.define([
         // Create the payload for updating the product in the backend
         var oPayloadmodelupdate = {
           model: oUpdatedProduct.model,
+
           description: oUpdatedProduct.description,
           grossWeight: oUpdatedProduct.grossWeight,
           netWeight: oUpdatedProduct.netWeight,
@@ -344,6 +415,11 @@ sap.ui.define([
           height: oUpdatedProduct.height,
           uom: oUpdatedProduct.uom,
           quantity: oUpdatedProduct.quantity,
+
+//           stack: oUpdatedProduct.stack
+//         };
+//         const oView = this.getView();
+
           stack: oUpdatedProduct.stack,
           volume: oUpdatedProduct.volume,
         };
@@ -380,7 +456,7 @@ sap.ui.define([
           MessageBox.information(errorMessageSave); // Show consolidated error messages
           return;
         }
-
+ 
 
         oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(2));
         oPayloadmodelupdate.bearingCapacity = String(oPayloadmodelupdate.stack * oPayloadmodelupdate.grossWeight);
@@ -669,7 +745,6 @@ sap.ui.define([
           reader.readAsArrayBuffer(file);
         }
       },
-
 
 // Function to handle the batch upload event
 onbatchUpload: async function (e) {
@@ -1119,7 +1194,6 @@ _importData: function (file) {
       //             this.oEdit.close();
       //         }
       //       }
-
 
     });
   });
