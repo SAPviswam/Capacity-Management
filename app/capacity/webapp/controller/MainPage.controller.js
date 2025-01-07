@@ -46,7 +46,7 @@ sap.ui.define([
             height: "",
             uom: "",
             tvuom: "M³",
-            tuom: "M",
+            tuom: "KG",
             volume: "",
             truckWeight: "",
             capacity: "",
@@ -67,6 +67,8 @@ sap.ui.define([
         debugger
         const { id } = oEvent1.getParameter("arguments");
         this.ID = id;
+        // Apply the stored profile image to all avatars in the app
+        this.applyStoredProfileImage();
       },
 
       //Avatar Press function from the MainPage_CM
@@ -123,6 +125,7 @@ sap.ui.define([
       onCancelCreateContainer: function () {
         if (this.oContainerCreate.isOpen()) {
           this.oContainerCreate.close();
+          this.getView().getModel("CombinedModel").setProperty("/Vehicle", {});
         }
       },
       /**Opening ModelEdit Fragment */
@@ -294,6 +297,7 @@ sap.ui.define([
       },
       /**save After Modifications */
       onSaveProduct: async function () {
+        debugger
         // Get the edited data from the fragment model
         const oView = this.getView(),
           oProductModel = oView.getModel("CombinedModel"),
@@ -583,6 +587,22 @@ sap.ui.define([
       _onFileSelected: async function (oFileInput) {
         // Retrieve the selected file
         var oFile = oFileInput.files[0];
+        // test
+
+        // Get the file name and MIME type
+        var fileName = oFile.name;
+
+        // Allowed extensions for Excel files
+        var allowedExtensions = ['.xls', '.xlsx', '.xlsm'];
+
+        // Check if the file extension is valid
+        var fileExtension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+
+        if (!allowedExtensions.includes(fileExtension)) {
+          alert("Please select a valid Excel file (.xls, .xlsx, .xlsm)");
+          return;
+        }
+        // test
 
         if (oFile) {
           // Here, you can implement the logic to handle the file
@@ -626,6 +646,7 @@ sap.ui.define([
           reader.readAsArrayBuffer(file);
         }
       },
+
       onContainerEditPress: async function () {
         var oSelectedItem = this.byId("idContianersTable").getSelectedItems();
         if (oSelectedItem.length == 0) {
@@ -652,7 +673,6 @@ sap.ui.define([
       //Edit function for the Container table. Present there is no requirment 
       // for any additional functionality or validation requirements Add this Code
       onSaveEditContainerPress: async function () {
-        debugger;
         // Get the edited data from the fragment model
         const oView = this.getView(),
           oContainerModel = oView.getModel("CombinedModel"),
@@ -687,8 +707,7 @@ sap.ui.define([
           { Id: "idContainerHeight_Input", value: oPayloadmodelupdate.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
           { Id: "idContainerCapacity_Input", value: oPayloadmodelupdate.capacity, regex: /^\d+(\.\d+)?$/, message: "capacity should be numeric" },
           { Id: "idContainerTruckWeight_Input", value: oPayloadmodelupdate.truckWeight, regex: /^\d+(\.\d+)?$/, message: "Truck Weight should be numeric" }]
-
-        const validationPromisesSave = aUserInputsSave.map(async input => {
+                   const validationPromisesSave = aUserInputsSave.map(async input => {
           let aValidationsSave = await this.validateField(oView, input.Id, input.value, input.regex, input.message);
           if (aValidationsSave.length > 0) {
             raisedErrorsSave.push(aValidationsSave[0]); // Push first error into array
@@ -717,6 +736,102 @@ sap.ui.define([
           MessageBox.error("Error updating product details: " + oError.message);
           this.onCloseEditModel()
         }
-      }
+      },
+
+      /***Creating New Containers */
+      onSaveCreateContainer: async function () {
+        let oView = this.getView(),
+          oDataModel = oView.getModel("CombinedModel"),
+          oProductData = oDataModel.getProperty("/Vehicle"),
+          oModel = oView.getModel("ModelV2"),
+          oPath = "/TruckTypes";
+
+        if (!oProductData.truckType ||
+          !oProductData.length ||
+          !oProductData.width ||
+          !oProductData.height ||
+          !oProductData.truckWeight ||
+          !oProductData.capacity) {
+          MessageBox.warning("Please Enter all Values");
+          return;
+        }
+
+        oProductData.truckType = `${oProductData.truckType}FT`
+        oProductData.volume = String((oProductData.length * oProductData.width * oProductData.height).toFixed(2));
+        var oSelectedUOM = this.byId("idCreateContainerSelectUOM").getSelectedKey();
+        if (oSelectedUOM === '') {
+          return MessageBox.warning("Please Select UOM")
+        }
+        oProductData.uom = oSelectedUOM;
+
+        /**Error check */
+        let raisedErrorsCreateContainer = [];
+        const aUserInputsCreateContainer = [
+          // { Id: "idDesvbncriptionInput_InitialView", value: oProductPayload.EAN, regex: null, message: "Please enter EAN" },
+          { Id: "idCreateContainerTruckTypeInput", value: oProductData.truckType, regex: null, message: "Enter Truck Type" },
+          { Id: "idCreateContainerLengthInput", value: oProductData.length, regex: /^\d+(\.\d+)?$/, message: "Length should be numeric" },
+          { Id: "idCreateContainerWidthInput", value: oProductData.width, regex: /^\d+(\.\d+)?$/, message: "Width should be numeric" },
+          { Id: "idCreateContainerHeightInput", value: oProductData.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
+          { Id: "idCreateContainerCapacityInput", value: oProductData.capacity, regex: /^\d+$/, message: "Capacity should be numeric" },
+          { Id: "idCreateContainerTruckWieghtInput", value: oProductData.truckWeight, regex: /^\d+$/, message: "Truck Weight should be numeric" }]
+        // Create an array of promises for validation
+
+        const validationPromisesCreateContainer = aUserInputsCreateContainer.map(async input => {
+          let aValidationsCreateContainer = await this.validateField(oView, input.Id, input.value, input.regex, input.message);
+          if (aValidationsCreateContainer.length > 0) {
+            raisedErrorsCreateContainer.push(aValidationsCreateContainer[0]); // Push first error into array
+          }
+        });
+
+        // Wait for all validations to complete
+        await Promise.all(validationPromisesCreateContainer);
+
+        // Check if there are any raised errors
+        if (raisedErrorsCreateContainer.length > 0) {
+          // Consolidate errors into a single message
+          const errorMessageSave = raisedErrorsCreateContainer.join("\n");
+          MessageBox.information(errorMessageSave); // Show consolidated error messages
+          return;
+        }
+        oProductData.tvuom = "M³";
+        oProductData.tuom = "KG";
+        try {
+          await this.createData(oModel, oProductData, oPath);
+          MessageToast.show("Successfully Created!!");
+          this.onCancelCreateContainer();
+          this.byId("idContianersTable").getBinding("items").refresh();
+          this.byId("idCreateContainerSelectUOM").setSelectedKey("");
+        } catch (error) {
+          MessageBox.error("Error Occurs at the Time of Creation!!");
+          this.onCancelCreateContainer();
+          this.byId("idCreateContainerSelectUOM").setSelectedKey("");
+          this.byId("idContianersTable").getBinding("items").refresh();
+
+        }
+      },
+      onLiveChangeForContainerType: function (oEvent) {
+        var sValue = oEvent.getParameter("value");
+        if (sValue.length > 2) {
+          oEvent.getSource().setValue(sValue.substring(0, 2));
+        }
+      },
+//         if(oSelectedItem.length > 1){
+//           MessageBox.information("Please select only one Row for edit!");
+//           return;
+//         }
+//        let oPayload = oSelectedItem[0].getBindingContext().getObject();
+//        this.getView().getModel("CombinedModel").setProperty("/Vehicle",oPayload)
+//           if (!this.oEdit) {
+//             this.oEdit = await this.loadFragment("EditContainerDetails");
+//              }
+//         this.oEdit.open();
+//         },
+//         onCancelInEditContainerDialog: function () {
+//         if (this.oEdit.isOpen()) {
+//             this.oEdit.close();
+//         }
+//       }
+
+
     });
   });
