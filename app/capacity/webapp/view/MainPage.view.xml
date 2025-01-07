@@ -653,6 +653,83 @@
                                         id="idList2"
                                         text="Previous Simulations"
                                     />
+                                      <VBox
+                                        id="idVBoxForPreviousSimulation"
+                                        
+                                    >
+                                        <smartfilterbar:SmartFilterBar
+                                            id="idSmarFilterContainerFor_previous_simulation"
+                                            filterBarExpanded="true"
+                                            entitySet="History"
+                                        >
+                                            <smartfilterbar:controlConfiguration
+                                            >
+                                                <smartfilterbar:ControlConfiguration
+                                                    id="idFor_simulation_name"
+                                                    key="simulationName_ID"
+                                                    visibleInAdvancedArea="true"
+                                                    label="Simulation Name"
+                                                />
+                                                <!-- <smartfilterbar:ControlConfiguration
+                                                    id="idForTruckCap"
+                                                    key="capacity"
+                                                    visibleInAdvancedArea="true"
+                                                    label="Truck Capacity"
+                                                /> -->
+                                            </smartfilterbar:controlConfiguration>
+                                        </smartfilterbar:SmartFilterBar>
+                                        <smarttable:SmartTable
+                                            id="idSmartTableFor_previous_simulation"
+                                            smartFilterId="idSmarFilterContainerFor_previous_simulation"
+                                            entitySet="History"
+                                            headerLevel="H6"
+                                            header="Previous Simulation"
+                                            showRowCount="false"
+                                            showFullScreenButton="true"
+                                            enableAutoBinding="true"
+                                            enableExport="true"
+                                            tableType="ResponsiveTable"
+                                        >
+                                            <smarttable:customToolbar>
+                                                <OverflowToolbar
+                                                    id="idOverFlowFor_previous_simulation"
+                                                >
+                                                    <ToolbarSpacer
+                                                        id="idToolbarFor_previous_simulation"
+                                                    />
+                                                    <!-- <Button
+                                                        id="idContainerCreateBtn"
+                                                        text="Create"
+                                                        icon="sap-icon://create"
+                                                        width="100px"
+                                                        type="Accept"
+                                                        press="onContainerCreate"
+                                                    />
+                                                    <Button
+                                                        id="idContainerEditBtn"
+                                                        text="Edit"
+                                                        icon="sap-icon://edit"
+                                                        width="100px"
+                                                        type="Emphasized"
+                                                    />
+                                                    <Button
+                                                        id="idContainerDeleteBtn"
+                                                        text="Delete"
+                                                        press="onContainerDelete"
+                                                        icon="sap-icon://delete"
+                                                        width="100px"
+                                                        type="Negative"
+                                                    /> -->
+                                                </OverflowToolbar>
+                                            </smarttable:customToolbar>
+                                            <Table
+                                                id="id_previous_simulation_table"
+                                                mode="MultiSelect"
+                                                noDataText="No Previous Simulation "
+                                                selectionChange="onTruckTypeChange"
+                                            />
+                                        </smarttable:SmartTable>
+                                    </VBox>
                                 </IconTabFilter>
                                 <IconTabFilter
                                     id="idIconTabFilterForCreateSimulation"
@@ -669,6 +746,7 @@
                                         id="idList4"
                                         text="Create Simulations"
                                     />
+                                    
                                 </IconTabFilter>
                             </items>
                         </IconTabBar>
