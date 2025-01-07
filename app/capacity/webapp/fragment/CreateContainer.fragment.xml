@@ -69,6 +69,8 @@
                 <Input
                     id="idCreateContainerLengthInput"
                     value="{CombinedModel>/Vehicle/length}"
+                     liveChange="onLiveChangeForConatainerLength"
+                     type="Number"
                 />
 
                 <Label
@@ -80,6 +82,8 @@
                 <Input
                     id="idCreateContainerWidthInput"
                     value="{CombinedModel>/Vehicle/width}"
+                    liveChange="onLiveChangeForContainerWidth"
+                    type="Number"
                 />
 
                 <Label
@@ -91,6 +95,8 @@
                 <Input
                     id="idCreateContainerHeightInput"
                     value="{CombinedModel>/Vehicle/height}"
+                    liveChange="onLiveChangeForContainerHeight"
+                            type="Number"
                 />
 
                 <Label

@@ -125,8 +125,10 @@ sap.ui.define([
       onCancelCreateContainer: function () {
         if (this.oContainerCreate.isOpen()) {
           this.oContainerCreate.close();
-          this.getView().getModel("CombinedModel").setProperty("/Vehicle", {});
+          this.oContainerCreate.destroy();
+        
         }
+        this.getView().getModel("CombinedModel").setProperty("/Vehicle", {});
       },
       /**Opening ModelEdit Fragment */
       onModelEditFragment: async function () {
@@ -139,8 +141,8 @@ sap.ui.define([
       onCloseEditModel: function () {
         if (this.oEdit.isOpen()) {
           this.oEdit.close();
-          this.getView().getModel("CombinedModel").setProperty("/Product", {});
         }
+        this.getView().getModel("CombinedModel").setProperty("/Product", {});
 
       },
       /**Create Product/Model */
@@ -746,6 +748,24 @@ sap.ui.define([
         var sValue = oEvent.getParameter("value");
         if (sValue.length > 2) {
           oEvent.getSource().setValue(sValue.substring(0, 2));
+        }
+      },
+      onLiveChangeForConatainerLength: function (oEvent) {
+        var sValue = oEvent.getParameter("value");
+        if (sValue.length > 2) {
+          oEvent.getSource().setValue(sValue.substring(0, 5));
+        }
+      },
+      onLiveChangeForContainerWidth: function (oEvent) {
+        var sValue = oEvent.getParameter("value");
+        if (sValue.length > 2) {
+          oEvent.getSource().setValue(sValue.substring(0, 5));
+        }
+      },
+      onLiveChangeForContainerHeight: function (oEvent) {
+        var sValue = oEvent.getParameter("value");
+        if (sValue.length > 2) {
+          oEvent.getSource().setValue(sValue.substring(0, 5));
         }
       }
 //         if(oSelectedItem.length > 1){
