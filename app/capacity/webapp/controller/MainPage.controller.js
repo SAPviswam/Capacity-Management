@@ -648,7 +648,6 @@ sap.ui.define([
       },
 
       onContainerEditPress: async function () {
-
         var oSelectedItem = this.byId("idContianersTable").getSelectedItems();
         if (oSelectedItem.length == 0) {
           MessageBox.information("Please select at least one Row for edit!");
@@ -668,6 +667,74 @@ sap.ui.define([
       onCancelInEditContainerDialog: function () {
         if (this.oEdit.isOpen()) {
           this.oEdit.close();
+        }
+      },
+
+      //Edit function for the Container table. Present there is no requirment 
+      // for any additional functionality or validation requirements Add this Code
+      onSaveEditContainerPress: async function () {
+        // Get the edited data from the fragment model
+        const oView = this.getView(),
+          oContainerModel = oView.getModel("CombinedModel"),
+          oUpdateContainer = oContainerModel.getProperty("/Vehicle"),
+          // Get the original product row binding context (from the selected row in the table)
+          oTable = this.byId("idContianersTable"),
+          oSelectedItem = oTable.getSelectedItem(),
+          oContext = oSelectedItem.getBindingContext(),
+          // Use the context to get the path and ID of the selected product for updating
+          sPath = oContext.getPath(), // The path to the product entry in the OData model
+          oModel = oView.getModel("ModelV2");
+
+        // Create the payload for updating the product in the backend
+        var oPayloadmodelupdate = {
+          truckType: oUpdateContainer.truckType,
+          length: oUpdateContainer.length,
+          width: oUpdateContainer.width,
+          height: oUpdateContainer.height,
+          uom: oUpdateContainer.uom,
+          volume: oUpdateContainer.volume,
+          tvuom: oUpdateContainer.tvuom,
+          truckWeight: oUpdateContainer.truckWeight,
+          capacity: oUpdateContainer.capacity,
+          tuom: oUpdateContainer.tuom, // Add any additional properties if needed
+          // Include the ID for the product being updated
+        }
+        let raisedErrorsSave = [];
+        const aUserInputsSave = [
+          // { Id: "idDesvbncriptionInput_InitialView", value: oProductPayload.EAN, regex: null, message: "Please enter EAN" },
+          { Id: "IdContainerLength_Input", value: oPayloadmodelupdate.length, regex: /^\d+(\.\d+)?$/, message: "Length should be numeric" },
+          { Id: "idContainerWidth_Input", value: oPayloadmodelupdate.width, regex: /^\d+(\.\d+)?$/, message: "Width should be numeric" },
+          { Id: "idContainerHeight_Input", value: oPayloadmodelupdate.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
+          { Id: "idContainerCapacity_Input", value: oPayloadmodelupdate.capacity, regex: /^\d+(\.\d+)?$/, message: "capacity should be numeric" },
+          { Id: "idContainerTruckWeight_Input", value: oPayloadmodelupdate.truckWeight, regex: /^\d+(\.\d+)?$/, message: "Truck Weight should be numeric" }]
+                   const validationPromisesSave = aUserInputsSave.map(async input => {
+          let aValidationsSave = await this.validateField(oView, input.Id, input.value, input.regex, input.message);
+          if (aValidationsSave.length > 0) {
+            raisedErrorsSave.push(aValidationsSave[0]); // Push first error into array
+          }
+        });
+
+        // Wait for all validations to complete
+        await Promise.all(validationPromisesSave);
+
+        // Check if there are any raised errors
+        if (raisedErrorsSave.length > 0) {
+          // Consolidate errors into a single message
+          const errorMessageSave = raisedErrorsSave.join("\n");
+          MessageBox.information(errorMessageSave); // Show consolidated error messages
+          return;
+        }
+        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(2));
+        try {
+          await this.updateData(oModel, oPayloadmodelupdate, sPath);
+          MessageBox.success("Product details updated successfully!");
+          // Close the fragment
+          this.onCloseEditModel();
+          // Optionally, refresh the table binding to reflect the changes
+          oTable.getBinding("items").refresh();
+        } catch (oError) {
+          MessageBox.error("Error updating product details: " + oError.message);
+          this.onCloseEditModel()
         }
       },
 
@@ -747,7 +814,7 @@ sap.ui.define([
         if (sValue.length > 2) {
           oEvent.getSource().setValue(sValue.substring(0, 2));
         }
-      }
+      },
 //         if(oSelectedItem.length > 1){
 //           MessageBox.information("Please select only one Row for edit!");
 //           return;
@@ -764,6 +831,7 @@ sap.ui.define([
 //             this.oEdit.close();
 //         }
 //       }
+
 
     });
   });
