@@ -258,7 +258,7 @@ sap.ui.define([
 
       onPressEditInProductsTable:async  function() {
         var oSelectedItem = this.byId("idModelsTable").getSelectedItems();
-        if (!oSelectedItem == 0) {
+        if (oSelectedItem.length == 0) {
           MessageBox.information("Please select at least one Row for edit!");
           return;
         }
