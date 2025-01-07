@@ -56,6 +56,19 @@
                                 text="Capacity Management"
                             />
                         </HBox>
+                        <Avatar
+                            id="idImageMainAvatar_CapacityManagement"
+                            displaySize="XS"
+                            press="onAvatarPress_CapacityManagement"
+                            tooltip="Profile"
+                        >
+                            <layoutData>
+                                <OverflowToolbarLayoutData
+                                    id="idOverflowToolbarLayoutData_CM"
+                                    priority="High"
+                                />
+                            </layoutData>
+                        </Avatar>
                     </HBox>
                 </tnt:content>
             </tnt:ToolHeader>
@@ -231,7 +244,7 @@
                                                     />
                                                     <Input
                                                         id="idInputForModelNum"
-                                                        value="{CombinedModel>/Product/sapProductno}"
+                                                        value="{CombinedModel>/Product/model}"
                                                         placeholder="Enter Productno"
                                                         class="customInput"
                                                         width="100%"
@@ -359,7 +372,7 @@
                                                         class="sapUiTinyMarginTop"
                                                     />
                                                     <Select
-                                                        id="idForSelectUOM"
+                                                        id="idForSelectModelLWHUOM"
                                                         width="174px"
                                                     >
                                                         <core:Item
@@ -546,6 +559,7 @@
                                                         icon="sap-icon://create"
                                                         width="100px"
                                                         type="Accept"
+                                                        press="onContainerCreate"
                                                     />
                                                     <Button
                                                         id="idContainerEditBtn"
