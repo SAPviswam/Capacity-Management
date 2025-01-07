@@ -20,18 +20,18 @@
             />
         </beginButton>
         <endButton>
-            <Button
+            <!-- <Button
                 id="idCancesslbnmButton"
                 text="Cancel"
                 press="onCancelInEditProductDialog"
                 type="Negative"
-            />
-<!--           <Button
+            /> -->
+          <Button
                 id="idCancesslbnmButton"
                 text="Cancel"
                 press="onCloseEditModel"
                 type="Negative"
-            /> -->
+            />
         </endButton>
         <content>
             <form:SimpleForm
