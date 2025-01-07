@@ -53,8 +53,9 @@
                             <Title
                                 id="idPageTitle"
                                 level="Auto"
-                                titleStyle="H6"
+                                titleStyle="H1"
                                 text="Capacity Management"
+                                class="capacityManagement"
                             />
                         </HBox>
                         <Avatar
@@ -597,7 +598,7 @@
                                                                     id="idContainerEditBtn"
                                                                     text="Edit"
                                                                     icon="sap-icon://edit"
-                                                                    press="idContainerEditPress"
+                                                                    press="onContainerEditPress"
                                                                 />
                                                                 <MenuItem
                                                                     id="idContainerDeleteBtn"

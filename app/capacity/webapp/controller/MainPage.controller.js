@@ -626,5 +626,27 @@ sap.ui.define([
           reader.readAsArrayBuffer(file);
         }
       },
+      onContainerEditPress:async  function() {
+        var oSelectedItem = this.byId("idContianersTable").getSelectedItems();
+        if (oSelectedItem.length == 0) {
+          MessageBox.information("Please select at least one Row for edit!");
+          return;
+        }
+        if(oSelectedItem.length > 1){
+          MessageBox.information("Please select only one Row for edit!");
+          return;
+        }
+       let oPayload = oSelectedItem[0].getBindingContext().getObject();
+       this.getView().getModel("CombinedModel").setProperty("/Vehicle",oPayload)
+          if (!this.oEdit) {
+            this.oEdit = await this.loadFragment("EditContainerDetails");
+             }
+        this.oEdit.open();
+        },
+        onCancelInEditContainerDialog: function () {
+        if (this.oEdit.isOpen()) {
+            this.oEdit.close();
+        }
+      }
     });
   });
