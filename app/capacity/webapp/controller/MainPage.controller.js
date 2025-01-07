@@ -355,38 +355,38 @@ sap.ui.define([
         }
       },
 
-      onSaveProduct: async function () {
-        // Get the edited data from the fragment model
-        var oModel = this.getView().getModel("CombinedModel");
-        var oUpdatedProduct = oModel.getProperty("/Product");
+      // onSaveProduct: async function () {
+      //   // Get the edited data from the fragment model
+      //   var oModel = this.getView().getModel("CombinedModel");
+      //   var oUpdatedProduct = oModel.getProperty("/Product");
 
-        // Get the original product row binding context (from the selected row in the table)
-        var oTable = this.byId("idModelsTable");
-        var oSelectedItem = oTable.getSelectedItem();
-        var oContext = oSelectedItem.getBindingContext();
+      //   // Get the original product row binding context (from the selected row in the table)
+      //   var oTable = this.byId("idModelsTable");
+      //   var oSelectedItem = oTable.getSelectedItem();
+      //   var oContext = oSelectedItem.getBindingContext();
 
-        // Use the context to get the path and ID of the selected product for updating
-        var sPath = oContext.getPath(); // The path to the product entry in the OData model
+      //   // Use the context to get the path and ID of the selected product for updating
+      //   var sPath = oContext.getPath(); // The path to the product entry in the OData model
 
-        //   if (oUpdatedProduct.length <= 0 || isNaN(oUpdatedProduct.length)) {
-        //     MessageBox.error("Please enter a valid positive number for Length!");
-        //     return;
-        // }
-        // if (oUpdatedProduct.width <= 0 || isNaN(oUpdatedProduct.width)) {
-        //     MessageBox.error("Please enter a valid positive number for Width!");
-        //     return;
-        // }
-        // if (oUpdatedProduct.height <= 0 || isNaN(oUpdatedProduct.height)) {
-        //     MessageBox.error("Please enter a valid positive number for Height!");
-        //     return;
-        // }
+      //   //   if (oUpdatedProduct.length <= 0 || isNaN(oUpdatedProduct.length)) {
+      //   //     MessageBox.error("Please enter a valid positive number for Length!");
+      //   //     return;
+      //   // }
+      //   // if (oUpdatedProduct.width <= 0 || isNaN(oUpdatedProduct.width)) {
+      //   //     MessageBox.error("Please enter a valid positive number for Width!");
+      //   //     return;
+      //   // }
+      //   // if (oUpdatedProduct.height <= 0 || isNaN(oUpdatedProduct.height)) {
+      //   //     MessageBox.error("Please enter a valid positive number for Height!");
+      //   //     return;
+      //   // }
 
-        // Create the payload for updating the product in the backend
-        var oPayloadmodelupdate = {
+      //   // Create the payload for updating the product in the backend
+      //   var oPayloadmodelupdate = {
 
-        this.getView().getModel("CombinedModel").setProperty("/Product", oPayload);
-        this.onModelEditFragment();
-      },
+      //   this.getView().getModel("CombinedModel").setProperty("/Product", oPayload);
+      //   this.onModelEditFragment();
+      // },
       /**save After Modifications */
       onSaveProduct: async function () {
         debugger
