@@ -237,7 +237,7 @@ sap.ui.define([
           MessageToast.show("successfully Deleted")
         } catch {
           MessageBox.error("Error Occurs!");
-        }finally{
+        } finally {
           this._oBusyDialog.close()
         }
       },
@@ -436,6 +436,22 @@ sap.ui.define([
       _onFileSelected: async function (oFileInput) {
         // Retrieve the selected file
         var oFile = oFileInput.files[0];
+        // test
+
+        // Get the file name and MIME type
+        var fileName = oFile.name;
+
+        // Allowed extensions for Excel files
+        var allowedExtensions = ['.xls', '.xlsx', '.xlsm'];
+
+        // Check if the file extension is valid
+        var fileExtension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+
+        if (!allowedExtensions.includes(fileExtension)) {
+          alert("Please select a valid Excel file (.xls, .xlsx, .xlsm)");
+          return;
+        }
+        // test
 
         if (oFile) {
           // Here, you can implement the logic to handle the file
