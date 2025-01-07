@@ -115,7 +115,6 @@ sap.ui.define([
             },
 
             onLoginBtnPressInLoginDialog: async function () {
-                debugger
                 const oModel = this.getOwnerComponent().getModel("ModelV2"),
                     oUserView = this.getView(),
                     sPath = "/Users",
