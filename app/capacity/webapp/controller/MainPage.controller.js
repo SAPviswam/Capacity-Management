@@ -14,6 +14,7 @@ sap.ui.define([
         this.MaterialModel = new JSONModel();
         this.getView().setModel(this.MaterialModel, "MaterialModel");
 
+
         /**Combined Model for Model and Containers */
         const oRouter = this.getOwnerComponent().getRouter();
         oRouter.attachRoutePatternMatched(this.onUserDetailsLoadCapacityManagement, this);
@@ -56,6 +57,13 @@ sap.ui.define([
         // Set the combined model to the view
         this.getView().setModel(oCombinedModel, "CombinedModel")
 
+        // Material upload
+        this.MaterialModel = new JSONModel();
+        this.getView().setModel(this.MaterialModel, "MaterialModel");
+
+        /**Combined Model for Model and Containers */
+        const oRouter = this.getOwnerComponent().getRouter();
+        oRouter.attachRoutePatternMatched(this.onUserDetailsLoadCapacityManagement, this);
       },
       onUserDetailsLoadCapacityManagement: async function (oEvent1) {
         debugger
@@ -75,13 +83,6 @@ sap.ui.define([
         // Call the reusable function from BaseController
         this.onPressAvatarPopOverBaseFunction(oEvent);
       },
-
-
-
-
-
-
-
 
       /*For ToolMenuCollapse */
       onCollapseExpandPress() {
@@ -108,6 +109,7 @@ sap.ui.define([
           navContainer.to(this.getView().createId(targetId));
         }
       },
+      /**Fragment's open and Close logics */
       /**Container Fragment open for Creation */
       onContainerCreate: async function () {
         let oSelectedItem = this.byId("idContianersTable").getSelectedItems();
@@ -123,6 +125,20 @@ sap.ui.define([
       onCancelCreateContainer: function () {
         if (this.oContainerCreate.isOpen()) {
           this.oContainerCreate.close();
+        }
+      },
+      /**Opening ModelEdit Fragment */
+      onModelEditFragment: async function () {
+        if (!this.oEdit) {
+          this.oEdit = await this.loadFragment("EditproductDetails");
+        }
+        this.oEdit.open();
+      },
+      /**closing Edit Model Fragment */
+      onCloseEditModel: function () {
+        if (this.oEdit.isOpen()) {
+          this.oEdit.close();
+          this.getView().getModel("CombinedModel").setProperty("/Product",{});
         }
 
       },
@@ -264,15 +280,62 @@ sap.ui.define([
         }
       },
 
+//       /*edit product functinality*/
+//       onModelEdit: async function () {
 
-      //edit product functinality
+
+
+//       //edit product functinality
 
       onPressEditInProductsTable:async  function() {
+
         var oSelectedItem = this.byId("idModelsTable").getSelectedItems();
         if (oSelectedItem.length == 0) {
           MessageBox.information("Please select at least one Row for edit!");
           return;
         }
+        if (oSelectedItem.length > 1) {
+          MessageBox.information("Please select only one Row for edit!");
+          return;
+        }
+        let oPayload = oSelectedItem[0].getBindingContext().getObject();
+        this.getView().getModel("CombinedModel").setProperty("/Product", oPayload);
+        this.onModelEditFragment();
+      },
+      /**save After Modifications */
+      onSaveProduct: async function () {
+        // Get the edited data from the fragment model
+        const oView = this.getView(),
+          oProductModel = oView.getModel("CombinedModel"),
+          oUpdatedProduct = oProductModel.getProperty("/Product"),
+          // Get the original product row binding context (from the selected row in the table)
+          oTable = this.byId("idModelsTable"),
+          oSelectedItem = oTable.getSelectedItem(),
+          oContext = oSelectedItem.getBindingContext(),
+          // Use the context to get the path and ID of the selected product for updating
+          sPath = oContext.getPath(), // The path to the product entry in the OData model
+          oModel = oView.getModel("ModelV2");
+
+        // Create the payload for updating the product in the backend
+        var oPayloadmodelupdate = {
+          model: oUpdatedProduct.model,
+          description: oUpdatedProduct.description,
+          grossWeight: oUpdatedProduct.grossWeight,
+          netWeight: oUpdatedProduct.netWeight,
+          length: oUpdatedProduct.length,
+          width: oUpdatedProduct.width,
+          wuom: oUpdatedProduct.wuom,
+          height: oUpdatedProduct.height,
+          uom: oUpdatedProduct.uom,
+          quantity: oUpdatedProduct.quantity,
+          stack: oUpdatedProduct.stack,
+          volume: oUpdatedProduct.volume,
+        };
+        
+        let raisedErrorsSave = [];
+        const aUserInputsSave = [
+          // { Id: "idDesvbncriptionInput_InitialView", value: oProductPayload.EAN, regex: null, message: "Please enter EAN" },
+
         if(oSelectedItem.length > 1){
           MessageBox.information("Please select only one Row for edit!");
           return;
@@ -341,7 +404,7 @@ sap.ui.define([
           { Id: "editprodHeightInput", value: oPayloadmodelupdate.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
           // { Id: "idInputForModelCat", value: oPayloadmodelupdate.mCategory, regex: null, message: "Enter category" },
           { Id: "editDescriptionInput", value: oPayloadmodelupdate.description, regex: null, message: "Enter description" },
-          { Id: "editnetWeightLabel", value: oPayloadmodelupdate.netWeight, regex: /^\d+(\.\d+)?$/, message: "Net Weight should be numeric" },
+          { Id: "editnetWeightInput", value: oPayloadmodelupdate.netWeight, regex: /^\d+(\.\d+)?$/, message: "Net Weight should be numeric" },
           { Id: "editgrossWeightInput", value: oPayloadmodelupdate.grossWeight, regex: /^\d+(\.\d+)?$/, message: "Gross Weight should be numeric" },
           { Id: "editQuantityInput", value: oPayloadmodelupdate.quantity, regex: /^\d+$/, message: "Quantity should be numeric" },
           { Id: "editstackInput", value: oPayloadmodelupdate.stack, regex: /^\d+$/, message: "Stack should be numeric" }]
@@ -364,6 +427,23 @@ sap.ui.define([
           MessageBox.information(errorMessageSave); // Show consolidated error messages
           return;
         }
+
+
+        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(2));
+        oPayloadmodelupdate.bearingCapacity = String(oPayloadmodelupdate.stack * oPayloadmodelupdate.grossWeight);
+        try {
+          await this.updateData(oModel, oPayloadmodelupdate, sPath);
+          MessageBox.success("Product details updated successfully!");
+          // Close the fragment
+          this.onCloseEditModel();
+          // Optionally, refresh the table binding to reflect the changes
+          oTable.getBinding("items").refresh();
+        } catch (oError) {
+          MessageBox.error("Error updating product details: " + oError.message);
+          this.onCloseEditModel()
+        }
+      }
+
     
         try {
             // Call the OData update request to save the edited data in the backend
@@ -647,7 +727,5 @@ sap.ui.define([
           reader.readAsArrayBuffer(file);
         }
       },
-
-
     });
   });

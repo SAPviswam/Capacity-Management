@@ -67,18 +67,24 @@ annotate MyService.Materials with @(UI: {
             Value: uom,
             Label: 'Dimension Units'
         },
-        {
-            $Type: 'UI.DataField',
-            Value: color,
-            Label: 'Color'
-        },
+         
         {
             $Type: 'UI.DataField',
             Value: volume,
             Label: 'Volume'
+        },
+          
+        {
+            $Type: 'UI.DataField',
+            Value: stack,
+            Label: 'Stack Levels'
+        },
+          
+        {
+            $Type: 'UI.DataField',
+            Value: quantity,
+            Label: 'Quantity'
         }
-
-
     ],
 });
 
@@ -160,7 +166,11 @@ annotate MyService.SelectedProduct with @(UI: {
     LineItem       : [
         {
             $Type: 'UI.DataField',
-            Value: Productno_ID
+            Value: Productno.ID,
+        },
+         {
+            $Type: 'UI.DataField',
+            Value: Productno.model
         },
         {
             $Type: 'UI.DataField',
@@ -168,7 +178,7 @@ annotate MyService.SelectedProduct with @(UI: {
         }
     ]
 });
-
+ 
 annotate MyService.Materials with @(
     UI.Identification: [],
     cds.odata.valuelist,
