@@ -3,6 +3,54 @@
     padding: 20px;
 }
 
+/*START=> used in Profile Popover for the details as bold text and also allignments */
+.UserNameBold {
+    font-weight: bold !important;
+}
+.onProfileOptions {
+    margin-left: -0.5rem !important;
+    align-items: start !important;
+}
+.NamePhoneClass {
+    margin-top: 0.4rem;
+    margin-right: 1rem;
+}
+.profileAvatar1234:hover::after {
+    content: "";
+    /* Unicode for the camera icon (from SAP icons) */
+    font-family: "SAP-icons";
+    position: absolute;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: 0.3s;
+}
+/* User Profile Details(Account Details) Dailog Box */
+.profileCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+.profileAvatar {
+    border-radius: 55%;
+    margin-bottom: 15px;
+    border: 4px solid #fff;
+    position: relative;
+}
+.profileDetailItem {
+    margin: auto;
+    font-size: 0.9em;
+    color: #000000;
+    font-weight: bold;
+}
+
 
 .capacityTitle {
     font-size: 2rem;
@@ -409,3 +457,10 @@
 .myInvisibleClass {
     display: none; /* This will hide the IconTabFilter */
 }
+
+/* Custom styles for capacity management section (Title)*/
+.capacityManagement{
+    font: 1.5rem sans-serif !important;
+    font-weight: bold !important;
+}
+ 

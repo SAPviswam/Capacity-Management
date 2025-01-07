@@ -67,18 +67,24 @@ annotate MyService.Materials with @(UI: {
             Value: uom,
             Label: 'Dimension Units'
         },
-        {
-            $Type: 'UI.DataField',
-            Value: color,
-            Label: 'Color'
-        },
+         
         {
             $Type: 'UI.DataField',
             Value: volume,
             Label: 'Volume'
+        },
+          
+        {
+            $Type: 'UI.DataField',
+            Value: stack,
+            Label: 'Stack Levels'
+        },
+          
+        {
+            $Type: 'UI.DataField',
+            Value: quantity,
+            Label: 'Quantity'
         }
-
-
     ],
 });
 
@@ -143,7 +149,37 @@ annotate MyService.TruckTypes with @(UI: {
             $Type: 'UI.DataField',
             Value: height,
             Label: 'Height'
-        }
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: uom,
+            Label: 'Uom'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: volume,
+            Label: 'Volume'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: tvuom,
+            Label: 'Tvuom'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: truckWeight,
+            Label: 'Truck Weight'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: capacity,
+            Label: 'Capacity'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: tuom,
+            Label: 'Tuom'
+        }  
     ]
 });
 
@@ -160,7 +196,11 @@ annotate MyService.SelectedProduct with @(UI: {
     LineItem       : [
         {
             $Type: 'UI.DataField',
-            Value: Productno_ID
+            Value: Productno.ID,
+        },
+         {
+            $Type: 'UI.DataField',
+            Value: Productno.model
         },
         {
             $Type: 'UI.DataField',
@@ -169,7 +209,47 @@ annotate MyService.SelectedProduct with @(UI: {
     ]
 });
 
-annotate MyService.Materials with @(
-    UI.Identification: [],
-    cds.odata.valuelist,
-);
+annotate MyService.History with @(UI: {
+    HeaderInfo     : {
+        $Type         : 'UI.HeaderInfoType',
+        TypeName      : 'History',
+        TypeNamePlural: 'History'
+    },
+    SelectionFields: [
+       simulationName_ID,
+       truckType_truckType,
+       createdAt,
+       createdBy,
+       modifiedAt,
+       modifiedBy
+       
+       
+    ],
+    LineItem       : [
+        {
+            $Type: 'UI.DataField',
+            Value:  simulationName_ID,
+             Label: 'Simulation Name'
+        },
+       
+        {
+            $Type: 'UI.DataField',
+            Value: createdAt,
+            Label:'Date and Time'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: createdBy,
+            Label:'Created By'
+        }, {
+            $Type: 'UI.DataField',
+            Value: modifiedAt,
+            Label:'MOdified Date and Time'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: modifiedBy,
+            Label:'Modified By'
+        }
+    ]
+});

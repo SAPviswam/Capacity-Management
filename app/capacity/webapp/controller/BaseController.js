@@ -2,9 +2,11 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/Fragment",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
+    "sap/ui/model/FilterOperator",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast",
 
-], function (Controller, Fragment, Filter, FilterOperator) {
+], function (Controller, Fragment, Filter, FilterOperator, MessageBox, MessageToast) {
     'use strict';
 
     return Controller.extend("com.app.capacity.controller.BaseController", {
@@ -99,69 +101,89 @@ sap.ui.define([
         },
 
         //Base function for opening the Profile PopOver..
-        onPressAvatarPopOverBaseFunction: function (oEvent) {
-            debugger;
+        loadFragment: async function (sFragmentName) {
+            const oFragment = await Fragment.load({
+                id: this.getView().getId(),
+                name: `com.app.capacity.fragment.${sFragmentName}`,
+                controller: this,
+            });
+            this.getView().addDependent(oFragment);
+            return oFragment;
+        },
+
+
+        //Base function for opening the Profile PopOver..
+        onPressAvatarPopOverBaseFunction: async function (oEvent) {
             var This = this;
             const oUserId = This.ID;
             var oView = This.getView();
-            var oModel1 = This.getOwnerComponent().getModel("ModelV2");
+            const oModel1 = this.getOwnerComponent().getModel("ModelV2");
 
-            oModel1.read(`/Users`, {
-                filters: [new Filter("userID", FilterOperator.EQ, oUserId)],
-                success: function (results) {
-                    // Prepare the profile data
-                    var oProfileData = {
-                        Name: results.fName,
-                        Name1: results.lName,
-                        Number: results.Phonenumber
-                    };
-                    var oProfileModel = new sap.ui.model.json.JSONModel(oProfileData);
+            try {
+                const data = await new Promise((resolve, reject) => {
+                    oModel1.read("/Users", {
+                        success: resolve,
+                        error: reject,
+                    });
+                });
 
-                    if (!This._oPopover) {
-                        This._oPopover = This.loadFragment("ProfileDialog");
-                        oView.addDependent(This._oPopover);
-                    }
-                    // Set both the profile and visibility models to the popover
-                    This._oPopover.setModel(oProfileModel, "profile");
-                    // Open the popover near the avatar after the data is set
-                    This._oPopover.openBy(oEvent.getSource());
-                },
-                error: function () {
-                    sap.m.MessageToast.show("User does not exist");
+                const user = data.results.find((user) => user.userID === oUserId);
+                const oProfileModel = new sap.ui.model.json.JSONModel({
+                    Name: `${user.fName} ${user.lName}`,
+                    Number: user.phoneNo,
+                });
+
+                if (!this.oPopoverUserDetailsFragment) {
+                    this.oPopoverUserDetailsFragment = await this.loadFragment("ProfileDialog");
                 }
-            });
+
+                this.oPopoverUserDetailsFragment.setModel(oProfileModel, "profile");
+                this.oPopoverUserDetailsFragment.openBy(oEvent.getSource());
+            } catch (error) {
+                sap.m.MessageToast.show("Error fetching user data");
+                console.error("Error while opening the popover:", error);
+            }
         },
         //Account Details press function from popover
-        onPressAccountDetails: async function () {
-            const oModel1 = this.getOwnerComponent().getModel();
-            const userId = this.ID;
+        onPressAccountDetails_CM: async function () {
+            debugger
+            const oUserId = this.ID;
+            const oModel1 = this.getOwnerComponent().getModel("ModelV2");
 
-            // Fetch user details from the backend
-            await new Promise((resolve, reject) => {
-                oModel1.read(`/RESOURCESSet('${userId}')`, {
-                    success: function (oData) {
-                        const userDetails = oData; // Adjust this based on your data structure
-                        // Set user data in a new model or update existing model
-                        const oUserModel = new sap.ui.model.json.JSONModel(userDetails);
-                        this.getView().setModel(oUserModel, "oUserModel"); // Set the model with name
-                        resolve();
-                    }.bind(this), // Bind this to ensure the context is correct
-                    error: function () {
-                        MessageToast.show("Error loading user tiles");
-                        reject();
-                    }
+            try {
+                const oUserdata = await new Promise((resolve, reject) => {
+                    oModel1.read("/Users", {
+                        success: resolve,
+                        error: reject,
+                    });
                 });
-            });
 
-            if (!this.UserDetailsFragment) {
-                this.UserDetailsFragment = await this.loadFragment("UserDetails"); // Load your fragment asynchronously
+                const user = oUserdata.results.find((user) => user.userID === oUserId);
+                const oProfileModel = new sap.ui.model.json.JSONModel({
+                    oUserID: user.userID,
+                    fName: user.fName,
+                    lName: user.lName,
+                    Number: user.phoneNo,
+                    UserMail: user.mailID
+                });
+
+
+                // Load the fragment asynchronously if not already loaded
+                if (!this.oUserDetailsFragment) {
+                    this.oUserDetailsFragment = await this.loadFragment("UserDetails");
+                }
+
+                // Set the model to the fragment
+                this.oUserDetailsFragment.setModel(oProfileModel, "oUserModel");
+                this.oUserDetailsFragment.open();
+            } catch (error) {
+                sap.m.MessageToast.show("Error fetching user data");
+                console.error("Error while opening the popover:", error);
             }
-            this.UserDetailsFragment.open();
-            this.applyStoredProfileImage();
         },
-        onPressDeclineProfileDetailsDailog: function () {
-            if (this.UserDetailsFragment) {
-                this.UserDetailsFragment.close();
+        onPressDeclineProfileDetailsDailog_CM: function () {
+            if (this.oUserDetailsFragment) {
+                this.oUserDetailsFragment.close();
             }
         },
         //Hover Effect btn function(from Popover)...
