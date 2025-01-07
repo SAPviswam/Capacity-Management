@@ -4,6 +4,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:tnt="sap.tnt"
     xmlns:vk="sap.ui.vk"
+    xmlns:u="sap.ui.unified"
     xmlns:smartform="sap.ui.comp.smartform"
     xmlns:layout="sap.ui.layout"
     xmlns:form="sap.ui.layout.form"
@@ -184,22 +185,52 @@
                                                     <ToolbarSpacer
                                                         id="idToolbarForProducts"
                                                     />
-                                                    <Button
-                                                        id="idMaterialEditBtn"
-                                                        text="Edit"
-                                                        icon="sap-icon://edit"
-                                                        width="100px"
-                                                        type="Emphasized"
-                                                        press="onPressEditInProductsTable"
+
+
+                                                    <MenuButton
+                                                        id="idMaterialMenuBtn"
+                                                        text="Actions"
+                                                    >
+                                                        <menu>
+                                                            <Menu
+                                                                id="idMaterialMenu"
+                                                                itemSelected="onMenuAction"
+                                                            >
+                                                                <MenuItem
+                                                                    id="idMaterialEditBtn"
+                                                                    text="Edit"
+                                                                    icon="sap-icon://edit"
+                                                                    press="onPressEditInProductsTable"
+                                                                />
+                                                                <MenuItem
+                                                                    id="idMaterialDeleteBtn"
+                                                                    text="Delete"
+                                                                    icon="sap-icon://delete"
+                                                                    press="onModelDelete"
+                                                                />
+                                                                <MenuItem
+                                                                    id="idMaterialUploadBtn"
+                                                                    text="upload"
+                                                                    icon="sap-icon://upload"
+                                                                    press="onMaterialUploadbtn"
+                                                                />
+                                                            </Menu>
+                                                        </menu>
+                                                    </MenuButton>
+
+                                                    <u:FileUploader
+                                                        id="FileUploader"
+                                                        sameFilenameAllowed="true"
+                                                        iconOnly="false"
+                                                        buttonOnly="false"
+                                                        fileType="XLSX,xlsx"
+                                                        icon="sap-icon://upload"
+                                                        iconFirst="true"
+                                                        style="Emphasized"
+                                                        change="onbatchUpload"
+                                                        buttonText="Upload File"
                                                     />
-                                                    <Button
-                                                        id="idMaterialDeleteBtn"
-                                                        text="Delete"
-                                                        icon="sap-icon://delete"
-                                                        width="100px"
-                                                        type="Negative"
-                                                        press="onModelDelete"
-                                                    />
+                                                   
                                                 </OverflowToolbar>
                                             </smarttable:customToolbar>
                                             <Table
@@ -606,6 +637,7 @@
                             id="IconTabBarForSimulationHistory"
                             backgroundDesign="Transparent"
                             class="sapUiTinyMargin"
+                            select="onIconTabSelect"
                         >
                             <items>
                                 <IconTabFilter
@@ -626,7 +658,7 @@
                                 <IconTabFilter
                                     id="idIconTabFilterForCreateSimulation"
                                     visible="true"
-                                    key="info"
+                                    key="createSimulation"
                                     icon="sap-icon://create-form"
                                     interactionMode="Auto"
                                     iconColor="Neutral"
