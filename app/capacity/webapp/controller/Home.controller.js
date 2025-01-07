@@ -592,7 +592,8 @@ sap.ui.define([
                     if (oResponse.results.length > 0) {
                         const sRegisteredUserID = oResponse.results[0].userID,
                             sRegisteredPhnNumber = oResponse.results[0].phoneNo,
-                            sStoredPassword = oResponse.results[0].password;
+                            sStoredPassword = oResponse.results[0].password,
+                            sUUID = oResponse.results[0].ID;
 
                         if (sRegisteredUserID === sUserEnteredUserID && sRegisteredPhnNumber === sUserEnteredMobile) {
 
@@ -611,7 +612,7 @@ sap.ui.define([
                             try {
 
                                 // update call
-                                const oResponse = await this.updateData(oModel, `${sPath}('${sUserEnteredUserID}')`, oPayload);
+                                const oResponse = await this.updateData(oModel, oPayload, `${sPath}('${sUUID}')`);
                                 sap.m.MessageToast.show("Password Changed Successfully")
                                 const oUserView = this.getView();
                                 // after successfull  value states

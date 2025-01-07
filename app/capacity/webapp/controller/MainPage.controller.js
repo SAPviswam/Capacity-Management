@@ -213,34 +213,87 @@ sap.ui.define([
         }
 
       },
+      
       /** Deleting Models */
+      // onModelDeletes: async function () {
+
+      //   this._oBusyDialog = new sap.m.BusyDialog({
+      //     text: "Deleting Data"
+      //   });
+      //   this._oBusyDialog.open()
+      //   let oSlectedItems = this.byId("idModelsTable").getSelectedItems();
+      //   const oModel = this.getView().getModel("ModelV2");
+      //   if (oSlectedItems.length < 1) {
+      //     this._oBusyDialog.close()
+      //     return MessageBox.warning("Please Select atleast One Model/Prodcut");
+      //   }
+      //   try {
+      //     // delay the for buffer
+      //     await new Promise((resolve) => setTimeout(resolve, 500));
+      //     for (let Item of oSlectedItems) {
+      //       let sPath = Item.getBindingContext().getPath();
+      //       await this.deleteData(oModel, sPath);
+      //     }
+      //     this.byId("idModelsTable").getBinding("items").refresh();
+      //     MessageToast.show("successfully Deleted")
+      //   } catch {
+      //     MessageBox.error("Error Occurs!");
+      //   } finally {
+      //     this._oBusyDialog.close()
+      //   }
+      // },
+
+
       onModelDelete: async function () {
+        let oSlectedItems = this.byId("idModelsTable").getSelectedItems();
+        if (oSlectedItems.length < 1) {
+          return MessageBox.warning("Please Select atleast One Model/Prodcut");
+        }
 
         this._oBusyDialog = new sap.m.BusyDialog({
           text: "Deleting Data"
         });
         this._oBusyDialog.open()
-        let oSlectedItems = this.byId("idModelsTable").getSelectedItems();
-        const oModel = this.getView().getModel("ModelV2");
-        if (oSlectedItems.length < 1) {
-          this._oBusyDialog.close()
-          return MessageBox.warning("Please Select atleast One Model/Prodcut");
-        }
+
         try {
-          // delay the for buffer
           await new Promise((resolve) => setTimeout(resolve, 500));
-          for (let Item of oSlectedItems) {
-            let sPath = Item.getBindingContext().getPath();
-            await this.deleteData(oModel, sPath);
-          }
-          this.byId("idModelsTable").getBinding("items").refresh();
-          MessageToast.show("successfully Deleted")
-        } catch {
-          MessageBox.error("Error Occurs!");
+
+          const oModel = this.getView().getModel("ModelV2");
+          // Create a batch group ID to group the delete requests
+          var sBatchGroupId = "deleteBatchGroup";
+          // Start a batch operation
+          oModel.setUseBatch(true);
+          oModel.setDeferredGroups([sBatchGroupId]);
+          oSlectedItems.forEach(async (item) => {
+            let sPath = item.getBindingContext().getPath();
+            await this.deleteData(oModel, sPath, sBatchGroupId);
+
+          })
+          // Submit the batch request
+          oModel.submitChanges({
+            groupId: sBatchGroupId,
+            success: this._onBatchSuccess.bind(this),
+            error: this._onBatchError.bind(this),
+            refresh: this.byId("idModelsTable").getBinding("items").refresh()
+          });
+
+        } catch (error) {
+          MessageBox.error("Technical deletion error");
         } finally {
           this._oBusyDialog.close()
         }
       },
+
+      // Success callback after the batch request
+      _onBatchSuccess: function (oData) {
+        MessageToast.show("successfully Deleted");
+      },
+
+      // Error callback after the batch request
+      _onBatchError: function (oError) {
+        MessageToast.show("Batch delete failed. Please try again.");
+      },
+      //test  
       /**Truck type selection based on click display details */
       onTruckTypeChange: function (oEvent) {
         let oSelectedItem = oEvent.getParameter('listItem'),
@@ -267,70 +320,70 @@ sap.ui.define([
 
       //edit product functinality
 
-      onPressEditInProductsTable:async  function() {
+      onPressEditInProductsTable: async function () {
         var oSelectedItem = this.byId("idModelsTable").getSelectedItems();
         if (oSelectedItem.length == 0) {
           MessageBox.information("Please select at least one Row for edit!");
           return;
         }
-        if(oSelectedItem.length > 1){
+        if (oSelectedItem.length > 1) {
           MessageBox.information("Please select only one Row for edit!");
           return;
         }
-       let oPayload = oSelectedItem[0].getBindingContext().getObject();
-       this.getView().getModel("CombinedModel").setProperty("/Product",oPayload)
-          if (!this.oEdit) {
-            this.oEdit = await this.loadFragment("EditproductDetails");
-             }
+        let oPayload = oSelectedItem[0].getBindingContext().getObject();
+        this.getView().getModel("CombinedModel").setProperty("/Product", oPayload)
+        if (!this.oEdit) {
+          this.oEdit = await this.loadFragment("EditproductDetails");
+        }
         this.oEdit.open();
 
-  
-        },
-        onCancelInEditProductDialog: function () {
+
+      },
+      onCancelInEditProductDialog: function () {
         if (this.oEdit.isOpen()) {
-            this.oEdit.close();
+          this.oEdit.close();
         }
       },
 
-      onSaveProduct : async function() {
+      onSaveProduct: async function () {
         // Get the edited data from the fragment model
         var oModel = this.getView().getModel("CombinedModel");
         var oUpdatedProduct = oModel.getProperty("/Product");
-    
+
         // Get the original product row binding context (from the selected row in the table)
         var oTable = this.byId("idModelsTable");
         var oSelectedItem = oTable.getSelectedItem();
         var oContext = oSelectedItem.getBindingContext();
-    
+
         // Use the context to get the path and ID of the selected product for updating
         var sPath = oContext.getPath(); // The path to the product entry in the OData model
 
-      //   if (oUpdatedProduct.length <= 0 || isNaN(oUpdatedProduct.length)) {
-      //     MessageBox.error("Please enter a valid positive number for Length!");
-      //     return;
-      // }
-      // if (oUpdatedProduct.width <= 0 || isNaN(oUpdatedProduct.width)) {
-      //     MessageBox.error("Please enter a valid positive number for Width!");
-      //     return;
-      // }
-      // if (oUpdatedProduct.height <= 0 || isNaN(oUpdatedProduct.height)) {
-      //     MessageBox.error("Please enter a valid positive number for Height!");
-      //     return;
-      // }
-        
+        //   if (oUpdatedProduct.length <= 0 || isNaN(oUpdatedProduct.length)) {
+        //     MessageBox.error("Please enter a valid positive number for Length!");
+        //     return;
+        // }
+        // if (oUpdatedProduct.width <= 0 || isNaN(oUpdatedProduct.width)) {
+        //     MessageBox.error("Please enter a valid positive number for Width!");
+        //     return;
+        // }
+        // if (oUpdatedProduct.height <= 0 || isNaN(oUpdatedProduct.height)) {
+        //     MessageBox.error("Please enter a valid positive number for Height!");
+        //     return;
+        // }
+
         // Create the payload for updating the product in the backend
         var oPayloadmodelupdate = {
-            description: oUpdatedProduct.description,
-            grossWeight:oUpdatedProduct.grossWeight,
-            netWeight: oUpdatedProduct.netWeight,
-            length: oUpdatedProduct.length,
-            width: oUpdatedProduct.width,
-            wuom: oUpdatedProduct.wuom,
-            height: oUpdatedProduct.height,
-            uom: oUpdatedProduct.uom,
-            quantity: oUpdatedProduct.quantity,
-            stack: oUpdatedProduct.stack
-        }; 
+          description: oUpdatedProduct.description,
+          grossWeight: oUpdatedProduct.grossWeight,
+          netWeight: oUpdatedProduct.netWeight,
+          length: oUpdatedProduct.length,
+          width: oUpdatedProduct.width,
+          wuom: oUpdatedProduct.wuom,
+          height: oUpdatedProduct.height,
+          uom: oUpdatedProduct.uom,
+          quantity: oUpdatedProduct.quantity,
+          stack: oUpdatedProduct.stack
+        };
         const oView = this.getView();
         let raisedErrorsSave = [];
         const aUserInputsSave = [
@@ -364,29 +417,29 @@ sap.ui.define([
           MessageBox.information(errorMessageSave); // Show consolidated error messages
           return;
         }
-    
+
         try {
-            // Call the OData update request to save the edited data in the backend
-            await this.getView().getModel().update(sPath, oPayloadmodelupdate, {
-                success: function() {
-                    // If the update is successful, show a success message
-                    MessageBox.success("Product details updated successfully!");
-    
-                    // Close the fragment
-                    this.oEdit.close();
-    
-                    // Optionally, refresh the table binding to reflect the changes
-                    oTable.getBinding("items").refresh();
-                }.bind(this),
-                error: function(oError) {
-                    // Handle the error scenario (e.g., show error message)
-                    MessageBox.error("Error updating product details: " + oError.message);
-                }
-            });
+          // Call the OData update request to save the edited data in the backend
+          await this.getView().getModel().update(sPath, oPayloadmodelupdate, {
+            success: function () {
+              // If the update is successful, show a success message
+              MessageBox.success("Product details updated successfully!");
+
+              // Close the fragment
+              this.oEdit.close();
+
+              // Optionally, refresh the table binding to reflect the changes
+              oTable.getBinding("items").refresh();
+            }.bind(this),
+            error: function (oError) {
+              // Handle the error scenario (e.g., show error message)
+              MessageBox.error("Error updating product details: " + oError.message);
+            }
+          });
         } catch (error) {
-            MessageBox.error("Error updating product details: " + error.message);
+          MessageBox.error("Error updating product details: " + error.message);
         }
-    },
+      },
 
 
 
@@ -395,40 +448,40 @@ sap.ui.define([
 
         // Only open the fragment if the "Create Simulation" tab is selected
         if (oSelectedKey === "createSimulation") {
-            this._openCreateSimulationFragment();
+          this._openCreateSimulationFragment();
         }
-    },
+      },
 
-    // Open the Create Simulation fragment
-    _openCreateSimulationFragment:async function () {
+      // Open the Create Simulation fragment
+      _openCreateSimulationFragment: async function () {
         var oView = this.getView();
 
         // Check if the fragment is already loaded
         if (!this._oFragment) {
-            // Load the fragment if it's not already loaded
-            this._oFragment= await  this.loadFragment("CreateNewSimulaton")
-        }  
-        this._oFragment.open();
-    },
-
-    // Close the fragment (can be attached to a "Close" button in the fragment)
-    onCloseDialogSimulate: function () {
-        if (this._oFragment) {
-            this._oFragment.close();
+          // Load the fragment if it's not already loaded
+          this._oFragment = await this.loadFragment("CreateNewSimulaton")
         }
-    },
+        this._oFragment.open();
+      },
 
-    // Submit the simulation (for example, a submit button in the fragment)
-    onSubmitSimulation: function () {
+      // Close the fragment (can be attached to a "Close" button in the fragment)
+      onCloseDialogSimulate: function () {
+        if (this._oFragment) {
+          this._oFragment.close();
+        }
+      },
+
+      // Submit the simulation (for example, a submit button in the fragment)
+      onSubmitSimulation: function () {
         var oInput = this.byId("simulationInput");
         var sValue = oInput.getValue();
-        
+
         if (sValue) {
-            MessageToast.show("Simulation Created: " + sValue);
+          MessageToast.show("Simulation Created: " + sValue);
         } else {
-            MessageToast.show("Please enter a simulation name.");
+          MessageToast.show("Please enter a simulation name.");
         }
-    },
+      },
 
       onbatchUpload: async function (e) {
         if (!this.oFragment) {
@@ -663,7 +716,5 @@ sap.ui.define([
           reader.readAsArrayBuffer(file);
         }
       },
-
-
     });
   });

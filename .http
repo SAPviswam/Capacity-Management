@@ -48,3 +48,18 @@ Content-Type: application/json
     "capacity": "10000",   
     "tuom": "kg"         
 }
+
+###
+POST http://localhost:4004/odata/v2/CapSRV/Users
+Content-Type: application/json
+
+{
+  "userID": "ARTDKN0001",
+  "fName": "John",
+  "lName": "Doe",
+  "phoneNo": "8886725925",
+  "mailID": "johndoe@example.com",
+  "password": "Subhash@47",
+  "profileImage": "",
+  "expireDate": ""
+}

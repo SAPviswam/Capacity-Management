@@ -31,9 +31,10 @@ sap.ui.define([
                 })
             })
         },
-        deleteData: function (oModel, sPath) {
+        deleteData: function (oModel, sPath, sBatchID) {
             return new Promise((resolve, reject) => {
                 oModel.remove(sPath, {
+                    groupId: sBatchID,
                     success: function (oSuccessData) {
                         resolve(oSuccessData);
                     },
