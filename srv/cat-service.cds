@@ -216,7 +216,7 @@ annotate MyService.History with @(UI: {
         TypeNamePlural: 'History'
     },
     SelectionFields: [
-       simulationName_ID,
+       simulationName.ID,
        truckType_truckType,
        createdAt,
        createdBy,

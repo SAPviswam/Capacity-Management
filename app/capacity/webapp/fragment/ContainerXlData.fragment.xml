@@ -1,0 +1,149 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    xmlns="sap.m"
+>
+    <Dialog
+        id="idDialogContainerUpload"
+        title="Upload Container Data"
+        class="dialogSlideIn"
+        resizable="true"
+        draggable="true"
+        contentWidth="85%"
+        contentHeight="85%"
+    >
+        <Table
+            id="idContainerUpload"
+            items="{ContainerModel>/items}"
+            mode="MultiSelect"
+        >
+            <headerToolbar>
+                <OverflowToolbar id="idTableHeaderIn_ContainerUpload">
+                    <ToolbarSpacer id="idTabledeHeaderSpacerIn_ContainerUpload" />
+                    <Button
+                        id="idSubmitIn_ContainerUpload"
+                        type="Accept"
+                        text="Submit"
+                        press="onBatchSaveContainerUpload"
+                    />
+                    <Button
+                        id="idBtnCloseIn_ContainerUpload"
+                        text="Close"
+                        icon="sap-icon://close"
+                        type="Neutral"
+                        press="onCloseContainerUpload"
+                    />
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column id="idClmnIn_ContainerUpload">
+                    <Label
+                        id="idTruckTypeIn_ContainerUpload"
+                        text="Truck Type"
+                    />
+                </Column>
+                <Column id="idClmnIn_ContainerUpload1">
+                    <Label
+                        id="idLengthLabelIn_ContainerUpload2"
+                        text="Length"
+                    />
+                </Column>
+                <Column id="idWidthColumIn_ContainerUpload">
+                    <Label
+                        id="idWidthLabelIn_ContainerUpload"
+                        text="Width"
+                    />
+                </Column>
+                <Column id="idHeightIn_ContainerUpload">
+                    <Label
+                        id="idHeightLabelIn_ContainerUpload"
+                        text="Height"
+                    />
+                </Column>
+                <Column id="idGenCosafIn_ContainerUpload">
+                    <Label
+                        id="iduomLabelIn_ContainerUpload"
+                        text="uom"
+                    />
+                </Column>
+                <Column id="iDGenColuIn_ContainerUpload">
+                    <Label
+                        id="idVolumeLabelIn_ContainerUpload"
+                        text="Volume"
+                    />
+                </Column>
+                <Column id="idTuomIn_ContainerUpload">
+                    <Label
+                        id="idtuomLabelIn_ContainerUpload"
+                        text="Tuom"
+                    />
+                </Column>
+                <Column id="idTruckWeightIn_ContainerUpload">
+                    <Label
+                        id="idTruckweightLabelIn_ContainerUpload"
+                        text="Truck weight"
+                    />
+                </Column>
+                <Column id="idCapacity_ContainerUpload">
+                    <Label
+                        id="idGenLabelIn_ContainerUpload"
+                        text="Capacity"
+                    />
+                </Column>
+               
+                <Column id="idTuomCapacity_ContainerUpload">
+                    <Label
+                        id="idTuomabelIn_ContainerUpload"
+                        text="Tuom"
+                    />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem id="idClmnListIn_ContainerUpload1">
+                    <cells>
+                        <Text
+                            id="idClmnTextIn_ContainerUpload1"
+                            text="{ContainerModel>truckType}"
+                        />
+                        <Input
+                            id="idClmnModelinputIn_ContainerUpload1"
+                            value="{ContainerModel>length}"
+                        />
+                        <Input
+                            id="idClmnEANTextIn_ContainerUpload"
+                            value="{ContainerModel>width}"
+                        />
+                        <Input
+                            id="idClmndescriptionIn_ContainerUpload"
+                            value="{ContainerModel>height}"
+                        />
+                        <Input
+                            id="idClmnmCategoryIn_ContainerUpload"
+                            value="{ContainerModel>uom}"
+                        />
+                        <Input
+                            id="idClmnLengthlInputIn_ContainerUpload1"
+                            value="{ContainerModel>volume}"
+                        />
+                        <Input
+                            id="idWidthinputIn_ContainerUpload1"
+                            value="{ContainerModel>tvuom}"
+                        />
+                        <Input
+                            id="idHeightInputIn_ContainerUpload1"
+                            value="{ContainerModel>truckWeight}"
+                        />
+                       <Input
+                            id="idcapacityinputIn_ContainerUpload1"
+                            value="{ContainerModel>capacity}"
+                        />
+                        <Input
+                            id="idtuomInputIn_ContainerUpload1"
+                            value="{ContainerModel>tuom}"
+                        />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Dialog>
+</core:FragmentDefinition>

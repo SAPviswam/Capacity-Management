@@ -619,6 +619,7 @@
                                             </smarttable:customToolbar>
                                             <Table
                                                 id="idContianersTable"
+                                               
                                                 mode="MultiSelect"
                                                 noDataText="No Containers/Vehicles Available"
                                                 selectionChange="onTruckTypeChange"

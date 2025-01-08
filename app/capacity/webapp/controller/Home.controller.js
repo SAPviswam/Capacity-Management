@@ -144,28 +144,6 @@ sap.ui.define([
                     }
                 }
                 // test
-                var flag = true;
-                if (!sUserEnteredUserID) {
-                    oUserView.byId("_IDGenInput11").setValueState("Warning");
-                    oUserView.byId("_IDGenInput11").setValueStateText("Please enter registered user ID");
-                    flag = false;
-                } else {
-                    oUserView.byId("_IDGenInput11").setValueState("None");
-                }
-                if (!sUserEnteredPassword) {
-                    oUserView.byId("_IDGenInput221").setValueState("Warning");
-                    oUserView.byId("_IDGenInput221").setValueStateText("Enter your password");
-                    flag = false;
-                } else {
-                    oUserView.byId("_IDGenInput221").setValueState("None");
-                }
-                if (!flag) {
-                    sap.m.MessageToast.show("Please enter required credentials")
-                    // Close busy dialog
-                    this._oBusyDialog.close();
-                    return;
-                }
-
                 const fUser = new sap.ui.model.Filter("userID", sap.ui.model.FilterOperator.EQ, sUserEnteredUserID),
                     // fPassword = new sap.ui.model.Filter("Password", sap.ui.model.FilterOperator.EQ, sUserEnteredPassword),
                     aFilters = new sap.ui.model.Filter({
@@ -592,7 +570,8 @@ sap.ui.define([
                     if (oResponse.results.length > 0) {
                         const sRegisteredUserID = oResponse.results[0].userID,
                             sRegisteredPhnNumber = oResponse.results[0].phoneNo,
-                            sStoredPassword = oResponse.results[0].password;
+                            sStoredPassword = oResponse.results[0].password,
+                            sUUID = oResponse.results[0].ID;
 
                         if (sRegisteredUserID === sUserEnteredUserID && sRegisteredPhnNumber === sUserEnteredMobile) {
 
@@ -611,7 +590,7 @@ sap.ui.define([
                             try {
 
                                 // update call
-                                const oResponse = await this.updateData(oModel, `${sPath}('${sUserEnteredUserID}')`, oPayload);
+                                const oResponse = await this.updateData(oModel, oPayload, `${sPath}('${sUUID}')`);
                                 sap.m.MessageToast.show("Password Changed Successfully")
                                 const oUserView = this.getView();
                                 // after successfull  value states

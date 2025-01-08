@@ -15,7 +15,7 @@
             <Button
                 id="idSaveEditContainer"
                 text="Save"
-                press="onSaveEditContainer"
+                press="onSaveEditContainerPress"
                 type="Success"
             />
         </beginButton>
@@ -23,7 +23,7 @@
             <Button
                 id="idCancleEditContainer"
                 text="Cancel"
-                press="onCancelInEditContainerDialog"
+                press="onCancelEditContainer"
                 type="Negative"
             />
         </endButton>
@@ -57,31 +57,31 @@
                 />
                 <Label
                     id="IdContainerLength_Label"
-                    text="Length"
+                    text="Length(M)"
                 />
                 <Input
                     id="IdContainerLength_Input"
                     value="{CombinedModel>/Vehicle/length}"
+                    type="Number"
                 />
-
                 <Label
                     id="idContainerWidth_Label"
-                    text="Width"
+                    text="Width(M)"
                 />
                 <Input
                     id="idContainerWidth_Input"
                     value="{CombinedModel>/Vehicle/width}"
+                    type="Number"
                 />
-
                 <Label
                     id="idContainerHeight_Label"
-                    text="Height"
+                    text="Height(M)"
                 />
                 <Input
                     id="idContainerHeight_Input"
                     value="{CombinedModel>/Vehicle/height}"
+                    type="Number"
                 />
-
                 <Label
                     id="idContainerCapacity_Label"
                     text="Capacity"
@@ -89,9 +89,8 @@
                 <Input
                     id="idContainerCapacity_Input"
                     value="{CombinedModel>/Vehicle/capacity}"
-                    editable="false"
+                    type="Number"
                 />
-
                 <Label
                     id="idContainerTruckWeight_Label"
                     text="Truck Weight"
@@ -99,18 +98,17 @@
                 <Input
                     id="idContainerTruckWeight_Input"
                     value="{CombinedModel>/Vehicle/truckWeight}"
+                    type="Number"
                 />
-
-                <Label
+                <!--  <Label
                     id="idContainerTuom_Label"
                     text="Tuom"
                 />
                 <Input
                     id="idContainerTuom_Input"
                     value="{CombinedModel>/Vehicle/tuom}"
-                />
-
-                <Label
+                />  -->
+                <!--  <Label
                     id="idContainerTvuom_Label"
                     text="Tvoum"
                 />
@@ -133,7 +131,7 @@
                 <Input
                     id="idContainerVolume_Input"
                     value="{CombinedModel>/Vehicle/volume}"
-                />
+                />  -->
             </form:SimpleForm>
         </content>
     </Dialog>
