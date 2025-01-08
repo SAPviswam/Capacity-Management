@@ -832,7 +832,7 @@ onOpenContainerBranch:async function(){
             item.tuom = item.tuom.toUpperCase();
             item.volume = String(item.length * item.width * item.height);
             item.uom = "M"; // Set UOM to Meters after conversion
-            item.truckType = String(item.truckType);
+            item.truckType = String(`${item.truckType}FT`);
             item.volume = String(item.volume);
             item.capacity = String(item.capacity);
             item.truckWeight = String(item.truckWeight);
@@ -846,20 +846,22 @@ onOpenContainerBranch:async function(){
                   MessageBox.success("Containers created successfully");
 
                   // Close the fragment dialog and refresh the table binding
-                  if (that.oFragment) {
-                    that.oFragment.close();
+                     that.onCloseContainerUpload();
                     that.byId("idContianersTable").getBinding("items").refresh();
-                  }
+                  
                 }
               },
               error: function (err) {
                 // Handle error for individual item
                 if (JSON.parse(err.responseText).error.message.value.toLowerCase() === "entity already exists") {
+                  that.onCloseContainerUpload();
                   MessageBox.error(`You are trying to upload a Container which already exists.\n\n(or)\nYour are trying to upload duplicate Container`);
                 } else {
                   MessageBox.error("Please check the uploaded file and upload correct data");
+                  that.onCloseContainerUpload();
                 }
                 console.error("Error creating Container:", err);
+                that.onCloseContainerUpload();
               }
             });
           });
