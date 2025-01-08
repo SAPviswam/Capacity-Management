@@ -15,9 +15,9 @@ sap.ui.define([
         this.getView().setModel(this.MaterialModel, "MaterialModel");
 
 
-            // Container upload
-            this.ContainerModel = new JSONModel();
-            this.getView().setModel(this.ContainerModel, "ContainerModel");
+        // Container upload
+        this.ContainerModel = new JSONModel();
+        this.getView().setModel(this.ContainerModel, "ContainerModel");
 
 
         /**Combined Model for Model and Containers */
@@ -131,7 +131,7 @@ sap.ui.define([
         if (this.oContainerCreate.isOpen()) {
           this.oContainerCreate.close();
           this.oContainerCreate.destroy();
-        
+
         }
         this.getView().getModel("CombinedModel").setProperty("/Vehicle", {});
       },
@@ -165,6 +165,18 @@ sap.ui.define([
           this.getView().getModel("CombinedModel").setProperty("/Vehicle", {});
         }
       },
+/**Opening Container Batch Fragment */
+onOpenContainerBranch:async function(){
+  // Open the fragment and import data if a file is selected
+  if (!this.oFragmentContainer) {
+    this.oFragmentContainer = await this.loadFragment("ContainerXlData");
+  }
+  this.oFragmentContainer.open();
+},
+
+
+
+
       /**Create Product/Model */
       onCreateProduct: async function () {
         const oView = this.getView(),
@@ -391,7 +403,7 @@ sap.ui.define([
       onSaveProduct: async function () {
         debugger
         // Get the edited data from the fragment model
-        const oView = this.getView(),
+          const oView = this.getView(),
           oProductModel = oView.getModel("CombinedModel"),
           oUpdatedProduct = oProductModel.getProperty("/Product"),
           // Get the original product row binding context (from the selected row in the table)
@@ -415,11 +427,6 @@ sap.ui.define([
           height: oUpdatedProduct.height,
           uom: oUpdatedProduct.uom,
           quantity: oUpdatedProduct.quantity,
-
-//           stack: oUpdatedProduct.stack
-//         };
-//         const oView = this.getView();
-
           stack: oUpdatedProduct.stack,
           volume: oUpdatedProduct.volume,
         };
@@ -431,7 +438,6 @@ sap.ui.define([
           { Id: "editproLengthInput", value: oPayloadmodelupdate.length, regex: /^\d+(\.\d+)?$/, message: "Length should be numeric" },
           { Id: "editprodWidthInput", value: oPayloadmodelupdate.width, regex: /^\d+(\.\d+)?$/, message: "Width should be numeric" },
           { Id: "editprodHeightInput", value: oPayloadmodelupdate.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
-          // { Id: "idInputForModelCat", value: oPayloadmodelupdate.mCategory, regex: null, message: "Enter category" },
           { Id: "editDescriptionInput", value: oPayloadmodelupdate.description, regex: null, message: "Enter description" },
           { Id: "editnetWeightInput", value: oPayloadmodelupdate.netWeight, regex: /^\d+(\.\d+)?$/, message: "Net Weight should be numeric" },
           { Id: "editgrossWeightInput", value: oPayloadmodelupdate.grossWeight, regex: /^\d+(\.\d+)?$/, message: "Gross Weight should be numeric" },
@@ -456,9 +462,9 @@ sap.ui.define([
           MessageBox.information(errorMessageSave); // Show consolidated error messages
           return;
         }
- 
 
-        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(2));
+
+        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(3));
         oPayloadmodelupdate.bearingCapacity = String(oPayloadmodelupdate.stack * oPayloadmodelupdate.grossWeight);
         try {
           await this.updateData(oModel, oPayloadmodelupdate, sPath);
@@ -512,177 +518,14 @@ sap.ui.define([
         }
       },
 
-      onbatchUpload: async function (e) {
-        if (!this.oFragment) {
-          this.oFragment = await this.loadFragment("MaterialXlData");
-        }
-        this.oFragment.open();
-        await this._importData(e.getParameter("files") && e.getParameter("files")[0]);
-      },
-
-      _importData: function (file) {
-        var that = this;
-        var excelData = {};
-        if (file && window.FileReader) {
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            var data = new Uint8Array(e.target.result);
-            var workbook = XLSX.read(data, {
-              type: 'array'
-            });
-            workbook.SheetNames.forEach(function (sheetName) {
-              // Here is your object for every sheet in workbook
-              excelData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-              // adding serial numbers
-              excelData.forEach(function (item, index) {
-                item.serialNumber = index + 1; // Serial number starts from 1
-              });
-
-            });
-
-            // Setting the data to the local model
-            that.MaterialModel.setData({
-              items: excelData
-            });
-            that.MaterialModel.refresh(true);
-          };
-          reader.onerror = function (ex) {
-            console.log(ex);
-
-          };
-          reader.readAsArrayBuffer(file);
-        }
-      },
-
-      onBatchSave: async function () {
-        var that = this;
-        var addedProdCodeModel = this.getView().getModel("MaterialModel").getData();
-        // var batchChanges = [];
-        var oDataModel = this.getView().getModel("ModelV2");
-        var batchGroupId = "batchCreateGroup";
-
-        const oView = this.getView();
-
-        // test
-        // excel Validations
-
-        let raisedErrors = []
-        addedProdCodeModel.items.forEach(async (item, index) => {
-
-          const aExcelInputs = [
-            { value: item.model, regex: null, message: "Enter SAP product number" },
-            { value: item.description, regex: null, message: "Enter description" },
-            { value: item.mCategory, regex: null, message: "Enter category" },
-            { value: item.length, regex: /^\d+(\.\d+)?$/, message: "Length should be numeric" },
-            { value: item.width, regex: /^\d+(\.\d+)?$/, message: "Width should be numeric" },
-            { value: item.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
-            { value: item.quantity, regex: /^\d+$/, message: "Quantity should be numeric" },
-            { value: item.grossWeight, regex: /^\d+(\.\d+)?$/, message: "Gross Weight should be numeric" },
-            { value: item.netWeight, regex: /^\d+(\.\d+)?$/, message: "Net Weight should be numeric" },
-            { value: item.wuom, regex: null, message: "Enter UOM for Weight" },
-            // { value: item.volume, regex: null, message: "Enter Volume" }
-          ]
-          for (let input of aExcelInputs) {
-            let aValidations = this.validateField(oView, null, input.value, input.regex, input.message)
-            if (aValidations.length > 0) {
-              raisedErrors.push({ index: index, errorMsg: aValidations[0] }) // pushning error into empty array
-            }
-          }
-        })
-
-        if (raisedErrors.length > 0) {
-          for (let error of raisedErrors) {
-            MessageBox.information(`Check record number ${error.index + 1} ${error.errorMsg}`) // showing error msg 
-            return;
-          }
-        }
-        // test
-        try {
-          addedProdCodeModel.items.forEach(async (item, index) => {
-            delete item.serialNumber // deleting serial number
-            if (item.uom === "mm" || item.uom === "MM") {
-              item.length = String((item.length) / 1000).trim();
-              item.width = String((item.width) / 1000).trim();
-              item.height = String((item.height) / 1000).trim();
-            } else if (item.uom === "cm" || item.uom === "CM") {
-              item.length = String((item.length) / 100).trim();
-              item.width = String((item.width) / 100).trim();
-              item.height = String((item.height) / 100).trim();
-            } else {
-              item.length = String(item.length).trim();
-              item.width = String(item.width).trim();
-              item.height = String(item.height).trim();
-            }
-            item.netWeight = String(item.netWeight).trim();
-            item.grossWeight = String(item.grossWeight).trim();
-            item.quantity = String(item.quantity).trim();
-            item.stack = String(item.stack).trim();
-            item.EAN = String(item.EAN).trim();
-            item.volume = String(item.length * item.width * item.height)
-            // Setting UOM to Meters because we converted to meters
-            item.uom = "M"
-
-
-            // Create individual batch request 
-            await oDataModel.create("/Materials", item, {
-              method: "POST",
-              groupId: batchGroupId, // Specify the batch group ID here
-              success: function (data, response) {
-                if (addedProdCodeModel.items.length === index + 1) {
-                  MessageBox.success("Materials created successfully");
-                  if (that.oFragment) {
-                    that.oFragment.close();
-                    that.byId("idModelsTable").getBinding("items").refresh();
-                  }
-                }
-              },
-              error: function (err) {
-                // Handle error for individual item
-                if (JSON.parse(err.responseText).error.message.value.toLowerCase() === "entity already exists") {
-                  MessageBox.error(`You are trying to upload a material which is already exist.\n\n(or)\n
-                                    Your are trying to upload duplicate material `);
-                } else {
-                  MessageBox.error("Please check the uploaded file and upload correct data");
-                }
-                console.error("Error creating material:", err);
-              }
-            })
-          });
-
-          // Now send the batch request using batch group
-          await oDataModel.submitChanges({
-            batchGroupId: batchGroupId,
-            success: function (oData, response) {
-              // MessageBox.success("Materials batch created successfully");
-              console.log("Batch request submitted", oData);
-              // Perform any final operations if needed after all batch operations succeed
-            },
-            error: function (err) {
-              MessageBox.success("Error creating material batch");
-              console.error("Error in batch request:", err);
-              // Handle any failure in the batch submission (e.g., server issues)
-            }
-          });
-        } catch (error) {
-          console.log(error);
-          MessageToast.show("Facing technical issue")
-        }
-      },
-      onClosePressXlData: function () {
-        if (this.oFragment.isOpen()) {
-          this.oFragment.close();
-        }
-      },
-      // test
+/****Material Batch operations fragment open and data setting to that model ---> subash */      
       onMaterialUploadbtn: function () {
         var oFileInput = document.createElement('input');
         oFileInput.type = 'file';
-
         // Trigger the file input click event to open the file dialog
         oFileInput.click();
         oFileInput.addEventListener('change', this._onFileSelected.bind(this, oFileInput));
       },
-
       _onFileSelected: async function (oFileInput) {
         // Retrieve the selected file
         var oFile = oFileInput.files[0];
@@ -713,6 +556,7 @@ sap.ui.define([
           await this._importData(oFile);
         }
       },
+      /**Loading Container Fragment Data */
       _importData: function (file) {
         var that = this;
         var excelData = {};
@@ -745,229 +589,354 @@ sap.ui.define([
           reader.readAsArrayBuffer(file);
         }
       },
-
-// Function to handle the batch upload event
-onbatchUpload: async function (e) {
-  // Check if the fragment is already loaded; if not, load it
-  if (!this.oFragment) {
-    this.oFragment = await this.loadFragment("ContainerXlData");
-  }
-  // Open the fragment dialog
-  this.oFragment.open();
-  // Import data from the selected file
-  await this._importData(e.getParameter("files") && e.getParameter("files")[0]);
-},
-
-// Function to import data from an Excel file
-_importData: function (file) {
-  var that = this;
-  var excelData = {};
-
-  // Check if a file is provided and if FileReader is supported by the browser
-  if (file && window.FileReader) {
-    var reader = new FileReader();
-    
-    // On file load, process the Excel data
-    reader.onload = function (e) {
-      var data = new Uint8Array(e.target.result);
-      var workbook = XLSX.read(data, { type: 'array' });
-
-      // Iterate through each sheet in the Excel workbook
-      workbook.SheetNames.forEach(function (sheetName) {
-        // Convert the sheet data to JSON format
-        excelData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-
-        // Add serial numbers to each row of data
-        excelData.forEach(function (item, index) {
-          item.serialNumber = index + 1; // Serial number starts from 1
-        });
-      });
-
-      // Set the imported data to the local model and refresh the model
-      that.ContainerModel.setData({ items: excelData });
-      that.ContainerModel.refresh(true);
-    };
-
-    // Handle any errors during file reading
-    reader.onerror = function (ex) {
-      console.log(ex);
-    };
-
-    // Read the file as an ArrayBuffer
-    reader.readAsArrayBuffer(file);
-  }
-},
-
-//*Container upload logic
-// Function to handle the batch save process in container upload
-onBatchSaveInContainerUpload: async function () {
-  var that = this;
-  var addedContainersModel = this.getView().getModel("ContainerModel").getData();
-  var oDataModel = this.getView().getModel("ModelV2");
-  var batchGroupIdInContainerUpload = "batchCreateGroup";
-
-  const oView = this.getView();
-
-  // Perform validation on the uploaded Excel data
-  let raisedErrors = [];
-  addedContainersModel.items.forEach(async (item, index) => {
-    const aExcelInputs = [
-      { value: item.truckType, regex: null, message: "Enter SAP product number" },
-      { value: item.length, regex: /^\d+(\.\d+)?$/, message: "Length should be numeric" },
-      { value: item.width, regex: /^\d+(\.\d+)?$/, message: "Width should be numeric" },
-      { value: item.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
-      { value: item.truckWeight, regex: /^\d+(\.\d+)?$/, message: "Truck Weight should be numeric" },
-      { value: item.capacity, regex: /^\d+(\.\d+)?$/, message: "Capacity should be numeric" },
-    ];
-    
-    // Validate each input in the Excel data
-    for (let input of aExcelInputs) {
-      let aValidations = this.validateField(oView, null, input.value, input.regex, input.message);
-      if (aValidations.length > 0) {
-        raisedErrors.push({ index: index, errorMsg: aValidations[0] });
-      }
-    }
-  });
-
-  // If there are any validation errors, display them and exit the process
-  if (raisedErrors.length > 0) {
-    for (let error of raisedErrors) {
-      MessageBox.information(`Check record number ${error.index + 1} ${error.errorMsg}`);
-      return;
-    }
-  }
-
-  // Proceed with data transformation and saving
-  try {
-    addedContainersModel.items.forEach(async (item, index) => {
-      delete item.serialNumber; // Remove the serial number before sending the data
-
-      // Convert units based on the UOM (Unit of Measure)
-      if (item.uom === "mm" || item.uom === "MM") {
-        item.length = String((item.length) / 1000).trim();
-        item.width = String((item.width) / 1000).trim();
-        item.height = String((item.height) / 1000).trim();
-      } else if (item.uom === "cm" || item.uom === "CM") {
-        item.length = String((item.length) / 100).trim();
-        item.width = String((item.width) / 100).trim();
-        item.height = String((item.height) / 100).trim();
-      } else {
-        item.length = String(item.length).trim();
-        item.width = String(item.width).trim();
-        item.height = String(item.height).trim();
-      }
-
-      // Convert other attributes to uppercase and calculate volume
-      item.tvuom = (item.tvuom).toUpperCase();
-      item.tuom = item.tuom.toUpperCase();
-      item.volume = String(item.length * item.width * item.height);
-      item.uom = "M"; // Set UOM to Meters after conversion
-      item.truckType = String(item.truckType);
-      item.volume = String(item.volume);
-      item.capacity = String(item.capacity);
-      item.truckWeight = String(item.truckWeight);
-
-      // Create individual batch request for each container
-      await oDataModel.create("/TruckTypes", item, {
-        method: "POST",
-        groupId: batchGroupIdInContainerUpload, // Specify the batch group ID
-        success: function (data, response) {
-          if (addedContainersModel.items.length === index + 1) {
-            MessageBox.success("Containers created successfully");
-
-            // Close the fragment dialog and refresh the table binding
-            if (that.oFragment) {
-              that.oFragment.close();
-              that.byId("idContianersTable").getBinding("items").refresh();
+        /**Creating Models batch */
+        onBatchSave: async function () {
+          var that = this;
+          var addedProdCodeModel = this.getView().getModel("MaterialModel").getData();
+          // var batchChanges = [];
+          var oDataModel = this.getView().getModel("ModelV2");
+          var batchGroupId = "batchCreateGroup";
+          const oView = this.getView();
+          // test
+          // excel Validations
+          let raisedErrors = []
+          addedProdCodeModel.items.forEach(async (item, index) => {
+  
+            const aExcelInputs = [
+              { value: item.model, regex: null, message: "Enter SAP product number" },
+              { value: item.description, regex: null, message: "Enter description" },
+              { value: item.mCategory, regex: null, message: "Enter category" },
+              { value: item.length, regex: /^\d+(\.\d+)?$/, message: "Length should be numeric" },
+              { value: item.width, regex: /^\d+(\.\d+)?$/, message: "Width should be numeric" },
+              { value: item.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
+              { value: item.quantity, regex: /^\d+$/, message: "Quantity should be numeric" },
+              { value: item.grossWeight, regex: /^\d+(\.\d+)?$/, message: "Gross Weight should be numeric" },
+              { value: item.netWeight, regex: /^\d+(\.\d+)?$/, message: "Net Weight should be numeric" },
+              { value: item.wuom, regex: null, message: "Enter UOM for Weight" },
+              // { value: item.volume, regex: null, message: "Enter Volume" }
+            ]
+            for (let input of aExcelInputs) {
+              let aValidations = this.validateField(oView, null, input.value, input.regex, input.message)
+              if (aValidations.length > 0) {
+                raisedErrors.push({ index: index, errorMsg: aValidations[0] }) // pushning error into empty array
+              }
+            }
+          })
+  
+          if (raisedErrors.length > 0) {
+            for (let error of raisedErrors) {
+              MessageBox.information(`Check record number ${error.index + 1} ${error.errorMsg}`) // showing error msg 
+              return;
             }
           }
-        },
-        error: function (err) {
-          // Handle error for individual item
-          if (JSON.parse(err.responseText).error.message.value.toLowerCase() === "entity already exists") {
-            MessageBox.error(`You are trying to upload a Container which already exists.\n\n(or)\nYour are trying to upload duplicate Container`);
-          } else {
-            MessageBox.error("Please check the uploaded file and upload correct data");
+          // test
+          try {
+            addedProdCodeModel.items.forEach(async (item, index) => {
+              delete item.serialNumber // deleting serial number
+              if (item.uom === "mm" || item.uom === "MM") {
+                item.length = String((item.length) / 1000).trim();
+                item.width = String((item.width) / 1000).trim();
+                item.height = String((item.height) / 1000).trim();
+              } else if (item.uom === "cm" || item.uom === "CM") {
+                item.length = String((item.length) / 100).trim();
+                item.width = String((item.width) / 100).trim();
+                item.height = String((item.height) / 100).trim();
+              } else {
+                item.length = String(item.length).trim();
+                item.width = String(item.width).trim();
+                item.height = String(item.height).trim();
+              }
+              item.netWeight = String(item.netWeight).trim();
+              item.grossWeight = String(item.grossWeight).trim();
+              item.quantity = String(item.quantity).trim();
+              item.stack = String(item.stack).trim();
+              item.EAN = String(item.EAN).trim();
+              item.volume = String(item.length * item.width * item.height)
+              // Setting UOM to Meters because we converted to meters
+              item.uom = "M"
+  
+  
+              // Create individual batch request 
+              await oDataModel.create("/Materials", item, {
+                method: "POST",
+                groupId: batchGroupId, // Specify the batch group ID here
+                success: function (data, response) {
+                  if (addedProdCodeModel.items.length === index + 1) {
+                    MessageBox.success("Materials created successfully");
+                    if (that.oFragment) {
+                      that.oFragment.close();
+                      that.byId("idModelsTable").getBinding("items").refresh();
+                    }
+                  }
+                },
+                error: function (err) {
+                  // Handle error for individual item
+                  if (JSON.parse(err.responseText).error.message.value.toLowerCase() === "entity already exists") {
+                    MessageBox.error(`You are trying to upload a material which is already exist.\n\n(or)\n
+                                      Your are trying to upload duplicate material `);
+                  } else {
+                    MessageBox.error("Please check the uploaded file and upload correct data");
+                  }
+                  console.error("Error creating material:", err);
+                }
+              })
+            });
+  
+            // Now send the batch request using batch group
+            await oDataModel.submitChanges({
+              batchGroupId: batchGroupId,
+              success: function (oData, response) {
+                // MessageBox.success("Materials batch created successfully");
+                console.log("Batch request submitted", oData);
+                // Perform any final operations if needed after all batch operations succeed
+              },
+              error: function (err) {
+                MessageBox.success("Error creating material batch");
+                console.error("Error in batch request:", err);
+                // Handle any failure in the batch submission (e.g., server issues)
+              }
+            });
+          } catch (error) {
+            console.log(error);
+            MessageToast.show("Facing technical issue")
           }
-          console.error("Error creating Container:", err);
+        },
+
+        /**close Models upload Fragment */
+        onClosePressXlData: function () {
+          if (this.oFragment.isOpen()) {
+            this.oFragment.close();
+          }
+        },
+/***completed material batch */
+
+      // Function to handle the batch upload event
+      onbatchUploadContainers: async function (e) {
+        // Check if the fragment is already loaded; if not, load it
+        if (!this.oFragmentContainer) {
+          this.oFragmentContainer = await this.loadFragment("ContainerXlData");
         }
-      });
-    });
-
-    // Now send the batch request using the batch group
-    await oDataModel.submitChanges({
-      batchGroupIdInContainerUpload: batchGroupIdInContainerUpload,
-      success: function (oData, response) {
-        console.log("Batch request submitted", oData);
+        // Open the fragment dialog
+        this.oFragmentContainer.open();
+        // Import data from the selected file
+        await this._importConatinerData(e.getParameter("files") && e.getParameter("files")[0]);
       },
-      error: function (err) {
-        MessageBox.success("Error creating Container batch");
-        console.error("Error in batch request:", err);
-      }
-    });
-  } catch (error) {
-    console.log(error);
-    MessageToast.show("Facing technical issue");
-  }
-},
 
-// Function to handle the close button press event in the container upload fragment
-onClosePressInContainerUpload: function () {
-  // Close the fragment dialog if it is open
-  if (this.oFragment.isOpen()) {
-    this.oFragment.close();
-  }
-},
+      // Function to import data from an Excel file
+      _importConatinerData: function (file) {
+        var that = this;
+        var excelData = {};
 
-// Function to trigger the container upload
-onContainerUpload: function () {
-  var oFileInput = document.createElement('input');
-  oFileInput.type = 'file';
+        // Check if a file is provided and if FileReader is supported by the browser
+        if (file && window.FileReader) {
+          var reader = new FileReader();
 
-  // Trigger the file input click event to open the file dialog
-  oFileInput.click();
-  oFileInput.addEventListener('change', this._onFileSelected.bind(this, oFileInput));
-},
+          // On file load, process the Excel data
+          reader.onload = function (e) {
+            var data = new Uint8Array(e.target.result);
+            var workbook = XLSX.read(data, { type: 'array' });
 
-// Function to handle file selection
-_onFileSelected: async function (oFileInput) {
-  // Retrieve the selected file
-  var oFile = oFileInput.files[0];
+            // Iterate through each sheet in the Excel workbook
+            workbook.SheetNames.forEach(function (sheetName) {
+              // Convert the sheet data to JSON format
+              excelData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-  if (oFile) {
-    // Open the fragment and import data if a file is selected
-    if (!this.oFragment) {
-      this.oFragment = await this.loadFragment("ContainerXlData");
-    }
-    this.oFragment.open();
-    await this._importData(oFile);
-  }
-},
+              // Add serial numbers to each row of data
+              excelData.forEach(function (item, index) {
+                item.serialNumber = index + 1; // Serial number starts from 1
+              });
+            });
 
-// Function to import data from the selected file (repeated function from earlier)
-_importData: function (file) {
-  var that = this;
-  var excelData = {};
-  if (file && window.FileReader) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      var data = new Uint8Array(e.target.result);
-      var workbook = XLSX.read(data, { type: 'array' });
-      workbook.SheetNames.forEach(function (sheetName) {
-        excelData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-        excelData.forEach(function (item, index) {
-          item.serialNumber = index + 1; // Serial number starts from 1
+            // Set the imported data to the local model and refresh the model
+            that.ContainerModel.setData({ items: excelData });
+            that.ContainerModel.refresh(true);
+          };
+
+          // Handle any errors during file reading
+          reader.onerror = function (ex) {
+            console.log(ex);
+          };
+
+          // Read the file as an ArrayBuffer
+          reader.readAsArrayBuffer(file);
+        }
+      },
+
+      //*Container upload logic
+      // Function to handle the batch save process in container upload
+      onBatchSaveContainerUpload: async function () {
+        var that = this;
+        var addedContainersModel = this.getView().getModel("ContainerModel").getData();
+        var oDataModel = this.getView().getModel("ModelV2");
+        var batchGroupIdInContainerUpload = "batchCreateGroup";
+
+        const oView = this.getView();
+
+        // Perform validation on the uploaded Excel data
+        let raisedErrors = [];
+        addedContainersModel.items.forEach(async (item, index) => {
+          const aExcelInputs = [
+            { value: item.truckType, regex: null, message: "Enter SAP product number" },
+            { value: item.length, regex: /^\d+(\.\d+)?$/, message: "Length should be numeric" },
+            { value: item.width, regex: /^\d+(\.\d+)?$/, message: "Width should be numeric" },
+            { value: item.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
+            { value: item.truckWeight, regex: /^\d+(\.\d+)?$/, message: "Truck Weight should be numeric" },
+            { value: item.capacity, regex: /^\d+(\.\d+)?$/, message: "Capacity should be numeric" },
+          ];
+
+          // Validate each input in the Excel data
+          for (let input of aExcelInputs) {
+            let aValidations = this.validateField(oView, null, input.value, input.regex, input.message);
+            if (aValidations.length > 0) {
+              raisedErrors.push({ index: index, errorMsg: aValidations[0] });
+            }
+          }
         });
-      });
-      that.ContainerModel.setData({ items: excelData });
-      that.ContainerModel.refresh(true);
-    };
-    reader.onerror = function (ex) {
-      console.log(ex);
-    };
-    reader.readAsArrayBuffer(file);
-  }
-},
+
+        // If there are any validation errors, display them and exit the process
+        if (raisedErrors.length > 0) {
+          for (let error of raisedErrors) {
+            MessageBox.information(`Check record number ${error.index + 1} ${error.errorMsg}`);
+            return;
+          }
+        }
+
+        // Proceed with data transformation and saving
+        try {
+          addedContainersModel.items.forEach(async (item, index) => {
+            delete item.serialNumber; // Remove the serial number before sending the data
+
+            // Convert units based on the UOM (Unit of Measure)
+            if (item.uom === "mm" || item.uom === "MM") {
+              item.length = String((item.length) / 1000).trim();
+              item.width = String((item.width) / 1000).trim();
+              item.height = String((item.height) / 1000).trim();
+            } else if (item.uom === "cm" || item.uom === "CM") {
+              item.length = String((item.length) / 100).trim();
+              item.width = String((item.width) / 100).trim();
+              item.height = String((item.height) / 100).trim();
+            } else {
+              item.length = String(item.length).trim();
+              item.width = String(item.width).trim();
+              item.height = String(item.height).trim();
+            }
+
+            // Convert other attributes to uppercase and calculate volume
+            item.tvuom = (item.tvuom).toUpperCase();
+            item.tuom = item.tuom.toUpperCase();
+            item.volume = String(item.length * item.width * item.height);
+            item.uom = "M"; // Set UOM to Meters after conversion
+            item.truckType = String(`${item.truckType}FT`);
+            item.volume = String(item.volume);
+            item.capacity = String(item.capacity);
+            item.truckWeight = String(item.truckWeight);
+
+            // Create individual batch request for each container
+            await oDataModel.create("/TruckTypes", item, {
+              method: "POST",
+              groupId: batchGroupIdInContainerUpload, // Specify the batch group ID
+              success: function (data, response) {
+                if (addedContainersModel.items.length === index + 1) {
+                  MessageBox.success("Containers created successfully");
+
+                  // Close the fragment dialog and refresh the table binding
+                     that.onCloseContainerUpload();
+                    that.byId("idContianersTable").getBinding("items").refresh();
+                  
+                }
+              },
+              error: function (err) {
+                // Handle error for individual item
+                if (JSON.parse(err.responseText).error.message.value.toLowerCase() === "entity already exists") {
+                  that.onCloseContainerUpload();
+                  MessageBox.error(`You are trying to upload a Container which already exists.\n\n(or)\nYour are trying to upload duplicate Container`);
+                } else {
+                  MessageBox.error("Please check the uploaded file and upload correct data");
+                  that.onCloseContainerUpload();
+                }
+                console.error("Error creating Container:", err);
+                that.onCloseContainerUpload();
+              }
+            });
+          });
+
+          // Now send the batch request using the batch group
+          await oDataModel.submitChanges({
+            batchGroupIdInContainerUpload: batchGroupIdInContainerUpload,
+            success: function (oData, response) {
+              console.log("Batch request submitted", oData);
+            },
+            error: function (err) {
+              MessageBox.success("Error creating Container batch");
+              console.error("Error in batch request:", err);
+            }
+          });
+        } catch (error) {
+          console.log(error);
+          MessageToast.show("Facing technical issue");
+        }
+      },
+
+      // Function to handle the close button press event in the container upload fragment
+      onCloseContainerUpload: function () {
+        // // Close the fragment dialog if it is open
+        if (!this.oFragmentContainer) {
+
+          this.byId("idDialogContainerUpload").close();
+        } else if (this.oFragmentContainer.isOpen()) {
+
+          this.oFragmentContainer.close();
+        } else {
+          console.log("No action taken: oFragmentContainer exists but is not open.");
+        }
+      },
+
+/****commented at 10:14 */      
+      // Function to trigger the container upload
+      onContainerUpload: function () {
+        var oFileInputContainer = document.createElement('input');
+        oFileInputContainer.type = 'file';
+
+        // Trigger the file input click event to open the file dialog
+        oFileInputContainer.click();
+        oFileInputContainer.addEventListener('change', this._onFileSelectedContainer.bind(this, oFileInputContainer));
+      },
+
+      // // Function to handle file selection
+      _onFileSelectedContainer: async function (oFileInputContainer) {
+        // Retrieve the selected file
+        var oFileContainer = oFileInputContainer.files[0];
+
+        if (oFileContainer) {
+          this.onOpenContainerBranch();
+          await this._importContainerData(oFileContainer);
+        }
+      },
+
+      // // Function to import data from the selected file (repeated function from earlier)
+      _importContainerData: function (file) {
+        var that = this;
+        var excelContainerData = {};
+        if (file && window.FileReader) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var data = new Uint8Array(e.target.result);
+            var workbook = XLSX.read(data, { type: 'array' });
+            workbook.SheetNames.forEach(function (sheetName) {
+              excelContainerData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+              excelContainerData.forEach(function (item, index) {
+                item.serialNumber = index + 1; // Serial number starts from 1
+              });
+            });
+            that.ContainerModel.setData({ items: excelContainerData });
+            that.ContainerModel.refresh(true);
+          };
+          reader.onerror = function (ex) {
+            console.log(ex);
+          };
+          reader.readAsArrayBuffer(file);
+        }
+      },
 
       onContainerEditPress: async function () {
         var oSelectedItem = this.byId("idContianersTable").getSelectedItems();
@@ -1051,7 +1020,7 @@ _importData: function (file) {
           return;
         }
 
-        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(2));
+        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(3));
 
         try {
           await this.updateData(oModel, oPayloadmodelupdate, sPath);
@@ -1160,22 +1129,22 @@ _importData: function (file) {
           oEvent.getSource().setValue(sValue.substring(0, 5));
         }
       },
-//         if(oSelectedItem.length > 1){
-//           MessageBox.information("Please select only one Row for edit!");
-//           return;
-//         }
-//        let oPayload = oSelectedItem[0].getBindingContext().getObject();
-//        this.getView().getModel("CombinedModel").setProperty("/Vehicle",oPayload)
-//           if (!this.oEdit) {
-//             this.oEdit = await this.loadFragment("EditContainerDetails");
-//              }
-//         this.oEdit.open();
-//         },
-//         onCancelInEditContainerDialog: function () {
-//         if (this.oEdit.isOpen()) {
-//             this.oEdit.close();
-//         }
-//       }
+      //         if(oSelectedItem.length > 1){
+      //           MessageBox.information("Please select only one Row for edit!");
+      //           return;
+      //         }
+      //        let oPayload = oSelectedItem[0].getBindingContext().getObject();
+      //        this.getView().getModel("CombinedModel").setProperty("/Vehicle",oPayload)
+      //           if (!this.oEdit) {
+      //             this.oEdit = await this.loadFragment("EditContainerDetails");
+      //              }
+      //         this.oEdit.open();
+      //         },
+      //         onCancelInEditContainerDialog: function () {
+      //         if (this.oEdit.isOpen()) {
+      //             this.oEdit.close();
+      //         }
+      //       }
 
 
       //         if(oSelectedItem.length > 1){

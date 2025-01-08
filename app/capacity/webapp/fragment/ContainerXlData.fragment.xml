@@ -24,14 +24,14 @@
                         id="idSubmitIn_ContainerUpload"
                         type="Accept"
                         text="Submit"
-                        press="onBatchSaveInContainerUpload"
+                        press="onBatchSaveContainerUpload"
                     />
                     <Button
                         id="idBtnCloseIn_ContainerUpload"
                         text="Close"
                         icon="sap-icon://close"
                         type="Neutral"
-                        press="onClosePressInContainerUpload"
+                        press="onCloseContainerUpload"
                     />
                 </OverflowToolbar>
             </headerToolbar>
