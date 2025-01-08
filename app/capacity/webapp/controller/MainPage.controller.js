@@ -1020,7 +1020,7 @@ onOpenContainerBranch:async function(){
           return;
         }
 
-        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(2));
+        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(3));
 
         try {
           await this.updateData(oModel, oPayloadmodelupdate, sPath);
