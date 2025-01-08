@@ -438,7 +438,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-left: 10%;
+    margin-right: 15%;
+    margin-top: 2%;
   /* Ensure no margins are applied that could push things out of place */
 }
 
@@ -467,17 +468,18 @@
 
    /* login container starts */
  
-  .loginContainer {
-  background-color: rgba(248, 244, 244, 0.107); /* Semi-transparent background */
+  /* .loginContainer {
+  background-color: rgba(248, 244, 244, 0.107); 
   padding: 3rem;
   border-radius: 30px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), 0 6px 6px rgba(0, 0, 0, 0.22); /* Improved shadow */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), 0 6px 6px rgba(0, 0, 0, 0.22); 
   max-width: 370px;
-  width: auto; /* Fixed scaling issue */
+  width: auto; 
   text-align: start;
   margin-top:50%;
   transition: all 0.5s ease-out;
-  }
+  } */
+
 /* login container ends */
    
  
