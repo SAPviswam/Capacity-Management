@@ -130,7 +130,7 @@ sap.ui.define([
       onCancelCreateContainer: function () {
         if (this.oContainerCreate.isOpen()) {
           this.oContainerCreate.close();
-          this.oContainerCreate.destroy();
+          
 
         }
         this.getView().getModel("CombinedModel").setProperty("/Vehicle", {});
@@ -427,6 +427,11 @@ sap.ui.define([
           height: oUpdatedProduct.height,
           uom: oUpdatedProduct.uom,
           quantity: oUpdatedProduct.quantity,
+
+          //           stack: oUpdatedProduct.stack
+          //         };
+          //         const oView = this.getView();
+
           stack: oUpdatedProduct.stack,
           volume: oUpdatedProduct.volume,
         };
@@ -438,6 +443,7 @@ sap.ui.define([
           { Id: "editproLengthInput", value: oPayloadmodelupdate.length, regex: /^\d+(\.\d+)?$/, message: "Length should be numeric" },
           { Id: "editprodWidthInput", value: oPayloadmodelupdate.width, regex: /^\d+(\.\d+)?$/, message: "Width should be numeric" },
           { Id: "editprodHeightInput", value: oPayloadmodelupdate.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
+          // { Id: "idInputForModelCat", value: oPayloadmodelupdate.mCategory, regex: null, message: "Enter category" },
           { Id: "editDescriptionInput", value: oPayloadmodelupdate.description, regex: null, message: "Enter description" },
           { Id: "editnetWeightInput", value: oPayloadmodelupdate.netWeight, regex: /^\d+(\.\d+)?$/, message: "Net Weight should be numeric" },
           { Id: "editgrossWeightInput", value: oPayloadmodelupdate.grossWeight, regex: /^\d+(\.\d+)?$/, message: "Gross Weight should be numeric" },
@@ -464,7 +470,7 @@ sap.ui.define([
         }
 
 
-        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(3));
+        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(2));
         oPayloadmodelupdate.bearingCapacity = String(oPayloadmodelupdate.stack * oPayloadmodelupdate.grossWeight);
         try {
           await this.updateData(oModel, oPayloadmodelupdate, sPath);
@@ -824,7 +830,7 @@ sap.ui.define([
             // Convert other attributes to uppercase and calculate volume
             item.tvuom = (item.tvuom).toUpperCase();
             item.tuom = item.tuom.toUpperCase();
-            item.volume = String(item.length * item.width * item.height);
+            item.volume = String((item.length * item.width * item.height).toFixed(3));
             item.uom = "M"; // Set UOM to Meters after conversion
             item.truckType = String(`${item.truckType}FT`);
             item.volume = String(item.volume);

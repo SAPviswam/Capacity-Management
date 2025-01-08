@@ -75,7 +75,7 @@
                 <Column id="idTuomIn_ContainerUpload">
                     <Label
                         id="idtuomLabelIn_ContainerUpload"
-                        text="Tuom"
+                        text="Tvuom"
                     />
                 </Column>
                 <Column id="idTruckWeightIn_ContainerUpload">
