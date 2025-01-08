@@ -130,7 +130,7 @@ sap.ui.define([
       onCancelCreateContainer: function () {
         if (this.oContainerCreate.isOpen()) {
           this.oContainerCreate.close();
-          this.oContainerCreate.destroy();
+          
 
         }
         this.getView().getModel("CombinedModel").setProperty("/Vehicle", {});
@@ -830,7 +830,7 @@ onOpenContainerBranch:async function(){
             // Convert other attributes to uppercase and calculate volume
             item.tvuom = (item.tvuom).toUpperCase();
             item.tuom = item.tuom.toUpperCase();
-            item.volume = String(item.length * item.width * item.height);
+            item.volume = String((item.length * item.width * item.height).toFixed(3));
             item.uom = "M"; // Set UOM to Meters after conversion
             item.truckType = String(`${item.truckType}FT`);
             item.volume = String(item.volume);
@@ -1026,7 +1026,7 @@ onOpenContainerBranch:async function(){
           return;
         }
 
-        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(2));
+        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(3));
 
         try {
           await this.updateData(oModel, oPayloadmodelupdate, sPath);
