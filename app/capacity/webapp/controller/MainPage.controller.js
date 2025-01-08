@@ -1,3 +1,5 @@
+const { getArtifactCdsPersistenceName } = require("@sap/cds/lib/compile/cdsc");
+
 sap.ui.define([
   "./BaseController",
   "sap/m/MessageBox",
@@ -9,7 +11,7 @@ sap.ui.define([
 
     return BaseController.extend("com.app.capacity.controller.MainPage", {
       onInit() {
-
+        
         // Material upload
         this.MaterialModel = new JSONModel();
         this.getView().setModel(this.MaterialModel, "MaterialModel");
