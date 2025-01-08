@@ -403,7 +403,7 @@ onOpenContainerBranch:async function(){
       onSaveProduct: async function () {
         debugger
         // Get the edited data from the fragment model
-        const oView = this.getView(),
+          const oView = this.getView(),
           oProductModel = oView.getModel("CombinedModel"),
           oUpdatedProduct = oProductModel.getProperty("/Product"),
           // Get the original product row binding context (from the selected row in the table)
@@ -427,11 +427,6 @@ onOpenContainerBranch:async function(){
           height: oUpdatedProduct.height,
           uom: oUpdatedProduct.uom,
           quantity: oUpdatedProduct.quantity,
-
-          //           stack: oUpdatedProduct.stack
-          //         };
-          //         const oView = this.getView();
-
           stack: oUpdatedProduct.stack,
           volume: oUpdatedProduct.volume,
         };
@@ -443,7 +438,6 @@ onOpenContainerBranch:async function(){
           { Id: "editproLengthInput", value: oPayloadmodelupdate.length, regex: /^\d+(\.\d+)?$/, message: "Length should be numeric" },
           { Id: "editprodWidthInput", value: oPayloadmodelupdate.width, regex: /^\d+(\.\d+)?$/, message: "Width should be numeric" },
           { Id: "editprodHeightInput", value: oPayloadmodelupdate.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
-          // { Id: "idInputForModelCat", value: oPayloadmodelupdate.mCategory, regex: null, message: "Enter category" },
           { Id: "editDescriptionInput", value: oPayloadmodelupdate.description, regex: null, message: "Enter description" },
           { Id: "editnetWeightInput", value: oPayloadmodelupdate.netWeight, regex: /^\d+(\.\d+)?$/, message: "Net Weight should be numeric" },
           { Id: "editgrossWeightInput", value: oPayloadmodelupdate.grossWeight, regex: /^\d+(\.\d+)?$/, message: "Gross Weight should be numeric" },
@@ -470,7 +464,7 @@ onOpenContainerBranch:async function(){
         }
 
 
-        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(2));
+        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(3));
         oPayloadmodelupdate.bearingCapacity = String(oPayloadmodelupdate.stack * oPayloadmodelupdate.grossWeight);
         try {
           await this.updateData(oModel, oPayloadmodelupdate, sPath);
