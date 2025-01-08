@@ -13,7 +13,7 @@
         contentHeight="85%"
     >
         <Table
-            id="_IDGenTswfd_able1"
+            id="idMutliProductTbl"
             items="{MaterialModel>/items}"
             mode="MultiSelect"
         >
@@ -26,6 +26,13 @@
                         text="Submit"
                         press="onBatchSave"
                     />
+                    <Button
+                        id="idDelete"
+                        type="Ghost"
+                        text="Delete"
+                        press="onDeleUnwanted"
+                    />
+
                     <Button
                         id="idBtsdvwnEditq__"
                         text="Close"
