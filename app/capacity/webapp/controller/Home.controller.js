@@ -39,6 +39,31 @@ sap.ui.define([
 
             },
 
+            onAfterRendering: function () {
+                // This ensures the elements are rendered before we start the animation
+                var aTextElements = [
+                  this.byId("_IDGe33nText").getDomRef(),
+                  this.byId("_IDG44enText1").getDomRef(),
+                  this.byId("_IDGenTeeext2").getDomRef(),
+                  this.byId("_IDGenTeeext3").getDomRef(),
+                  this.byId("_IDGenTeeext4").getDomRef()
+                ];
+         
+                // Ensure that each element exists before applying GSAP animation
+                if (aTextElements.every(function (el) { return el !== null; })) {
+                  gsap.from(aTextElements, {
+                    duration: 1.5,
+                    opacity: 0,
+                    y: 30,
+                    stagger: 0.5,
+                   
+                  
+                 
+                    ease: "elastic"
+                  });
+                }
+              },
+
             checkAutoLogin: async function () {
 
                 const savedData = localStorage.getItem('loginData');

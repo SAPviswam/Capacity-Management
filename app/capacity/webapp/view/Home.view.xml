@@ -38,7 +38,7 @@
                         >
                             <Text
                                 id="_IDGe33nText"
-                                text="{i18n>HI}"
+                                text="{i18n>Hi}"
                                 class="Hi"
                             />
                             <VBox id="_IDGenV33Box">
@@ -148,15 +148,16 @@
                                 </HBox>
                             </VBox>
                         </HBox>
-
-                        <HBox id="_IDGenHBeeox4">
+                        <!-- <HBox id="_IDGenHBeeox4">
                             <Image
                                 id="idImage"
+                                class="sapUiLargeMarginTop"
                                 src="Image/logintruck.png"
                                 height="500px"
                                 width="600px"
                             />
-                        </HBox>
+                        </HBox> -->
+                    
                     </HBox>
                     <Text
                         id="_IDGenTeeext4"
@@ -164,6 +165,8 @@
                         text="&quot;Let's create something amazing together by Artihcus©.&quot;"
                         class="quoteText"
                     />
+
+                       
                     <!--  <Text text="Together.&quot;" class="quoteText"/>  -->
                 </content>
             </Page>
