@@ -11,6 +11,12 @@ sap.ui.define([
 
         return BaseController.extend("com.app.capacity.controller.Home", {
             async onInit() {
+                if (!this._LoadingDialog) {
+                    this._LoadingDialog = new sap.m.BusyDialog({
+                        text: "Please wait while loading"
+                    });
+                    this._LoadingDialog.open()
+                }
                 const oUserModel = new JSONModel({
                     userID: "",
                     fName: "",
@@ -25,12 +31,14 @@ sap.ui.define([
                 this.getView().setModel(oUserModel, "UserModel")
                 // Check credentials are saved
                 await this.checkAutoLogin()
+                this._LoadingDialog.close()
 
                 const oConfigModel = this.getOwnerComponent().getModel("config");
                 this.oTwilioConfig = oConfigModel.getProperty("/Twilio");
                 this.oSMSConfig = oConfigModel.getProperty("/SMS");
 
             },
+
             checkAutoLogin: async function () {
 
                 const savedData = localStorage.getItem('loginData');
@@ -60,7 +68,7 @@ sap.ui.define([
 
                             // Navigate to the Initial Screen
                             const oRouter = this.getOwnerComponent().getRouter();
-                            oRouter.navTo("MainPage");
+                            oRouter.navTo("MainPage",{id:userID});
                         }
                     } catch (error) {
                         sap.m.MessageToast.show("Oops something went wrong please refresh the page");
