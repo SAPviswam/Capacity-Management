@@ -201,9 +201,8 @@
                                                                     text="Edit"
                                                                     icon="sap-icon://edit"
                                                                     press="onModelEdit"
-
                                                                 />
-<!--                                                                <MenuItem
+                                                                <!--                                                                <MenuItem
                                                                     id="idMaterialEditBtn"
                                                                     text="Edit"
                                                                     icon="sap-icon://edit"
@@ -224,7 +223,6 @@
                                                             </Menu>
                                                         </menu>
                                                     </MenuButton>
-
                                                 </OverflowToolbar>
                                             </smarttable:customToolbar>
                                             <Table
@@ -465,7 +463,7 @@
                                                 <HBox id="idHBoxForModelWeight">
                                                     <Label
                                                         id="idLablForModelWeight"
-                                                        text="Weight:"
+                                                        text="UOM:"
                                                         width="125px"
                                                         class="sapUiTinyMarginTop"
                                                     />
@@ -511,15 +509,26 @@
                                                         maxLength="200"
                                                     />
                                                 </HBox>
+                                                <HBox
+                                                    id="buttonsHbox_productList"
+                                                    class="sapUiSmallMarginTop"
+                                                >
+                                                    <Button
+                                                        id="idBtnForModelClear"
+                                                        text="Clear"
+                                                        press="onClearProduct"
+                                                        type="Emphasized"
+                                                        class="dialogButton_sapconnect addProductSaveButton sapUiMediumMarginEnd"
+                                                    />
 
-                                                <Label id="idModelEmptyLabel" />
-                                                <Button
-                                                    id="idBtnForModelSave"
-                                                    text="Save"
-                                                    press="onCreateProduct"
-                                                    type="Emphasized"
-                                                    class="dialogButton_sapconnect addProductSaveButton"
-                                                />
+                                                    <Button
+                                                        id="idBtnForModelSave"
+                                                        text="Save"
+                                                        press="onCreateProduct"
+                                                        type="Emphasized"
+                                                        class="dialogButton_sapconnect addProductSaveButton"
+                                                    />
+                                                </HBox>
                                             </VBox>
                                         </form:SimpleForm>
                                     </HBox>
@@ -619,7 +628,6 @@
                                             </smarttable:customToolbar>
                                             <Table
                                                 id="idContianersTable"
-                                               
                                                 mode="MultiSelect"
                                                 noDataText="No Containers/Vehicles Available"
                                                 selectionChange="onTruckTypeChange"
@@ -662,10 +670,7 @@
                                         id="idList2"
                                         text="Previous Simulations"
                                     />
-                                      <VBox
-                                        id="idVBoxForPreviousSimulation"
-                                        
-                                    >
+                                    <VBox id="idVBoxForPreviousSimulation">
                                         <smartfilterbar:SmartFilterBar
                                             id="idSmarFilterContainerFor_previous_simulation"
                                             filterBarExpanded="true"
@@ -755,7 +760,6 @@
                                         id="idList4"
                                         text="Create Simulations"
                                     />
-                                    
                                 </IconTabFilter>
                             </items>
                         </IconTabBar>
