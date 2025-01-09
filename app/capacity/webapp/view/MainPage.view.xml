@@ -648,6 +648,15 @@
                                                     </VBox>
                                                 </noData>
                                             </Table>
+                                            <VBox id="idErrorIllustrationContainer" visible="false">
+    <IllustratedMessage
+        id="idErrorIllustration"
+        title="{/errorTitle}"
+        description="{/errorDescription}"
+        illustrationType="{/errorIllustrationType}"
+        illustrationSize="Spot"
+    />
+</VBox>
                                         </smarttable:SmartTable>
                                     </VBox>
                                 </IconTabFilter>
