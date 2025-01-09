@@ -125,7 +125,7 @@ sap.ui.define([
       onCancelCreateContainer: function () {
         if (this.oContainerCreate.isOpen()) {
           this.oContainerCreate.close();
-          this.oContainerCreate.destroy();
+           
         
         }
         this.getView().getModel("CombinedModel").setProperty("/Vehicle", {});
