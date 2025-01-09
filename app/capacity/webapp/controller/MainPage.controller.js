@@ -1,5 +1,7 @@
-const { getArtifactCdsPersistenceName } = require("@sap/cds/lib/compile/cdsc");
+<<<<<<< HEAD
 
+=======
+>>>>>>> 672dad3c082037947bf81d0dacc540e4ba24182a
 sap.ui.define([
   "./BaseController",
   "sap/m/MessageBox",
@@ -1146,6 +1148,30 @@ sap.ui.define([
         oModel.setProperty(sPath, null);  // Removes the object at this path
         this.byId("idMutliProductTbl").refresh()
       },
+
+// clear functionality for Add Product
+
+onClearProduct:function(){
+  this.getView().byId("idInputForModelNum").setValue();
+  this.getView().byId("idInputForEAN").setValue();
+  this.getView().byId("idInputForModelDesc").setValue();
+  this.getView().byId("idInputForModelCat").setValue();
+  this.getView().byId("idInputForModelLeng").setValue();
+  this.getView().byId("idInputForModelWidth").setValue();
+  this.getView().byId("idInputForModelHeight").setValue();
+  this.getView().byId("idInputForModelQuan").setValue();
+  this.getView().byId("idForSelectModelLWHUOM").setValue("Select");
+  this.getView().byId("idInputForModelNetWeight").setValue();
+  this.getView().byId("idInputForModelGrossWeight").setValue();
+  this.getView().byId("idSelectModelWeightUOM").setValue("Select");
+  this.getView().byId("idInputForModelStack").setValue();
+ 
+}
+
+
+
+
+
       //         if(oSelectedItem.length > 1){
       //           MessageBox.information("Please select only one Row for edit!");
       //           return;

@@ -42,8 +42,9 @@
                             id="idForImage"
                             height="1.5rem"
                             class="sapUiTinyMarginBegin"
-                            src="https://www.daikin.com/-/media/Project/Daikin/daikin_com/dg_common/images/logo_daikin-png.png"
+                            src="https://artihcus.com/assets/img/AG-logo.png"
                         />
+                         <!-- https://www.daikin.com/-/media/Project/Daikin/daikin_com/dg_common/images/logo_daikin-png.png -->
                         <!-- Title centered in the remaining space -->
                         <HBox
                             id="idHBoxForPageTitle"
@@ -201,9 +202,8 @@
                                                                     text="Edit"
                                                                     icon="sap-icon://edit"
                                                                     press="onModelEdit"
-
                                                                 />
-<!--                                                                <MenuItem
+                                                                <!--                                                                <MenuItem
                                                                     id="idMaterialEditBtn"
                                                                     text="Edit"
                                                                     icon="sap-icon://edit"
@@ -224,15 +224,28 @@
                                                             </Menu>
                                                         </menu>
                                                     </MenuButton>
-
                                                 </OverflowToolbar>
                                             </smarttable:customToolbar>
                                             <Table
                                                 id="idModelsTable"
                                                 mode="MultiSelect"
-                                                noDataText="No Models/Products Available"
                                                 selectionChange="onModelChange"
-                                            />
+                                            >
+                                                <noData>
+                                                    <VBox
+                                                        id="idGenVBoxIllusModel"
+                                                    >
+                                                        <IllustratedMessage
+                                                            id="idGenIllustratedMessageModel"
+                                                            title="No Models/Products Available"
+                                                            description="Currently, no models are available. Please add new models."
+                                                            illustrationSize="Dialog"
+                                                            illustrationType="sapIllus-SimpleEmptyDoc"
+                                                        />
+                                                    </VBox>
+                                                </noData>
+                                            </Table>
+ 
                                         </smarttable:SmartTable>
                                     </VBox>
                                 </IconTabFilter>
@@ -465,7 +478,7 @@
                                                 <HBox id="idHBoxForModelWeight">
                                                     <Label
                                                         id="idLablForModelWeight"
-                                                        text="Weight:"
+                                                        text="UOM:"
                                                         width="125px"
                                                         class="sapUiTinyMarginTop"
                                                     />
@@ -511,15 +524,26 @@
                                                         maxLength="200"
                                                     />
                                                 </HBox>
+                                                <HBox
+                                                    id="buttonsHbox_productList"
+                                                    class="sapUiSmallMarginTop"
+                                                >
+                                                    <Button
+                                                        id="idBtnForModelClear"
+                                                        text="Clear"
+                                                        press="onClearProduct"
+                                                        type="Emphasized"
+                                                        class="dialogButton_sapconnect addProductSaveButton sapUiMediumMarginEnd"
+                                                    />
 
-                                                <Label id="idModelEmptyLabel" />
-                                                <Button
-                                                    id="idBtnForModelSave"
-                                                    text="Save"
-                                                    press="onCreateProduct"
-                                                    type="Emphasized"
-                                                    class="dialogButton_sapconnect addProductSaveButton"
-                                                />
+                                                    <Button
+                                                        id="idBtnForModelSave"
+                                                        text="Save"
+                                                        press="onCreateProduct"
+                                                        type="Emphasized"
+                                                        class="dialogButton_sapconnect addProductSaveButton"
+                                                    />
+                                                </HBox>
                                             </VBox>
                                         </form:SimpleForm>
                                     </HBox>
@@ -619,11 +643,30 @@
                                             </smarttable:customToolbar>
                                             <Table
                                                 id="idContianersTable"
-                                               
                                                 mode="MultiSelect"
-                                                noDataText="No Containers/Vehicles Available"
                                                 selectionChange="onTruckTypeChange"
-                                            />
+                                            >
+                                                <noData>
+                                                    <VBox id="_IDGenVBox">
+                                                        <IllustratedMessage
+                                                            id="_IDGenIllustratedMessage1"
+                                                            title="No Containers or Vehicles Found"
+                                                            description="currently no containers or vehicles available. Please add new Containers."
+                                                            illustrationSize="Dialog"
+                                                            illustrationType="sapIllus-SimpleError"
+                                                        />
+                                                    </VBox>
+                                                </noData>
+                                            </Table>
+                                            <VBox id="idErrorIllustrationContainer" visible="false">
+    <IllustratedMessage
+        id="idErrorIllustration"
+        title="{/errorTitle}"
+        description="{/errorDescription}"
+        illustrationType="{/errorIllustrationType}"
+        illustrationSize="Spot"
+    />
+</VBox>
                                         </smarttable:SmartTable>
                                     </VBox>
                                 </IconTabFilter>
@@ -662,10 +705,7 @@
                                         id="idList2"
                                         text="Previous Simulations"
                                     />
-                                      <VBox
-                                        id="idVBoxForPreviousSimulation"
-                                        
-                                    >
+                                    <VBox id="idVBoxForPreviousSimulation">
                                         <smartfilterbar:SmartFilterBar
                                             id="idSmarFilterContainerFor_previous_simulation"
                                             filterBarExpanded="true"
@@ -731,12 +771,25 @@
                                                     /> -->
                                                 </OverflowToolbar>
                                             </smarttable:customToolbar>
-                                            <Table
+                                           <Table
                                                 id="id_previous_simulation_table"
                                                 mode="MultiSelect"
-                                                noDataText="No Previous Simulation "
                                                 selectionChange="onTruckTypeChange"
-                                            />
+                                            >
+                                                <noData>
+                                                    <VBox
+                                                        id="idGenVBoxIllusSimulation"
+                                                    >
+                                                        <IllustratedMessage
+                                                            id="idGenIllustratedMessageSimulation"
+                                                            title="No Previous Simulations"
+                                                            description="Currently, no simulations are available. Please add a new simulation."
+                                                            illustrationSize="Dialog"
+                                                            illustrationType="sapIllus-PageNotFound"
+                                                        />
+                                                    </VBox>
+                                                </noData>
+                                            </Table>
                                         </smarttable:SmartTable>
                                     </VBox>
                                 </IconTabFilter>
@@ -755,7 +808,6 @@
                                         id="idList4"
                                         text="Create Simulations"
                                     />
-                                    
                                 </IconTabFilter>
                             </items>
                         </IconTabBar>
