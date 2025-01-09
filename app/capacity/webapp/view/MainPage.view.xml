@@ -42,8 +42,9 @@
                             id="idForImage"
                             height="1.5rem"
                             class="sapUiTinyMarginBegin"
-                            src="https://www.daikin.com/-/media/Project/Daikin/daikin_com/dg_common/images/logo_daikin-png.png"
+                            src="https://artihcus.com/assets/img/AG-logo.png"
                         />
+                         <!-- https://www.daikin.com/-/media/Project/Daikin/daikin_com/dg_common/images/logo_daikin-png.png -->
                         <!-- Title centered in the remaining space -->
                         <HBox
                             id="idHBoxForPageTitle"
