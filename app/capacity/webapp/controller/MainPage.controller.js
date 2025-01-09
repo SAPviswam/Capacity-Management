@@ -1,5 +1,3 @@
-const { getArtifactCdsPersistenceName } = require("@sap/cds/lib/compile/cdsc");
-
 sap.ui.define([
   "./BaseController",
   "sap/m/MessageBox",
