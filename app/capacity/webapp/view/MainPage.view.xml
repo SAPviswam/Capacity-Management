@@ -230,9 +230,23 @@
                                             <Table
                                                 id="idModelsTable"
                                                 mode="MultiSelect"
-                                                noDataText="No Models/Products Available"
                                                 selectionChange="onModelChange"
-                                            />
+                                            >
+                                                <noData>
+                                                    <VBox
+                                                        id="idGenVBoxIllusModel"
+                                                    >
+                                                        <IllustratedMessage
+                                                            id="idGenIllustratedMessageModel"
+                                                            title="No Models/Products Available"
+                                                            description="Currently, no models are available. Please add new models."
+                                                            illustrationSize="Dialog"
+                                                            illustrationType="sapIllus-SimpleEmptyDoc"
+                                                        />
+                                                    </VBox>
+                                                </noData>
+                                            </Table>
+ 
                                         </smarttable:SmartTable>
                                     </VBox>
                                 </IconTabFilter>
@@ -619,11 +633,21 @@
                                             </smarttable:customToolbar>
                                             <Table
                                                 id="idContianersTable"
-                                               
                                                 mode="MultiSelect"
-                                                noDataText="No Containers/Vehicles Available"
                                                 selectionChange="onTruckTypeChange"
-                                            />
+                                            >
+                                                <noData>
+                                                    <VBox id="_IDGenVBox">
+                                                        <IllustratedMessage
+                                                            id="_IDGenIllustratedMessage1"
+                                                            title="No Containers or Vehicles Found"
+                                                            description="currently no containers or vehicles available. Please add new Containers."
+                                                            illustrationSize="Dialog"
+                                                            illustrationType="sapIllus-SimpleError"
+                                                        />
+                                                    </VBox>
+                                                </noData>
+                                            </Table>
                                         </smarttable:SmartTable>
                                     </VBox>
                                 </IconTabFilter>
@@ -731,12 +755,25 @@
                                                     /> -->
                                                 </OverflowToolbar>
                                             </smarttable:customToolbar>
-                                            <Table
+                                           <Table
                                                 id="id_previous_simulation_table"
                                                 mode="MultiSelect"
-                                                noDataText="No Previous Simulation "
                                                 selectionChange="onTruckTypeChange"
-                                            />
+                                            >
+                                                <noData>
+                                                    <VBox
+                                                        id="idGenVBoxIllusSimulation"
+                                                    >
+                                                        <IllustratedMessage
+                                                            id="idGenIllustratedMessageSimulation"
+                                                            title="No Previous Simulations"
+                                                            description="Currently, no simulations are available. Please add a new simulation."
+                                                            illustrationSize="Dialog"
+                                                            illustrationType="sapIllus-PageNotFound"
+                                                        />
+                                                    </VBox>
+                                                </noData>
+                                            </Table>
                                         </smarttable:SmartTable>
                                     </VBox>
                                 </IconTabFilter>
