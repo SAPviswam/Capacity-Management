@@ -6,10 +6,10 @@
 >
     <Dialog
         id="idSignssUp"
-        resizable="false"
-        draggable="false"
+        resizable="true"
+        draggable="true"
         title="SignUp for A new Account"
-        class="sapMPopover sapMIBar sapMHeader-CTX"
+       
     >
         <beginButton>
             <Button
