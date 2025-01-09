@@ -8,6 +8,8 @@ define service MyService {
     define entity SelectedProduct as projection on db.SelectedProduct;
     define entity History         as projection on db.History;
     define entity Users           as projection on db.Users;
+
+    action AuthenticateUser(username : String, password : String) returns String; //testing for login
 }
 
 annotate MyService.Materials with @(UI: {
@@ -67,19 +69,19 @@ annotate MyService.Materials with @(UI: {
             Value: uom,
             Label: 'Dimension Units'
         },
-         
+
         {
             $Type: 'UI.DataField',
             Value: volume,
             Label: 'Volume'
         },
-          
+
         {
             $Type: 'UI.DataField',
             Value: stack,
             Label: 'Stack Levels'
         },
-          
+
         {
             $Type: 'UI.DataField',
             Value: quantity,
@@ -179,7 +181,7 @@ annotate MyService.TruckTypes with @(UI: {
             $Type: 'UI.DataField',
             Value: tuom,
             Label: 'Tuom'
-        }  
+        }
     ]
 });
 
@@ -198,7 +200,7 @@ annotate MyService.SelectedProduct with @(UI: {
             $Type: 'UI.DataField',
             Value: Productno.ID,
         },
-         {
+        {
             $Type: 'UI.DataField',
             Value: Productno.model
         },
@@ -216,40 +218,41 @@ annotate MyService.History with @(UI: {
         TypeNamePlural: 'History'
     },
     SelectionFields: [
-       simulationName.ID,
-       truckType_truckType,
-       createdAt,
-       createdBy,
-       modifiedAt,
-       modifiedBy
-       
-       
+        simulationName.ID,
+        truckType_truckType,
+        createdAt,
+        createdBy,
+        modifiedAt,
+        modifiedBy
+
+
     ],
     LineItem       : [
         {
             $Type: 'UI.DataField',
-            Value:  simulationName_ID,
-             Label: 'Simulation Name'
+            Value: simulationName_ID,
+            Label: 'Simulation Name'
         },
-       
+
         {
             $Type: 'UI.DataField',
             Value: createdAt,
-            Label:'Date and Time'
+            Label: 'Date and Time'
         },
         {
             $Type: 'UI.DataField',
             Value: createdBy,
-            Label:'Created By'
-        }, {
+            Label: 'Created By'
+        },
+        {
             $Type: 'UI.DataField',
             Value: modifiedAt,
-            Label:'MOdified Date and Time'
+            Label: 'MOdified Date and Time'
         },
         {
             $Type: 'UI.DataField',
             Value: modifiedBy,
-            Label:'Modified By'
+            Label: 'Modified By'
         }
     ]
 });

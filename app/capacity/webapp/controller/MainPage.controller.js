@@ -1,5 +1,3 @@
-const { getArtifactCdsPersistenceName } = require("@sap/cds/lib/compile/cdsc");
-
 sap.ui.define([
   "./BaseController",
   "sap/m/MessageBox",
@@ -15,7 +13,6 @@ sap.ui.define([
         // Material upload
         this.MaterialModel = new JSONModel();
         this.getView().setModel(this.MaterialModel, "MaterialModel");
-
 
         // Container upload
         this.ContainerModel = new JSONModel();
@@ -56,7 +53,7 @@ sap.ui.define([
             tuom: "KG",
             volume: "",
             truckWeight: "",
-            capacity: "",
+            capacity: ""
           }
         })
         // Set the combined model to the view
