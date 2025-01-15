@@ -1,3 +1,4 @@
+
 sap.ui.define([
   "./BaseController",
   "sap/m/MessageBox",
@@ -9,7 +10,7 @@ sap.ui.define([
 
     return BaseController.extend("com.app.capacity.controller.MainPage", {
       onInit() {
-
+        
         // Material upload
         this.MaterialModel = new JSONModel();
         this.getView().setModel(this.MaterialModel, "MaterialModel");
@@ -135,7 +136,7 @@ sap.ui.define([
       onCancelCreateContainer: function () {
         if (this.oContainerCreate.isOpen()) {
           this.oContainerCreate.close();
-          this.oContainerCreate.destroy();
+          
 
         }
         this.getView().getModel("CombinedModel").setProperty("/Vehicle", {});
@@ -432,6 +433,11 @@ sap.ui.define([
           height: oUpdatedProduct.height,
           uom: oUpdatedProduct.uom,
           quantity: oUpdatedProduct.quantity,
+
+          //           stack: oUpdatedProduct.stack
+          //         };
+          //         const oView = this.getView();
+
           stack: oUpdatedProduct.stack,
           volume: oUpdatedProduct.volume,
         };
@@ -443,6 +449,7 @@ sap.ui.define([
           { Id: "editproLengthInput", value: oPayloadmodelupdate.length, regex: /^\d+(\.\d+)?$/, message: "Length should be numeric" },
           { Id: "editprodWidthInput", value: oPayloadmodelupdate.width, regex: /^\d+(\.\d+)?$/, message: "Width should be numeric" },
           { Id: "editprodHeightInput", value: oPayloadmodelupdate.height, regex: /^\d+(\.\d+)?$/, message: "Height should be numeric" },
+          // { Id: "idInputForModelCat", value: oPayloadmodelupdate.mCategory, regex: null, message: "Enter category" },
           { Id: "editDescriptionInput", value: oPayloadmodelupdate.description, regex: null, message: "Enter description" },
           { Id: "editnetWeightInput", value: oPayloadmodelupdate.netWeight, regex: /^\d+(\.\d+)?$/, message: "Net Weight should be numeric" },
           { Id: "editgrossWeightInput", value: oPayloadmodelupdate.grossWeight, regex: /^\d+(\.\d+)?$/, message: "Gross Weight should be numeric" },
@@ -469,7 +476,7 @@ sap.ui.define([
         }
 
 
-        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(3));
+        oPayloadmodelupdate.volume = String((oPayloadmodelupdate.height * oPayloadmodelupdate.width * oPayloadmodelupdate.length).toFixed(2));
         oPayloadmodelupdate.bearingCapacity = String(oPayloadmodelupdate.stack * oPayloadmodelupdate.grossWeight);
         try {
           await this.updateData(oModel, oPayloadmodelupdate, sPath);
@@ -656,11 +663,19 @@ sap.ui.define([
             item.quantity = String(item.quantity).trim();
             item.stack = String(item.stack).trim();
             item.EAN = String(item.EAN).trim();
+<<<<<<< HEAD
             item.volume = String(item.length * item.width * item.height)
             // Setting UOM to Meters because we converted to meters
             item.uom = "M"
 
 
+=======
+            let Volume = parseFloat(item.length * item.width * item.height).toFixed(3);
+            item.volume = String(Volume)
+            // Setting UOM to Meters because we converted to meters
+            item.uom = "M"
+
+>>>>>>> adf4f8ef47b6c87ba6ff635cff999f218c11874a
             // Create individual batch request 
             await oDataModel.create("/Materials", item, {
               method: "POST",
@@ -829,7 +844,7 @@ sap.ui.define([
             // Convert other attributes to uppercase and calculate volume
             item.tvuom = (item.tvuom).toUpperCase();
             item.tuom = item.tuom.toUpperCase();
-            item.volume = String(item.length * item.width * item.height);
+            item.volume = String((item.length * item.width * item.height).toFixed(3));
             item.uom = "M"; // Set UOM to Meters after conversion
             item.truckType = String(`${item.truckType}FT`);
             item.volume = String(item.volume);
@@ -1134,6 +1149,39 @@ sap.ui.define([
           oEvent.getSource().setValue(sValue.substring(0, 5));
         }
       },
+
+      onDeleUnwanted: async function () {
+
+        const aSelectedItem = this.byId("idMutliProductTbl").getSelectedItem();
+        let sPath = aSelectedItem.getBindingContextPath(),
+          oModel = aSelectedItem.getModel("MaterialModel");
+        oModel.setProperty(sPath, null);  // Removes the object at this path
+        this.byId("idMutliProductTbl").refresh()
+      },
+
+// clear functionality for Add Product
+
+onClearProduct:function(){
+  this.getView().byId("idInputForModelNum").setValue();
+  this.getView().byId("idInputForEAN").setValue();
+  this.getView().byId("idInputForModelDesc").setValue();
+  this.getView().byId("idInputForModelCat").setValue();
+  this.getView().byId("idInputForModelLeng").setValue();
+  this.getView().byId("idInputForModelWidth").setValue();
+  this.getView().byId("idInputForModelHeight").setValue();
+  this.getView().byId("idInputForModelQuan").setValue();
+  this.getView().byId("idForSelectModelLWHUOM").setValue("Select");
+  this.getView().byId("idInputForModelNetWeight").setValue();
+  this.getView().byId("idInputForModelGrossWeight").setValue();
+  this.getView().byId("idSelectModelWeightUOM").setValue("Select");
+  this.getView().byId("idInputForModelStack").setValue();
+ 
+}
+
+
+
+
+
       //         if(oSelectedItem.length > 1){
       //           MessageBox.information("Please select only one Row for edit!");
       //           return;
