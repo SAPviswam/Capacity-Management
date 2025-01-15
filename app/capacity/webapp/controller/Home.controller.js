@@ -91,6 +91,7 @@ sap.ui.define([
                     this.oLoginDialog.close();
                 }
             },
+            
             onSignup: async function () {
                 if (!this.oSignUpDialog) {
                     this.oSignUpDialog = await this.loadFragment("SignUp");
