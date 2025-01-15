@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 672dad3c082037947bf81d0dacc540e4ba24182a
 sap.ui.define([
   "./BaseController",
   "sap/m/MessageBox",
